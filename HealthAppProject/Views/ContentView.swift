@@ -12,23 +12,23 @@ struct ContentView: View {
   
     @StateObject var healthStore = HealthStoreManager()
     
-
+    
     
     var body: some View {
-        VStack {
-            Image(systemName: "figure.walk")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Work on new HealthApp project to start career change")
+        List(healthStore.steps, id: \.id) { item in
+            VStack {
+                Text("\(item.count)")
+                Text(item.date, style: .date)
+            }
+         
         }
         .onAppear {
             healthStore.requestUserAuthorization { success in
-                //
+                if success {
+                    healthStore.calculateDataForOneWeek()
+                }
             }
         }
-     
-      
-    
     }
 }
 
