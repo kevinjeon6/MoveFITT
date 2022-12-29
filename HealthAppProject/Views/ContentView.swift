@@ -5,9 +5,15 @@
 //  Created by Kevin Mattocks on 12/27/22.
 //
 
+import HealthKit
 import SwiftUI
 
 struct ContentView: View {
+  
+    @StateObject var healthStore = HealthStoreManager()
+    
+
+    
     var body: some View {
         VStack {
             Image(systemName: "figure.walk")
@@ -15,7 +21,14 @@ struct ContentView: View {
                 .foregroundColor(.accentColor)
             Text("Work on new HealthApp project to start career change")
         }
-        .padding()
+        .onAppear {
+            healthStore.requestUserAuthorization { success in
+                //
+            }
+        }
+     
+      
+    
     }
 }
 
