@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E2295DFC8200FE4613 /* DateExtension.swift */; };
+		743818E6295E0C4500FE4613 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E5295E0C4500FE4613 /* Step.swift */; };
 		74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */; };
 		74DF66FB295B77A50046F521 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66FA295B77A50046F521 /* ContentView.swift */; };
 		74DF66FD295B77AC0046F521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FC295B77AC0046F521 /* Assets.xcassets */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		743818E2295DFC8200FE4613 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		743818E5295E0C4500FE4613 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		743AB91B295CE8B2004BD054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		74DF66F5295B77A50046F521 /* HealthAppProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAppProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppProjectApp.swift; sourceTree = "<group>"; };
@@ -36,6 +40,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		743818E1295DFC7200FE4613 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				743818E2295DFC8200FE4613 /* DateExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		743818E4295E0BAD00FE4613 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				743818E5295E0C4500FE4613 /* Step.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		74DF66EC295B77A50046F521 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +78,8 @@
 				743AB91B295CE8B2004BD054 /* Info.plist */,
 				74DF6706295B80450046F521 /* HealthAppProject.entitlements */,
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
+				743818E4295E0BAD00FE4613 /* Model */,
+				743818E1295DFC7200FE4613 /* Extensions */,
 				74DF6708295B84090046F521 /* Manager */,
 				74DF6707295B83FF0046F521 /* Views */,
 				74DF66FC295B77AC0046F521 /* Assets.xcassets */,
@@ -161,6 +183,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				74DF66FB295B77A50046F521 /* ContentView.swift in Sources */,
+				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
+				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
 				74DF670C295B843C0046F521 /* HealthStoreManager.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
 			);
