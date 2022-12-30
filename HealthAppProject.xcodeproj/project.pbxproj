@@ -13,7 +13,7 @@
 		74DF66FB295B77A50046F521 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66FA295B77A50046F521 /* ContentView.swift */; };
 		74DF66FD295B77AC0046F521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FC295B77AC0046F521 /* Assets.xcassets */; };
 		74DF6700295B77AC0046F521 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FF295B77AC0046F521 /* Preview Assets.xcassets */; };
-		74DF670C295B843C0046F521 /* HealthStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF670B295B843C0046F521 /* HealthStoreManager.swift */; };
+		74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,7 +26,7 @@
 		74DF66FC295B77AC0046F521 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74DF66FF295B77AC0046F521 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		74DF6706295B80450046F521 /* HealthAppProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthAppProject.entitlements; sourceTree = "<group>"; };
-		74DF670B295B843C0046F521 /* HealthStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreManager.swift; sourceTree = "<group>"; };
+		74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +107,7 @@
 		74DF6708295B84090046F521 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				74DF670B295B843C0046F521 /* HealthStoreManager.swift */,
+				74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -185,7 +185,7 @@
 				74DF66FB295B77A50046F521 /* ContentView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
 				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
-				74DF670C295B843C0046F521 /* HealthStoreManager.swift in Sources */,
+				74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

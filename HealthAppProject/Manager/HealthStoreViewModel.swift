@@ -8,12 +8,17 @@
 import HealthKit
 import Foundation
 
-class HealthStoreManager: ObservableObject {
+class HealthStoreViewModel: ObservableObject {
     
     var healthStore: HKHealthStore?
     var query: HKStatisticsCollectionQuery?
     
     @Published var steps: [Step] = [Step]()
+    
+    
+    var currentStepCount: Int {
+        steps.last?.count ?? 0
+    }
  
     
     init(){
@@ -54,7 +59,8 @@ class HealthStoreManager: ObservableObject {
     
     
     //MARK: - Calculate Data for One Week
-    func calculateDataForOneWeek() {
+    //Takes in a completion handler and returns an HKStatisticCollection
+    func calculateDataForOneWeek(completion: @escaping (HKStatisticsCollection?) -> Void) {
         //Health Data I want to display in future
 //        let healthTypes = Set([
 //            HKObjectType.quantityType(forIdentifier: .stepCount)!,
@@ -76,7 +82,6 @@ class HealthStoreManager: ObservableObject {
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())
         
         //Define the predicate
-       
         let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
         //Creating the query
@@ -95,9 +100,10 @@ class HealthStoreManager: ObservableObject {
             self.updateUIFromStatistics(statisticsCollection)
         }
         
-        
         //Execute our query.
         guard let query = self.query else { return }
+        
+        //If we succeed in our query. We execute it
         self.healthStore?.execute(query)
     }
     
@@ -110,11 +116,10 @@ class HealthStoreManager: ObservableObject {
             let endDate = Date()
             
             //Calculating the number of steps
-            
             statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
-                let count = statistics.sumQuantity()?.doubleValue(for: .count())
                 
-                let step = Step(count: Int(count ?? 0), date: statistics.startDate)
+                let count = statistics.sumQuantity()?.doubleValue(for: .count()) ?? 0
+                let step = Step(count: Int(count), date: statistics.startDate)
                 self.steps.append(step)
                 
             }

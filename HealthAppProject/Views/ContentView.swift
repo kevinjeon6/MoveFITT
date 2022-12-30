@@ -10,22 +10,28 @@ import SwiftUI
 
 struct ContentView: View {
   
-    @StateObject var healthStore = HealthStoreManager()
-    
-    
+    @StateObject var healthStore = HealthStoreViewModel()
+
     
     var body: some View {
-        List(healthStore.steps, id: \.id) { item in
+        ScrollView {
             VStack {
-                Text("\(item.count)")
-                Text(item.date, style: .date)
+                Text("\(healthStore.currentStepCount)")
+                List(healthStore.steps, id: \.id) {
+                    item in
+                    Text("\(item.count)")
+                    Text("\(item.date)")
+                }
             }
-         
         }
         .onAppear {
             healthStore.requestUserAuthorization { success in
                 if success {
-                    healthStore.calculateDataForOneWeek()
+                    healthStore.calculateDataForOneWeek { statisticsCollection in
+                        if let statisticsCollection = statisticsCollection {
+                            healthStore.updateUIFromStatistics(statisticsCollection)
+                        }
+                    }
                 }
             }
         }
