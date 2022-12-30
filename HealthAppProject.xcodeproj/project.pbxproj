@@ -80,7 +80,7 @@
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
 				743818E4295E0BAD00FE4613 /* Model */,
 				743818E1295DFC7200FE4613 /* Extensions */,
-				74DF6708295B84090046F521 /* Manager */,
+				74DF6708295B84090046F521 /* ViewModel */,
 				74DF6707295B83FF0046F521 /* Views */,
 				74DF66FC295B77AC0046F521 /* Assets.xcassets */,
 				74DF66FE295B77AC0046F521 /* Preview Content */,
@@ -104,12 +104,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		74DF6708295B84090046F521 /* Manager */ = {
+		74DF6708295B84090046F521 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */,
 			);
-			path = Manager;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
