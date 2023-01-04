@@ -70,7 +70,7 @@ struct ContentView: View {
                 .chartXAxis {
                     AxisMarks(values: Step.stepExample.map{ $0.date}) { date in
                         AxisGridLine()
-                        AxisValueLabel(format: .dateTime.day())
+                        AxisValueLabel(format: .dateTime.day().month())
                     }
                 }
 //                .chartPlotStyle { plotContent in
