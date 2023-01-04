@@ -14,22 +14,27 @@ struct ContentView: View {
 
     
     var body: some View {
-        ScrollView {
+      NavigationView {
             VStack {
                 Text("\(healthStore.currentStepCount)")
-                List(healthStore.steps, id: \.id) {
+                List(healthStore.steps.reversed(), id: \.id) {
                     item in
-                    Text("\(item.count)")
-                    Text("\(item.date)")
+               
+                    VStack {
+                        Text("\(item.count) steps")
+                        Text("\(item.date, style: .date)")
+                    }
                 }
             }
+            .navigationTitle("Health Project App")
+       
         }
         .onAppear {
             healthStore.requestUserAuthorization { success in
                 if success {
-                    healthStore.calculateDataForOneWeek { statisticsCollection in
-                        if let statisticsCollection = statisticsCollection {
-                            healthStore.updateUIFromStatistics(statisticsCollection)
+                    healthStore.calculateDataForOneWeek { statisticscollection in
+                        if let statisticscollection = statisticscollection {
+                            healthStore.updateUIFromStatistics(statisticscollection)
                         }
                     }
                 }
