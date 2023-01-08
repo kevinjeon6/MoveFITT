@@ -59,16 +59,16 @@ class HealthStoreViewModel: ObservableObject {
     
     
     //MARK: - Calculate Data for One Week
-    //Takes in a completion handler and returns an HKStatisticCollection
-    func calculateDataForOneWeek(completion: @escaping (HKStatisticsCollection?) -> Void) {
+    //Takes in a completion handler and returns an HKStatisticCollection: func calculateStepCount(completion: @escaping (HKStatisticsCollection?) -> Void)
+    func calculateStepCount() {
         //Health Data I want to display in future
-//        let healthTypes = Set([
-//            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-//            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-//            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-//            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
-//            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
-//        ])
+        //        let healthTypes = Set([
+        //            HKObjectType.quantityType(forIdentifier: .stepCount)!,
+        //            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
+        //            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
+        //            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
+        //            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+        //        ])
         
         let stepType = HKObjectType.quantityType(forIdentifier: .stepCount)!
         

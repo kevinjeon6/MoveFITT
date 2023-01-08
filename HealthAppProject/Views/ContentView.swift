@@ -31,75 +31,74 @@ struct ContentView: View {
             endPoint: .bottom
         )
         
-      NavigationView {
-          VStack(spacing: 10) {
+        NavigationView {
+            VStack(spacing: 10) {
                 Text("Step Count")
+                Text("Current Steps: \(healthStore.currentStepCount) steps")
                 //reduce adds up the total count
-                Text("Total: \(Step.stepExample.reduce(0, { $0 + $1.count}))")
-              Text("Average: \(Step.stepExample.reduce(0, { $0 + $1.count / 7}))")
+                Text("Weekly Step Total: \(healthStore.steps.reduce(0, { $0 + $1.count}))")
+                Text("Step Count Average: \(healthStore.steps.reduce(0, { $0 + $1.count / 7}))")
+             
                 
                 Chart {
-                    ForEach(Step.stepExample) {
+                    ForEach(healthStore.steps, id: \.date) {
                         stepData in
                         
                         LineMark(x: .value("day", stepData.date, unit: .day),
-                                y: .value("steps", stepData.count)
+                                 y: .value("steps", stepData.count)
                         )
-                        .interpolationMethod(.cardinal)
+                        .interpolationMethod(.catmullRom)
                         .foregroundStyle(.purple)
                         .symbol(Circle())
                         
                         AreaMark(x: .value("day", stepData.date, unit: .day),
                                  y: .value("steps", stepData.count)
                         )
-                        .interpolationMethod(.cardinal)
+                        .interpolationMethod(.catmullRom)
                         .foregroundStyle(curGradient)
-                        
                     }
-               
+                    
                     
                     RuleMark(y: .value("Goal", 10_000))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
-//                        .annotation(alignment: .leading) {
-//                            Text("Goal")
-//                                .font(.caption)
-//                                .foregroundColor(.blue)
-//                        }
+                    //                        .annotation(alignment: .leading) {
+                    //                            Text("Goal")
+                    //                                .font(.caption)
+                    //                                .foregroundColor(.blue)
+                    //                        }
                 }
                 .frame(height: 200)
                 .chartXAxis {
-                    AxisMarks(values: Step.stepExample.map{ $0.date}) { date in
+                    AxisMarks(values: .stride(by: .day)) {
                         AxisGridLine()
-                        AxisValueLabel(format: .dateTime.day().month())
+                        AxisValueLabel(format: .dateTime.day().month(), centered: true)
+                        
                     }
                 }
-//                .chartPlotStyle { plotContent in
-//                    plotContent
-//                        .background(.yellow.gradient.opacity(0.4))
-//                }
-
-                  HStack {
-                        Image(systemName: "line.diagonal")
-                            .rotationEffect(Angle(degrees: 45))
-                            .foregroundColor(.red)
-                        
-                        Text("Goal Steps")
-                    }
-                    .font(.caption2)
+                .chartPlotStyle { plotContent in
+                    plotContent
+                        .background(.purple.opacity(0.1))
+                        .border(.mint, width: 1)
+                }
+                
+                HStack {
+                    Image(systemName: "line.diagonal")
+                        .rotationEffect(Angle(degrees: 45))
+                        .foregroundColor(.red)
+                    
+                    Text("Goal Steps")
+                }
+                .font(.caption2)
                 .padding(.leading, 4)
-              
+                
                 Spacer()
             }
-          .padding(.horizontal)
-          .navigationTitle("Health Project App")
-        }
-        .onAppear {
-            healthStore.requestUserAuthorization { success in
-                if success {
-                    healthStore.calculateDataForOneWeek { statisticscollection in
-                        if let statisticscollection = statisticscollection {
-                            healthStore.updateUIFromStatistics(statisticscollection)
-                        }
+            .padding(.horizontal)
+            .navigationTitle("Health Project App")
+            .onAppear {
+                healthStore.requestUserAuthorization { success in
+                    if success {
+                        healthStore.calculateStepCount()
                     }
                 }
             }
