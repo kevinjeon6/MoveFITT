@@ -19,6 +19,10 @@ class HealthStoreViewModel: ObservableObject {
     var currentStepCount: Int {
         steps.last?.count ?? 0
     }
+    
+    var stepCountPercent: Int {
+        ((currentStepCount * 100) / 10_000)
+    }
  
     
     init(){
@@ -50,8 +54,8 @@ class HealthStoreViewModel: ObservableObject {
             return
         }
         
-      
-      //Passing in an empty array for toShare since we are not writing any data yet. Want to read the user's data
+        
+        //Passing in an empty array for toShare since we are not writing any data yet. Want to read the user's data
         healthStore.requestAuthorization(toShare: [], read: [stepType]) { success, error in
             completion(success)
         }
@@ -117,11 +121,16 @@ class HealthStoreViewModel: ObservableObject {
             
             //Calculating the number of steps
             statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
-                
-                let count = statistics.sumQuantity()?.doubleValue(for: .count()) ?? 0
-                let step = Step(count: Int(count), date: statistics.startDate)
-                self.steps.append(step)
-                
+                if let quantity = statistics.sumQuantity() {
+                    let date = statistics.startDate
+                    
+                    //Step Units
+                    let unit = HKUnit.count()
+                    let value = quantity.doubleValue(for: unit)
+                    let step = Step(count: Int(value), date: date)
+                    self.steps.append(step)
+
+                }
             }
         }
     }

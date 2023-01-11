@@ -31,17 +31,17 @@ struct ContentView: View {
             endPoint: .bottom
         )
         
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 10) {
                 
                 Image(systemName: "figure.walk")
                     .font(.largeTitle)
-                Text("\(healthStore.currentStepCount)")
+                Text("\(healthStore.currentStepCount) steps")
                 HStack {
                     Text("Goal: 10,000 steps")
                         .font(.caption)
                     Spacer()
-                    Text("70%")
+                    Text("\(healthStore.stepCountPercent)%")
                         .font(.caption)
                 }
                 ProgressionStepBar(value: healthStore.currentStepCount, goalValue: 10_000)
@@ -72,7 +72,7 @@ struct ContentView: View {
                     
                     
                     RuleMark(y: .value("Goal", 10_000))
-                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
+//                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                     //                        .annotation(alignment: .leading) {
                     //                            Text("Goal")
                     //                                .font(.caption)
@@ -93,23 +93,17 @@ struct ContentView: View {
                         .border(.mint, width: 1)
                 }
                 
-                HStack {
-                    Image(systemName: "line.diagonal")
-                        .rotationEffect(Angle(degrees: 45))
-                        .foregroundColor(.red)
-                    
-                    Text("Goal Steps")
-                }
-                .font(.caption2)
-                .padding(.leading, 4)
+//                HStack {
+//                    Image(systemName: "line.diagonal")
+//                        .rotationEffect(Angle(degrees: 45))
+//                        .foregroundColor(.red)
+//                    
+//                    Text("Goal Steps")
+//                }
+//                .font(.caption2)
+//                .padding(.leading, 4)
                 
                 Spacer()
-                
-//                List(healthStore.restingHR, id: \.id) {
-//                    hr in
-//                    Text("\(hr.restingCount)")
-//                    Text("\(hr.date)")
-//                }
             }
             .padding(.horizontal)
             .navigationTitle("Health Project App")
