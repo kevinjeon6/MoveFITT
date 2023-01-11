@@ -33,8 +33,20 @@ struct ContentView: View {
         
         NavigationView {
             VStack(spacing: 10) {
-                Text("Step Count")
-                Text("Current Steps: \(healthStore.currentStepCount) steps")
+                
+                Image(systemName: "figure.walk")
+                    .font(.largeTitle)
+                Text("\(healthStore.currentStepCount)")
+                HStack {
+                    Text("Goal: 10,000 steps")
+                        .font(.caption)
+                    Spacer()
+                    Text("70%")
+                        .font(.caption)
+                }
+                ProgressionStepBar(value: healthStore.currentStepCount, goalValue: 10_000)
+                
+           
                 //reduce adds up the total count
                 Text("Weekly Step Total: \(healthStore.steps.reduce(0, { $0 + $1.count}))")
                 Text("Step Count Average: \(healthStore.steps.reduce(0, { $0 + $1.count / 7}))")
@@ -92,6 +104,12 @@ struct ContentView: View {
                 .padding(.leading, 4)
                 
                 Spacer()
+                
+//                List(healthStore.restingHR, id: \.id) {
+//                    hr in
+//                    Text("\(hr.restingCount)")
+//                    Text("\(hr.date)")
+//                }
             }
             .padding(.horizontal)
             .navigationTitle("Health Project App")
@@ -99,6 +117,7 @@ struct ContentView: View {
                 healthStore.requestUserAuthorization { success in
                     if success {
                         healthStore.calculateStepCount()
+                       
                     }
                 }
             }
