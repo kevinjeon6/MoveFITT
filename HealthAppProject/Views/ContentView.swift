@@ -32,88 +32,94 @@ struct ContentView: View {
         )
         
         NavigationStack {
-            VStack(spacing: 10) {
+            ScrollView {
+                VStack(spacing: 10) {
                 
-                Image(systemName: "figure.walk")
-                    .font(.largeTitle)
-                Text("\(healthStore.currentStepCount) steps")
-                HStack {
-                    Text("Goal: 10,000 steps")
-                        .font(.caption)
+                    Image(systemName: "figure.walk")
+                        .font(.largeTitle)
+                    Text("\(healthStore.currentStepCount) steps")
+                    HStack {
+                        Text("Goal: 10,000 steps")
+                            .font(.caption)
+                        Spacer()
+                        Text("\(healthStore.stepCountPercent)%")
+                            .font(.caption)
+                    }
+                    ProgressionStepBar(value: healthStore.currentStepCount, goalValue: 10_000)
+                    
+               
+                    //reduce adds up the total count
+                    Text("Weekly Step Total: \(healthStore.steps.reduce(0, { $0 + $1.count}))")
+                    Text("Step Count Average: \(healthStore.steps.reduce(0, { $0 + $1.count / 7}))")
+                   
+                    ForEach(healthStore.restingHR, id: \.date) {
+                        h in
+                        Text("\(h.restingValue)")
+                        Text("\(h.date)")
+                    }
+                    
+                    Chart {
+                        ForEach(healthStore.steps, id: \.date) {
+                            stepData in
+
+                            LineMark(x: .value("day", stepData.date, unit: .day),
+                                     y: .value("steps", stepData.count)
+                            )
+                            .interpolationMethod(.catmullRom)
+                            .foregroundStyle(.purple)
+                            .symbol(Circle())
+
+                            AreaMark(x: .value("day", stepData.date, unit: .day),
+                                     y: .value("steps", stepData.count)
+                            )
+                            .interpolationMethod(.catmullRom)
+                            .foregroundStyle(curGradient)
+                        }
+
+
+                        RuleMark(y: .value("Goal", 10_000))
+    //                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
+                        //                        .annotation(alignment: .leading) {
+                        //                            Text("Goal")
+                        //                                .font(.caption)
+                        //                                .foregroundColor(.blue)
+                        //                        }
+                    }
+                    .frame(height: 200)
+                    .chartXAxis {
+                        AxisMarks(values: .stride(by: .day)) {
+                            AxisGridLine()
+                            AxisValueLabel(format: .dateTime.day().month(), centered: true)
+
+                        }
+                    }
+                    .chartPlotStyle { plotContent in
+                        plotContent
+                            .background(.purple.opacity(0.1))
+                            .border(.mint, width: 1)
+                    }
+                    
+    //                HStack {
+    //                    Image(systemName: "line.diagonal")
+    //                        .rotationEffect(Angle(degrees: 45))
+    //                        .foregroundColor(.red)
+    //
+    //                    Text("Goal Steps")
+    //                }
+    //                .font(.caption2)
+    //                .padding(.leading, 4)
+               
                     Spacer()
-                    Text("\(healthStore.stepCountPercent)%")
-                        .font(.caption)
                 }
-                ProgressionStepBar(value: healthStore.currentStepCount, goalValue: 10_000)
-                
-           
-                //reduce adds up the total count
-                Text("Weekly Step Total: \(healthStore.steps.reduce(0, { $0 + $1.count}))")
-                Text("Step Count Average: \(healthStore.steps.reduce(0, { $0 + $1.count / 7}))")
-             
-                
-                Chart {
-                    ForEach(healthStore.steps, id: \.date) {
-                        stepData in
-                        
-                        LineMark(x: .value("day", stepData.date, unit: .day),
-                                 y: .value("steps", stepData.count)
-                        )
-                        .interpolationMethod(.catmullRom)
-                        .foregroundStyle(.purple)
-                        .symbol(Circle())
-                        
-                        AreaMark(x: .value("day", stepData.date, unit: .day),
-                                 y: .value("steps", stepData.count)
-                        )
-                        .interpolationMethod(.catmullRom)
-                        .foregroundStyle(curGradient)
+                .padding(.horizontal)
+                .navigationTitle("Health Project App")
+                .onAppear {
+                    healthStore.requestUserAuthorization { success in
+                        if success {
+                            healthStore.calculateHealthData()
+                        }
                     }
-                    
-                    
-                    RuleMark(y: .value("Goal", 10_000))
-//                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
-                    //                        .annotation(alignment: .leading) {
-                    //                            Text("Goal")
-                    //                                .font(.caption)
-                    //                                .foregroundColor(.blue)
-                    //                        }
-                }
-                .frame(height: 200)
-                .chartXAxis {
-                    AxisMarks(values: .stride(by: .day)) {
-                        AxisGridLine()
-                        AxisValueLabel(format: .dateTime.day().month(), centered: true)
-                        
-                    }
-                }
-                .chartPlotStyle { plotContent in
-                    plotContent
-                        .background(.purple.opacity(0.1))
-                        .border(.mint, width: 1)
-                }
-                
-//                HStack {
-//                    Image(systemName: "line.diagonal")
-//                        .rotationEffect(Angle(degrees: 45))
-//                        .foregroundColor(.red)
-//                    
-//                    Text("Goal Steps")
-//                }
-//                .font(.caption2)
-//                .padding(.leading, 4)
-                
-                Spacer()
             }
-            .padding(.horizontal)
-            .navigationTitle("Health Project App")
-            .onAppear {
-                healthStore.requestUserAuthorization { success in
-                    if success {
-                        healthStore.calculateStepCount()
-                       
-                    }
-                }
             }
         }
     }
