@@ -18,24 +18,21 @@ struct ProgressionStepBar: View {
     
     var body: some View {
      
-        ZStack(alignment: .leading) {
-            
-            Capsule()
-                .fill(Color.black.opacity(0.1))
-                .frame(height: 18)
-            
-            
-          
-                Capsule()
-                    .trim(from: 0, to: CGFloat(self.value) / CGFloat(self.goalValue))
-                    .frame(width: 250, height: 18)
-                    .background(
-                        LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .leading, endPoint: .trailing).clipShape(Capsule())
-                    )
-                    .foregroundColor(.clear)
-                 
+        GeometryReader { geo in
+            VStack {
+                ZStack(alignment: .leading) {
+                    
+                    Capsule()
+                        .fill(Color.black.opacity(0.1))
+                        .frame(height: 18)
+                    
+                    LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .leading, endPoint: .trailing)
+                        .clipShape(Capsule())
+                        .frame(width: geo.size.width * CGFloat(value) / CGFloat(goalValue))
+                }
+            }
         }
-       
+        .frame(height: 18)
     }
 }
 
@@ -43,6 +40,6 @@ struct ProgressionStepBar_Previews: PreviewProvider {
     
 
     static var previews: some View {
-        ProgressionStepBar(value: 2,goalValue: 500, color1: .mint, color2: .green)
+        ProgressionStepBar(value: 7500, goalValue: 10_000, color1: .mint, color2: .green)
     }
 }
