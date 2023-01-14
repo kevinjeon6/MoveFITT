@@ -52,6 +52,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7400144F29735DAE00675EE9 /* ChartViews */ = {
+			isa = PBXGroup;
+			children = (
+				74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */,
+				7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */,
+			);
+			path = ChartViews;
+			sourceTree = "<group>";
+		};
 		743818E1295DFC7200FE4613 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,8 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				74DF66FA295B77A50046F521 /* ContentView.swift */,
-				74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */,
-				7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */,
+				7400144F29735DAE00675EE9 /* ChartViews */,
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 			);
 			path = Views;
