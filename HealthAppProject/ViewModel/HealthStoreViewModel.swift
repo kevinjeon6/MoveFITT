@@ -25,6 +25,10 @@ class HealthStoreViewModel: ObservableObject {
     var stepCountPercent: Int {
         ((currentStepCount * 100) / 10_000)
     }
+    
+    var currentRestHR: Int {
+        restingHR.last?.restingValue ?? 0
+    }
  
     
     init(){
@@ -165,13 +169,13 @@ class HealthStoreViewModel: ObservableObject {
         DispatchQueue.main.async {
             let startDate =  Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
             let endDate = Date()
-            
-            //Calculating the number of steps
+
+            //Calculating resting HR
             statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
                     if let restHRquantity = statistics.averageQuantity() {
                         let hrdate = statistics.startDate
-                        
-                        //Step Units
+
+                        //HR Units
                         let hrUnit = HKUnit(from: "count/min")
                         let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
                         let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
