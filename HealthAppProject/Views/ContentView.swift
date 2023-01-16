@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ContentView: View {
   
-    @StateObject var healthStore = HealthStoreViewModel()
+    @ObservedObject var healthStore: HealthStoreViewModel
     
  
 
@@ -22,7 +22,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 10) {
-                
+                    
                     Image(systemName: "figure.walk")
                         .font(.largeTitle)
                     Text("\(healthStore.currentStepCount) steps")
@@ -33,30 +33,31 @@ struct ContentView: View {
                         Text("\(healthStore.stepCountPercent)%")
                             .font(.caption)
                     }
+                    //MARK: - Progression Step bar
                     ProgressionStepBar(value: healthStore.currentStepCount, goalValue: 10_000)
+                        .padding(.bottom, 20)
                     
-               
-                    OneWeekStepChartView(healthStore: healthStore)
-                    OneWeekRestHRChartView(healthStore: healthStore)
-             
-                    Spacer()
+                    //MARK: - Quick Snapshot of health variables
+                    CurrentSummaryCardView(healthCategory1: "Resting Heart Rate", categoryValue1: "\(healthStore.currentRestHR)")
                 }
                 .padding(.horizontal)
                 .navigationTitle("Health Project App")
                 .onAppear {
                     healthStore.requestUserAuthorization { success in
                         if success {
-                            healthStore.calculateHealthData()
+                            healthStore.calculateStepCountData()
+                            healthStore.calculateRestingHRData()
                         }
                     }
+                }
             }
-            }
+           
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(healthStore: HealthStoreViewModel())
     }
 }
