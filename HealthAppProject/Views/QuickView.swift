@@ -45,23 +45,9 @@ struct QuickView: View {
                         categoryValue2: "\(healthStoreVM.currentExTime) mins"
                     
                     )
-                    
-                    ForEach(healthStoreVM.exerciseTime, id: \.date){
-                        ex in
-                        Text("\(ex.exerValue)")
-                        Text(ex.date, style: .date)
-                    }
                 }
                 .padding(.horizontal)
                 .navigationTitle("Health Project App")
-                .refreshable {
-                    healthStoreVM.calculateStepCountData()
-                }
-                .onAppear {
-                    healthStoreVM.calculateStepCountData()
-                    healthStoreVM.calculateRestingHRData()
-                    healthStoreVM.calculateExerciseTimeData()
-                }
             }
         }
     }
