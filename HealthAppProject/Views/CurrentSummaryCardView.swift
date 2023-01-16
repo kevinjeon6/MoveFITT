@@ -75,9 +75,10 @@ struct CurrentSummaryCardView: View {
                     
                 }
                 .padding(.horizontal, 20)
-                Spacer()
+             
             }
-            .padding()
+            .padding(.bottom, 190)
+            
         }
         
     }

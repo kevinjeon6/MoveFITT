@@ -38,7 +38,13 @@ struct QuickView: View {
                         .padding(.bottom, 20)
                     
                     //MARK: - Quick Snapshot of health variables
-                    CurrentSummaryCardView(healthCategory1: "Resting Heart Rate", categoryValue1: "\(healthStoreVM.currentRestHR)")
+                    CurrentSummaryCardView(
+                        healthCategory1: "Resting Heart Rate",
+                        categoryValue1:
+                            "\(healthStoreVM.currentRestHR) bpm", healthCategory2: "Exercise Time",
+                        categoryValue2: "\(healthStoreVM.currentExTime) mins"
+                    
+                    )
                     
                     ForEach(healthStoreVM.exerciseTime, id: \.date){
                         ex in
@@ -57,7 +63,6 @@ struct QuickView: View {
                     healthStoreVM.calculateExerciseTimeData()
                 }
             }
-           
         }
     }
 }
