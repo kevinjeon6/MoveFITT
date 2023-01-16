@@ -46,17 +46,17 @@ class HealthStoreViewModel: ObservableObject {
         let stepType = HKObjectType.quantityType(forIdentifier: .stepCount)!
         let restingHeartRateType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
         
-                let healthTypes = Set([
-                    stepType, restingHeartRateType
-//                    HKObjectType.quantityType(forIdentifier: .stepCount)!,
-//                    HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-//                    HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-//                    HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
-//                    HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+        let healthTypes = Set([
+            stepType, restingHeartRateType
+            //                    HKObjectType.quantityType(forIdentifier: .stepCount)!,
+            //                    HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
+            //                    HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
+            //                    HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
+            //                    HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+            
+        ])
         
-                ])
         
-
         guard let healthStore = self.healthStore else {
             //returning false
             return
@@ -72,18 +72,10 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: - Calculate Data for One Week
     //Takes in a completion handler and returns an HKStatisticCollection: func calculateStepCount(completion: @escaping (HKStatisticsCollection?) -> Void)
-    func calculateHealthData() {
-        //Health Data I want to display in future
-        //        let healthTypes = Set([
-        //            HKObjectType.quantityType(forIdentifier: .stepCount)!,
-        //            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-        //            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-        //            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
-        //            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
-        //        ])
+    func calculateStepCountData() {
+        
         
         let stepType = HKObjectType.quantityType(forIdentifier: .stepCount)!
-        let restingHeartRateType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
         
         //Set up anchor date. Which starts on a Monday at 12:00 AM
         let anchorDate = Date.mondayAt12AM()
@@ -92,7 +84,7 @@ class HealthStoreViewModel: ObservableObject {
         let daily = DateComponents(day: 1)
         
         //Go Back 7 days. This is the start date
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())
+        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date()) ?? Date()
         
         //Define the predicate
         let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
@@ -110,80 +102,82 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            self.updateUIFromStatistics(statisticsCollection)
-        }
-        
-        //MARK: - Query for Resting HR
-       restingHRquery = HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
-                                                     quantitySamplePredicate: predicate,
-                                                     options: .discreteAverage,
-                                                     anchorDate: anchorDate,
-                                                     intervalComponents: daily)
-
-        
-
-        
-        restingHRquery!.initialResultsHandler = {
-            restingQuery, statisticsCollection, error in
-
-            guard let statisticsCollection = statisticsCollection else { return}
-
-            self.updateHRUIFromStatistics(statisticsCollection)
+            statisticsCollection.enumerateStatistics(from: oneWeekAgo, to: Date()) { statistics, stop in
+                if let quantity = statistics.sumQuantity() {
+                    let date = statistics.startDate
+                    let value = quantity.doubleValue(for: .count())
+                    let step = Step(count: Int(value), date: date)
+                    
+                    
+                    
+                    DispatchQueue.main.async {
+                        self.steps.append(step)
+                    }
+                }
+            }
         }
         
         //Execute our query.
         guard let query = self.query else { return }
-        guard let restingHRquery = self.restingHRquery else { return }
-        
-        //If we succeed in our query. We execute it
         self.healthStore?.execute(query)
-        self.healthStore?.execute(restingHRquery)
     }
     
     
     
-    func updateUIFromStatistics(_ statisticsCollection: HKStatisticsCollection) {
-        //Since we are updating our UI, we want to dispatch back to the main thread
-        DispatchQueue.main.async {
-            let startDate =  Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-            let endDate = Date()
-            
-            //Calculating the number of steps
-            statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
-                if let quantity = statistics.sumQuantity() {
-                    let date = statistics.startDate
-                    
-                    //Step Units
-                    let unit = HKUnit.count()
-                    let value = quantity.doubleValue(for: unit)
-                    let step = Step(count: Int(value), date: date)
-                    self.steps.append(step)
+    func calculateRestingHRData() {
+        let restingHeartRateType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
+        
+        
+        let anchorDate = Date.mondayAt12AM()
+        let daily = DateComponents(day: 1)
+        //Go Back 7 days. This is the start date
+        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date()) ?? Date()
+        
+        
+        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        //        let restingHRanchorDate = Calendar.current.startOfDay(for: Date())
+        //        let hourly = DateComponents(hour: 1)
+        //        let oneDayCount = Calendar.current.date(byAdding: DateComponents(day: -1), to: Date())
 
+        restingHRquery =   HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
+                                                       quantitySamplePredicate: predicate,
+                                                       options: .discreteAverage,
+                                                       anchorDate: anchorDate,
+                                                       intervalComponents: daily)
+        //
+        //
+        //        //        HKAnchoredObjectQuery(type: restingHeartRateType, predicate: predicate, anchor: anchorDate, limit: HKObjectQueryNoLimit, resultsHandler: <#T##(HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void#>)
+        //
+        //
+        //
+        //
+        restingHRquery!.initialResultsHandler = {
+            restingQuery, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating resting HR
+            statisticsCollection.enumerateStatistics(from: oneWeekAgo, to: Date()) { statistics, stop in
+                if let restHRquantity = statistics.averageQuantity() {
+                    let hrdate = statistics.startDate
+                    
+                    //HR Units
+                    let hrUnit = HKUnit(from: "count/min")
+                    let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
+                    let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
+                    
+                    DispatchQueue.main.async {
+                        self.restingHR.append(restHR)
+                    }
                 }
             }
         }
+        
+        
+        guard let restingHRquery = self.restingHRquery else { return }
+        self.healthStore?.execute(restingHRquery)
     }
     
-    
-    func updateHRUIFromStatistics(_ statisticsCollection: HKStatisticsCollection) {
-        DispatchQueue.main.async {
-            let startDate =  Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-            let endDate = Date()
-
-            //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: startDate, to: endDate) { statistics, stop in
-                    if let restHRquantity = statistics.averageQuantity() {
-                        let hrdate = statistics.startDate
-
-                        //HR Units
-                        let hrUnit = HKUnit(from: "count/min")
-                        let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
-                        let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
-                        self.restingHR.append(restHR)
-
-                    }
-
-                }
-            }
-    }
 }
+  
+

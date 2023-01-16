@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7405CDBF296893D30061A8D1 /* HKHealthType.swift */; };
 		7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */; };
+		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
+		74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* StatsView.swift */; };
 		743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E2295DFC8200FE4613 /* DateExtension.swift */; };
 		743818E6295E0C4500FE4613 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E5295E0C4500FE4613 /* Step.swift */; };
 		7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */; };
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		7405CDBF296893D30061A8D1 /* HKHealthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKHealthType.swift; sourceTree = "<group>"; };
 		7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingHeartRate.swift; sourceTree = "<group>"; };
+		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		74338BC32974D03800EEC9B9 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		743818E2295DFC8200FE4613 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		743818E5295E0C4500FE4613 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekRestHRChartView.swift; sourceTree = "<group>"; };
@@ -57,6 +61,7 @@
 			children = (
 				74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */,
 				7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */,
+				74338BC32974D03800EEC9B9 /* StatsView.swift */,
 			);
 			path = ChartViews;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				74DF66FA295B77A50046F521 /* ContentView.swift */,
+				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 			);
@@ -223,7 +229,9 @@
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
 				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
+				74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */,
 				74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */,
+				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
