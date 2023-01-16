@@ -15,7 +15,7 @@ struct MainScreenView: View {
     var body: some View {
         TabView {
             
-            ContentView(healthStore: healthStore)
+            QuickView(healthStoreVM: healthStore)
                 .tabItem {
                     Label("Today", systemImage: "list.bullet.clipboard")
                 }

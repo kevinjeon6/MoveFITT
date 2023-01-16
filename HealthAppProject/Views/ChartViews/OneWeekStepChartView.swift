@@ -10,7 +10,7 @@ import HealthKit
 import SwiftUI
 
 struct OneWeekStepChartView: View {
-  @ObservedObject var healthStore: HealthStoreViewModel
+  @ObservedObject var healthStoreVM: HealthStoreViewModel
 
     
     var body: some View {
@@ -29,11 +29,11 @@ struct OneWeekStepChartView: View {
         
         VStack(alignment: .leading, spacing: 10) {
             //reduce adds up the total count
-            Text("Weekly Step Total: \(healthStore.steps.reduce(0, { $0 + $1.count}))")
-            Text("Step Count Average: \(healthStore.steps.reduce(0, { $0 + $1.count / 7}))")
+            Text("Weekly Step Total: \(healthStoreVM.steps.reduce(0, { $0 + $1.count}))")
+            Text("Step Count Average: \(healthStoreVM.steps.reduce(0, { $0 + $1.count / 7}))")
             
             Chart {
-                ForEach(healthStore.steps, id: \.date) {
+                ForEach(healthStoreVM.steps, id: \.date) {
                     stepData in
                     
                     LineMark(x: .value("day", stepData.date, unit: .day),
@@ -79,6 +79,6 @@ struct OneWeekStepChartView: View {
 
 struct OneWeekChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekStepChartView(healthStore: HealthStoreViewModel())
+        OneWeekStepChartView(healthStoreVM: HealthStoreViewModel())
     }
 }

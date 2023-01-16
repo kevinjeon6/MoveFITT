@@ -5,6 +5,8 @@
 //  Created by Kevin Mattocks on 1/15/23.
 //
 
+import Charts
+import HealthKit
 import SwiftUI
 
 struct StatsView: View {
@@ -16,8 +18,9 @@ struct StatsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20){
-                OneWeekStepChartView(healthStore: healthStoreVM)
-                OneWeekRestHRChartView(healthStore: healthStoreVM)
+                Spacer()
+                OneWeekStepChartView(healthStoreVM: healthStoreVM)
+                OneWeekRestHRChartView(healthStoreVM: healthStoreVM)
             }
         }
     }

@@ -9,16 +9,16 @@ import HealthKit
 import SwiftUI
 
 struct OneWeekRestHRChartView: View {
-    @ObservedObject var healthStore: HealthStoreViewModel
+    @ObservedObject var healthStoreVM: HealthStoreViewModel
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
       
-            Text("Resting Heart Rate Average: \(healthStore.restingHR.reduce(0, { $0 + $1.restingValue / 7}))")
+            Text("Resting Heart Rate Average: \(healthStoreVM.restingHR.reduce(0, { $0 + $1.restingValue / 7}))")
             
             Chart {
-                ForEach(healthStore.restingHR, id: \.date) {
+                ForEach(healthStoreVM.restingHR, id: \.date) {
                     restHrData in
                     
                     LineMark(x: .value("day", restHrData.date, unit: .day),
@@ -51,6 +51,6 @@ struct OneWeekRestHRChartView: View {
 
 struct OneWeekRestHRChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekRestHRChartView(healthStore: HealthStoreViewModel())
+        OneWeekRestHRChartView(healthStoreVM: HealthStoreViewModel())
     }
 }

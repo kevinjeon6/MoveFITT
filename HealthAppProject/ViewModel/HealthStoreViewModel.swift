@@ -60,13 +60,17 @@ class HealthStoreViewModel: ObservableObject {
         
         //Passing in an empty array for toShare since we are not writing any data yet. Want to read the user's data
         healthStore.requestAuthorization(toShare: [], read: healthTypes) { success, error in
-            completion(success)
+//            completion(success)
+            if success {
+                self.calculateStepCountData()
+                self.calculateRestingHRData()
+                self.calculateExerciseTimeData()
+            }
         }
     }
     
     
     //MARK: - Calculate Data for One Week
-    //Takes in a completion handler and returns an HKStatisticCollection: func calculateStepCount(completion: @escaping (HKStatisticsCollection?) -> Void)
     func calculateStepCountData() {
         
         
@@ -98,13 +102,32 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: oneWeekAgo, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
                 if let quantity = statistics.sumQuantity() {
                     let date = statistics.startDate
                     let value = quantity.doubleValue(for: .count())
                     let step = Step(count: Int(value), date: date)
                     
                     
+                    
+                    DispatchQueue.main.async {
+                        self.steps.append(step)
+                    }
+                }
+            }
+        }
+        
+        //Gets called when there's any new data that's coming into the database
+        query!.statisticsUpdateHandler = {
+            query, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return }
+            
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let quantity = statistics.sumQuantity() {
+                    let date = statistics.startDate
+                    let value = quantity.doubleValue(for: .count())
+                    let step = Step(count: Int(value), date: date)
                     
                     DispatchQueue.main.async {
                         self.steps.append(step)
@@ -154,7 +177,29 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: oneWeekAgo, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let restHRquantity = statistics.averageQuantity() {
+                    let hrdate = statistics.startDate
+                    
+                    //HR Units
+                    let hrUnit = HKUnit(from: "count/min")
+                    let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
+                    let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
+                    
+                    DispatchQueue.main.async {
+                        self.restingHR.append(restHR)
+                    }
+                }
+            }
+        }
+        
+        restingHRquery!.statisticsUpdateHandler = {
+            restingQuery, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating resting HR
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
                 if let restHRquantity = statistics.averageQuantity() {
                     let hrdate = statistics.startDate
                     
