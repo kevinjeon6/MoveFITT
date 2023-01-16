@@ -6,7 +6,6 @@
 //
 
 import Charts
-import HealthKit
 import SwiftUI
 
 struct OneWeekStepChartView: View {

@@ -31,6 +31,10 @@ class HealthStoreViewModel: ObservableObject {
     var currentRestHR: Int {
         restingHR.last?.restingValue ?? 0
     }
+    
+    var currentExTime: Int {
+        exerciseTime.last?.exerValue ?? 0
+    }
  
     
     init(){
@@ -140,6 +144,8 @@ class HealthStoreViewModel: ObservableObject {
         guard let query = self.query else { return }
         self.healthStore?.execute(query)
     }
+    
+
     
     
     
