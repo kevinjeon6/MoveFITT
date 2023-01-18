@@ -36,7 +36,8 @@ struct CurrentSummaryCardView: View {
                     }
                     
                 }
-                .padding(.trailing, 30)
+                .frame(width: 140)
+                .padding(.trailing, 10)
                 .padding(.top, 20)
                 
                 VStack {
