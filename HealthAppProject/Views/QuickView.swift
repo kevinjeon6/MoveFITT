@@ -14,10 +14,7 @@ struct QuickView: View {
     @ObservedObject var healthStoreVM: HealthStoreViewModel
     
  
-
-    
     var body: some View {
-      
       
         NavigationStack {
             ScrollView {
@@ -38,13 +35,14 @@ struct QuickView: View {
                         .padding(.bottom, 20)
                     
                     //MARK: - Quick Snapshot of health variables
-                    CurrentSummaryCardView(
-                        healthCategory1: "Resting Heart Rate",
-                        categoryValue1:
-                            "\(healthStoreVM.currentRestHR) bpm", healthCategory2: "Exercise Time",
-                        categoryValue2: "\(healthStoreVM.currentExTime) mins"
-                    
-                    )
+                    Grid {
+                        GridRow {
+                            CurrentSummaryCardView(title: "Resting HR", categoryValue: "\(healthStoreVM.currentRestHR)")
+                            
+                            CurrentSummaryCardView(title: "Exercise Time", categoryValue: "\(healthStoreVM.currentExTime)")
+                        }
+                    }
+                        
                 }
                 .padding(.horizontal)
                 .navigationTitle("Health Project App")

@@ -8,84 +8,54 @@
 import SwiftUI
 
 struct CurrentSummaryCardView: View {
-    var healthCategory1: String?
-    var categoryValue1: String?
+    var title: String
+    var categoryValue: String?
     
-    var healthCategory2: String?
-    var categoryValue2: String?
+    @State var showInfoSheet = false
     
-    var healthCategory3: String?
-    var categoryValue3: String?
-    
-    var healthCategory4: String?
-    var categoryValue4: String?
     
     var body: some View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(.white)
-                .aspectRatio(CGSize(width: 300, height: 300), contentMode: .fit)
+                .frame(width: 160, height: 160)
                 .shadow(color: .black.opacity(0.5), radius: 10, x: -5, y: 5)
-                .padding(.horizontal, 5)
             
             
-            VStack(alignment: .leading, spacing: 10) {
-                
+            VStack(alignment: .center, spacing: 10) {
                 HStack {
-                    Text("Current Stats")
-                        .font(.title2)
-                        .opacity(0.5)
-                        .padding(.leading)
-                    
                     Spacer()
+                    Button {
+                        showInfoSheet.toggle()
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .sheet(isPresented: $showInfoSheet) {
+                        Text("Add description of health category")
+                    }
+                    
                 }
+                .padding(.trailing, 30)
+                .padding(.top, 20)
                 
-                VStack(spacing: 25) {
-                    
-                    HStack {
+                VStack {
+                    Text(title)
+                        .font(.title3)
+                        .opacity(0.5)
                         
-                        VStack {
-                            Text(healthCategory1 ?? "N/A")
-                                .font(.headline)
-                            Text(categoryValue1 ?? "Missing data")
-                        }
-                        Spacer()
-                        VStack {
-                            Text(healthCategory2 ?? "N/A")
-                                .font(.headline)
-                            Text(categoryValue2 ?? "Missing data")
-                        }
-                        
-                    }
-                    
-                    HStack {
-                        VStack {
-                            Text(healthCategory3 ?? "N/A")
-                                .font(.headline)
-                            Text(categoryValue3 ?? "Missing data")
-                        }
-                        Spacer()
-                        VStack {
-                            Text(healthCategory4 ?? "N/A")
-                                .font(.headline)
-                            Text(categoryValue4 ?? "Missing data")
-                        }
-                    }
-                    
+                    Text(categoryValue ?? "Missing Data")
                 }
                 .padding(.horizontal, 20)
-             
+                
             }
-            .padding(.bottom, 190)
-            
+            .padding(.bottom, 80)
         }
-        
     }
 }
 
 struct CurrentSummaryCardView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentSummaryCardView()
+        CurrentSummaryCardView(title: "Health Type")
     }
 }
