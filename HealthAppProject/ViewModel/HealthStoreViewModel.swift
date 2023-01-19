@@ -40,6 +40,9 @@ class HealthStoreViewModel: ObservableObject {
     init(){
         if HKHealthStore.isHealthDataAvailable(){
             healthStore = HKHealthStore()
+            calculateStepCountData()
+            calculateRestingHRData()
+            calculateExerciseTimeData()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -64,12 +67,7 @@ class HealthStoreViewModel: ObservableObject {
         
         //Passing in an empty array for toShare since we are not writing any data yet. Want to read the user's data
         healthStore.requestAuthorization(toShare: [], read: healthTypes) { success, error in
-//            completion(success)
-            if success {
-                self.calculateStepCountData()
-                self.calculateRestingHRData()
-                self.calculateExerciseTimeData()
-            }
+            completion(success)
         }
     }
     
@@ -146,7 +144,13 @@ class HealthStoreViewModel: ObservableObject {
     }
     
 
-    
+//    func stopQuery() {
+//        self.healthStore?.stop(query!)
+//        self.healthStore?.stop(restingHRquery!)
+//        self.healthStore?.stop(exerciseTimeQuery!)
+//
+//    }
+
     
     
     func calculateRestingHRData() {
@@ -170,13 +174,8 @@ class HealthStoreViewModel: ObservableObject {
                                                        options: .discreteAverage,
                                                        anchorDate: anchorDate,
                                                        intervalComponents: daily)
-        //
-        //
-        //        //        HKAnchoredObjectQuery(type: restingHeartRateType, predicate: predicate, anchor: anchorDate, limit: HKObjectQueryNoLimit, resultsHandler: <#T##(HKAnchoredObjectQuery, [HKSample]?, [HKDeletedObject]?, HKQueryAnchor?, Error?) -> Void#>)
-        //
-        //
-        //
-        //
+   
+        
         restingHRquery!.initialResultsHandler = {
             restingQuery, statisticsCollection, error in
             

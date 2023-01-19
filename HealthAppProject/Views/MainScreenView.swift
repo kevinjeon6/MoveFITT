@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MainScreenView: View {
     
+    //@StateObject -> Use this on creation/ init
+    //@ObservedObject -> Use this for subviews
     @StateObject var healthStore = HealthStoreViewModel()
     
     //Select tab that is active
@@ -35,11 +37,6 @@ struct MainScreenView: View {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
                 .tag(3)
-        }
-        .onAppear {
-            healthStore.calculateStepCountData()
-            healthStore.calculateRestingHRData()
-            healthStore.calculateExerciseTimeData()
         }
     }
 }
