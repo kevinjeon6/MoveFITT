@@ -9,18 +9,19 @@ import SwiftUI
 
 struct CurrentSummaryCardView: View {
     var title: String
+    var description: String
     var categoryValue: String?
     
-    @State var showInfoSheet = false
+    @State private var showInfoSheet = false
     
     
     var body: some View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
+                .stroke(.black.opacity(0.5), lineWidth: 3)
                 .foregroundColor(.white)
                 .frame(width: 160, height: 160)
-                .shadow(color: .black.opacity(0.5), radius: 10, x: -5, y: 5)
             
             
             VStack(alignment: .center, spacing: 10) {
@@ -32,7 +33,8 @@ struct CurrentSummaryCardView: View {
                         Image(systemName: "info.circle")
                     }
                     .sheet(isPresented: $showInfoSheet) {
-                        Text("Add description of health category")
+                        InfoView(description: description)
+                            .presentationDetents([.medium])
                     }
                     
                 }
@@ -57,6 +59,6 @@ struct CurrentSummaryCardView: View {
 
 struct CurrentSummaryCardView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentSummaryCardView(title: "Health Type")
+        CurrentSummaryCardView(title: "Health Type", description: "Description Text Here")
     }
 }

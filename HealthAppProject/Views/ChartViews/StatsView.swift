@@ -30,7 +30,7 @@ struct StatsView: View {
                     .cornerRadius(8)
                     .padding(.horizontal)
                     
-                    
+                    //TODO: Update the background of the charts
                     OneWeekStepChartView(healthStoreVM: healthStoreVM)
                     OneWeekRestHRChartView(healthStoreVM: healthStoreVM)
                     OneWeekExerciseTimeChartView(healthStoreVM: healthStoreVM)

@@ -37,9 +37,9 @@ struct QuickView: View {
                     //MARK: - Quick Snapshot of health variables
                     Grid {
                         GridRow {
-                            CurrentSummaryCardView(title: "Resting HR", categoryValue: "\(healthStoreVM.currentRestHR)")
+                            CurrentSummaryCardView(title: "Resting HR", description: "Resting Heart Rate how well your heart pumps", categoryValue: "\(healthStoreVM.currentRestHR)")
                             
-                            CurrentSummaryCardView(title: "Exercise Time", categoryValue: "\(healthStoreVM.currentExTime)")
+                            CurrentSummaryCardView(title: "Exercise Time", description: "Exercise is beneficial", categoryValue: "\(healthStoreVM.currentExTime)")
                         }
                     }
                         
