@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7405CDBF296893D30061A8D1 /* HKHealthType.swift */; };
+		74117142297A07C000328365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117141297A07C000328365 /* SettingsView.swift */; };
 		7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* StatsView.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		7405CDBF296893D30061A8D1 /* HKHealthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKHealthType.swift; sourceTree = "<group>"; };
+		74117141297A07C000328365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingHeartRate.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -149,9 +151,10 @@
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* QuickView.swift */,
+				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
+				74117141297A07C000328365 /* SettingsView.swift */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
-				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */,
 				7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */,
 				74DF66FB295B77A50046F521 /* QuickView.swift in Sources */,
+				74117142297A07C000328365 /* SettingsView.swift in Sources */,
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
 				74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */,
 				7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */,

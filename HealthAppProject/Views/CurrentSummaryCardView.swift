@@ -21,7 +21,7 @@ struct CurrentSummaryCardView: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(.black.opacity(0.5), lineWidth: 3)
                 .foregroundColor(.white)
-                .frame(width: 160, height: 160)
+                .frame(width: 200, height: 160)
             
             
             VStack(alignment: .center, spacing: 10) {
@@ -38,7 +38,7 @@ struct CurrentSummaryCardView: View {
                     }
                     
                 }
-                .frame(width: 140)
+                .frame(width: 180)
                 .padding(.trailing, 10)
                 .padding(.top, 20)
                 
