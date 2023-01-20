@@ -7,6 +7,7 @@
 
 import HealthKit
 import Foundation
+import SwiftUI
 
 class HealthStoreViewModel: ObservableObject {
     
@@ -24,16 +25,26 @@ class HealthStoreViewModel: ObservableObject {
         steps.last?.count ?? 0
     }
     
+    @AppStorage("step goal") var stepGoal: Int = 12_000 
+    
     var stepCountPercent: Int {
-        ((currentStepCount * 100) / 10_000)
+        ((currentStepCount * 100) / stepGoal)
     }
     
     var currentRestHR: Int {
         restingHR.last?.restingValue ?? 0
     }
     
+    var restHRDescription: String {
+        " Resting Heart Rate is your heart rate while resting for a period of time. Your heart is primarily controlled by sympathetic and parasympathetic input to the sinoatrial (SA) node. A "
+    }
+    
     var currentExTime: Int {
         exerciseTime.last?.exerValue ?? 0
+    }
+    
+    var exerTimeDescription: String {
+        "It is recommended that individuals engage in 150 min/week of physical activity. Meeting the recommended guidelines may reduces heart attack incidences and "
     }
  
     
