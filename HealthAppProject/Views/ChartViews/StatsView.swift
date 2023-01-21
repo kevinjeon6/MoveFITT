@@ -12,23 +12,31 @@ struct StatsView: View {
     
     @ObservedObject var healthStoreVM: HealthStoreViewModel
     
-    @State private var week = "Week"
-    let dateSegments = ["Week", "Month", "3 Months"]
-    
     
     var body: some View {
         
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20){
-                    Picker("Choose data", selection: $week) {
-                        ForEach(dateSegments, id: \.self) {
-                            Text($0)
-                        }
+                    Picker("Choose data", selection: $healthStoreVM.timePeriodSelected.animation(.easeInOut)) {
+                            Text("Week").tag("week")
+                            Text("Month").tag("month")
+                            Text("3 Months").tag("3 months")
                     }
                     .pickerStyle(.segmented)
                     .cornerRadius(8)
                     .padding(.horizontal)
+       
+            
+                    if healthStoreVM.timePeriodSelected == "week" {
+                        OneWeekExerciseTimeChartView(healthStoreVM: healthStoreVM)
+                    } else if healthStoreVM.timePeriodSelected == "month" {
+                        OneMonthExerciseChartView(healthStoreVM: healthStoreVM)
+                    } else {
+                                            OneWeekStepChartView(healthStoreVM: healthStoreVM)
+                                            OneWeekRestHRChartView(healthStoreVM: healthStoreVM)
+                    }
+                    
                     
                     //TODO: Update the background of the charts
                     OneWeekStepChartView(healthStoreVM: healthStoreVM)

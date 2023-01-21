@@ -22,7 +22,7 @@ struct OneWeekExerciseTimeChartView: View {
                     time in
                     
                     BarMark(x: .value("day", time.date, unit: .day),
-                             y: .value("RHR", time.exerValue)
+                             y: .value("ex time", time.exerValue)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.purple)
@@ -31,7 +31,6 @@ struct OneWeekExerciseTimeChartView: View {
                 }
             }
             .frame(height: 200)
-//            .chartYScale(domain: 30...80)
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) {
                     AxisGridLine()
@@ -44,6 +43,8 @@ struct OneWeekExerciseTimeChartView: View {
                     .background(.purple.opacity(0.1))
                     .border(.mint, width: 1)
             }
+            .chartYAxisLabel("Minutes", position: .trailing, alignment: .center, spacing: 8)
+            
         }
         .padding(.horizontal)
     }

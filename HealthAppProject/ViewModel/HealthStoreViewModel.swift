@@ -21,11 +21,16 @@ class HealthStoreViewModel: ObservableObject {
     @Published var exerciseTime: [ExerciseTime] = [ExerciseTime]()
     
     
+    //Associated with the segmented control. Week is set as the default
+    @Published var timePeriodSelected = "week"
+    
     var currentStepCount: Int {
         steps.last?.count ?? 0
     }
     
-    @AppStorage("step goal") var stepGoal: Int = 12_000 
+    //AppStorage key name is step goal
+    //In general, since using AppStorage. Can update variable directly. Can then put code in any view on app and it'll have the same access to the same variable
+    @AppStorage("step goal") var stepGoal: Int = 10_000
     
     var stepCountPercent: Int {
         ((currentStepCount * 100) / stepGoal)
@@ -54,6 +59,7 @@ class HealthStoreViewModel: ObservableObject {
             calculateStepCountData()
             calculateRestingHRData()
             calculateExerciseTimeData()
+            calculateMonthExerciseTimeData()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -237,7 +243,7 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     
-    
+    //MARK: One Week
     func calculateExerciseTimeData() {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
@@ -250,9 +256,6 @@ class HealthStoreViewModel: ObservableObject {
         
         
         let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
-        //        let restingHRanchorDate = Calendar.current.startOfDay(for: Date())
-        //        let hourly = DateComponents(hour: 1)
-        //        let oneDayCount = Calendar.current.date(byAdding: DateComponents(day: -1), to: Date())
 
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
                                                        quantitySamplePredicate: predicate,
@@ -286,6 +289,52 @@ class HealthStoreViewModel: ObservableObject {
         self.healthStore?.execute(exerciseTimeQuery)
     }
     
+    //MARK: One Month
+    
+    func calculateMonthExerciseTimeData() {
+        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+        
+        
+        let anchorDate = Date.mondayAt12AM()
+        let daily = DateComponents(day: 1)
+        //Go Back 7 days. This is the start date
+        let oneMonthAgo = Calendar.current.date(byAdding: DateComponents(day: -30), to: Date())!
+        let startDate = Calendar.current.date(byAdding: DateComponents(day: -29), to: Date())!
+        
+        
+        let predicate = HKQuery.predicateForSamples(withStart: oneMonthAgo, end: nil, options: .strictStartDate)
+
+        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                       quantitySamplePredicate: predicate,
+                                                       options: .cumulativeSum,
+                                                       anchorDate: anchorDate,
+                                                       intervalComponents: daily)
+    
+        exerciseTimeQuery!.initialResultsHandler = {
+            exerciseTimeQuery, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating exercise time
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTime.append(exTime)
+                    }
+                }
+            }
+        }
+        
+        
+        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
+        self.healthStore?.execute(exerciseTimeQuery)
+    }
 }
   
 
