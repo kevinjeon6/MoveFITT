@@ -58,8 +58,8 @@ class HealthStoreViewModel: ObservableObject {
             healthStore = HKHealthStore()
             calculateStepCountData()
             calculateRestingHRData()
-            calculateExerciseTimeData()
-            calculateMonthExerciseTimeData()
+            calculateSevenDaysExerciseTime()
+            calculateMonthExerciseTime()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -244,7 +244,7 @@ class HealthStoreViewModel: ObservableObject {
     
     
     //MARK: One Week
-    func calculateExerciseTimeData() {
+    func calculateSevenDaysExerciseTime() {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
@@ -291,7 +291,7 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: One Month
     
-    func calculateMonthExerciseTimeData() {
+    func calculateMonthExerciseTime() {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
