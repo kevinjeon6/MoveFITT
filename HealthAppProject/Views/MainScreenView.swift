@@ -32,7 +32,8 @@ struct MainScreenView: View {
                 }
                 .tag(2)
             
-            Text("Settings view?")
+            //The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
+            SettingsView(stepGoal: $healthStore.stepGoal, healthStoreVM: healthStore)
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }

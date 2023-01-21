@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var stepGoal: Int
+    
+
+    @Binding var stepGoal: Int
+    @ObservedObject var healthStoreVM: HealthStoreViewModel
+    
     
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    Stepper("\(stepGoal) steps", value: $stepGoal, in: 100...15_000, step: 100)
+                    Stepper("\(stepGoal) steps", value: $healthStoreVM.stepGoal, in: 100...15_000, step: 100)
                         .foregroundColor(.blue)
                 } header: {
-                    Text("Set your Step Goal Here")
+                    Text("Set your Daily Step Goal Here")
                 }
             }
             .navigationTitle("Settings")
@@ -27,6 +31,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(stepGoal: 7500)
+        SettingsView(stepGoal: Binding.constant(7500), healthStoreVM: HealthStoreViewModel())
     }
 }
