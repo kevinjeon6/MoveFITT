@@ -10,6 +10,7 @@
 		7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7405CDBF296893D30061A8D1 /* HKHealthType.swift */; };
 		74117142297A07C000328365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117141297A07C000328365 /* SettingsView.swift */; };
 		74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */; };
+		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* StatsView.swift */; };
@@ -34,6 +35,7 @@
 		7405CDBF296893D30061A8D1 /* HKHealthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKHealthType.swift; sourceTree = "<group>"; };
 		74117141297A07C000328365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthExerciseChartView.swift; sourceTree = "<group>"; };
+		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingHeartRate.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			children = (
 				7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */,
 				74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */,
+				74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */,
 			);
 			path = "Exercise Charts";
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */,
+				74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */,
 				7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */,
 				74DF66FB295B77A50046F521 /* QuickView.swift in Sources */,
 				74117142297A07C000328365 /* SettingsView.swift in Sources */,

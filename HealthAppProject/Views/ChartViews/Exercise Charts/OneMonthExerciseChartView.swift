@@ -15,7 +15,7 @@ struct OneMonthExerciseChartView: View {
         VStack(alignment: .leading, spacing: 10) {
             
             Chart {
-                ForEach(healthStoreVM.exerciseTime, id: \.date) {
+                ForEach(healthStoreVM.exerciseTimeMonth, id: \.date) {
                     time in
                     
                     BarMark(x: .value("day", time.date, unit: .day),
@@ -27,7 +27,7 @@ struct OneMonthExerciseChartView: View {
                     
                 }
             }
-            .frame(height: 200)
+            .frame(height: 400)
             .chartXAxis {
                 AxisMarks(values: .automatic(minimumStride: 7)) {
                     AxisGridLine()
@@ -40,7 +40,6 @@ struct OneMonthExerciseChartView: View {
                     .background(.purple.opacity(0.1))
                     .border(.mint, width: 1)
             }
-            .chartYAxisLabel("Minutes", position: .trailing, alignment: .center, spacing: 8)
         }
         .padding(.horizontal)
     }

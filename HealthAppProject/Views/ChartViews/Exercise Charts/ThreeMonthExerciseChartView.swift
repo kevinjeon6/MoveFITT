@@ -1,40 +1,36 @@
 //
-//  OneWeekExerciseTimeChartView.swift
+//  ThreeMonthExerciseChartView.swift
 //  HealthAppProject
 //
-//  Created by Kevin Mattocks on 1/16/23.
+//  Created by Kevin Mattocks on 1/22/23.
 //
 
 import Charts
 import SwiftUI
 
-struct OneWeekExerciseTimeChartView: View {
-    
+struct ThreeMonthExerciseChartView: View {
     @ObservedObject var healthStoreVM: HealthStoreViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             
-            Text("Exercise Time Average: \(healthStoreVM.exerciseTime.reduce(0, { $0 + $1.exerValue / 7})) mins")
-            
             Chart {
-                ForEach(healthStoreVM.exerciseTime, id: \.date) {
-                    time in
+                ForEach(healthStoreVM.exerciseTime3Months, id: \.date) {
+                    value in
                     
-                    BarMark(x: .value("day", time.date, unit: .day),
-                             y: .value("ex time", time.exerValue)
+                    BarMark(x: .value("day", value.date, unit: .day),
+                             y: .value("ex time", value.exerValue)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.purple)
                     .symbol(Circle())
-                    
                 }
             }
             .frame(height: 400)
             .chartXAxis {
-                AxisMarks(values: .stride(by: .day)) {
+                AxisMarks(values: .automatic(minimumStride: 7)) {
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day().month(), centered: true)
+                    AxisValueLabel(format: .dateTime.day().month())
                     
                 }
             }
@@ -43,15 +39,13 @@ struct OneWeekExerciseTimeChartView: View {
                     .background(.purple.opacity(0.1))
                     .border(.mint, width: 1)
             }
-
         }
         .padding(.horizontal)
     }
 }
 
-
-struct OneWeekExerciseTimeChartView_Previews: PreviewProvider {
+struct ThreeMonthExerciseChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekExerciseTimeChartView(healthStoreVM: HealthStoreViewModel())
+        ThreeMonthExerciseChartView(healthStoreVM: HealthStoreViewModel())
     }
 }

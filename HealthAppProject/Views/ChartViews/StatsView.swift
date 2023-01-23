@@ -33,8 +33,7 @@ struct StatsView: View {
                     } else if healthStoreVM.timePeriodSelected == "month" {
                         OneMonthExerciseChartView(healthStoreVM: healthStoreVM)
                     } else {
-                                            OneWeekStepChartView(healthStoreVM: healthStoreVM)
-                                            OneWeekRestHRChartView(healthStoreVM: healthStoreVM)
+                        ThreeMonthExerciseChartView(healthStoreVM: healthStoreVM)
                     }
                     
                     
@@ -45,6 +44,7 @@ struct StatsView: View {
                 }
                 .padding(.horizontal)
                 .navigationTitle("Charts")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }
