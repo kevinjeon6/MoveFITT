@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct ExerciseGaugeView: View {
-    var progress = 80.0
-    private let minValue = 0.0
-    private let maxValue = 150.0
+    var progress: Double
+    var minValue: Double
+    var maxValue: Double
+    var title: String
+    
+    let gradient = Gradient(colors: [.red, .orange, .yellow, .mint, .green])
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             Gauge(value: progress, in: minValue...maxValue) {
                 //
             } currentValueLabel: {
@@ -24,17 +27,17 @@ struct ExerciseGaugeView: View {
                 Text(maxValue, format: .number)
             }
             .gaugeStyle(.accessoryCircular)
-            .tint(.blue)
+            .tint(gradient)
             .scaleEffect(1.5)
-            .padding(.bottom)
+        
             
-            Text("Weekly Goal")
-        }
+            Text(title)
+        }//VStack
     }
 }
 
 struct ExerciseGaugeView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseGaugeView()
+        ExerciseGaugeView(progress: 75, minValue: 0, maxValue: 150, title: "Weekly Goal")
     }
 }

@@ -34,6 +34,8 @@ class HealthStoreViewModel: ObservableObject {
     //In general, since using AppStorage. Can update variable directly. Can then put code in any view on app and it'll have the same access to the same variable
     @AppStorage("step goal") var stepGoal: Int = 10_000
     
+    var exerciseWeeklyGoal: Int = 150
+    
     var stepCountPercent: Int {
         ((currentStepCount * 100) / stepGoal)
     }
