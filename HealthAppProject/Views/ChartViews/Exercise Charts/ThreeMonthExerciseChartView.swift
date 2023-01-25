@@ -28,7 +28,7 @@ struct ThreeMonthExerciseChartView: View {
             }
             .frame(height: 400)
             .chartXAxis {
-                AxisMarks(values: .automatic(minimumStride: 7)) {
+                AxisMarks(values: .automatic(minimumStride: 30)) {
                     AxisGridLine()
                     AxisValueLabel(format: .dateTime.day().month())
                     

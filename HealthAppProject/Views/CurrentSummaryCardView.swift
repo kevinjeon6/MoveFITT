@@ -21,11 +21,14 @@ struct CurrentSummaryCardView: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(.black.opacity(0.5), lineWidth: 3)
                 .foregroundColor(.white)
-                .frame(width: 200, height: 160)
+                .padding(.horizontal)
+                .frame(width: 400, height: 100)
             
             
-            VStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .leading) {
                 HStack {
+                    Text(title)
+                        .font(.title3)
                     Spacer()
                     Button {
                         showInfoSheet.toggle()
@@ -38,21 +41,20 @@ struct CurrentSummaryCardView: View {
                     }
                     
                 }
-                .frame(width: 180)
                 .padding(.trailing, 10)
-                .padding(.top, 20)
+                .padding(.top, 30)
+         
+        
+                Text(categoryValue ?? "Missing Data")
+                    .font(.largeTitle)
+                    .padding(.bottom, 20)
                 
-                VStack {
-                    Text(title)
-                        .font(.title3)
-                        .opacity(0.5)
-                        
-                    Text(categoryValue ?? "Missing Data")
-                }
-                .padding(.horizontal, 20)
+        
                 
             }
-            .padding(.bottom, 80)
+            .padding(.bottom)
+            .padding(.leading)
+            .frame(width: 350)
         }
     }
 }
