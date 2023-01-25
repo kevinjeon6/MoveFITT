@@ -24,6 +24,7 @@ struct InfoView: View {
             
         }
         .padding(.top, 25)
+        .padding(.horizontal)
     }
 }
 
