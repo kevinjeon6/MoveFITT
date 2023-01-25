@@ -21,6 +21,11 @@ struct QuickView: View {
                 ScrollView {
                     VStack(spacing: 10) {
                         
+                        
+                        ExerciseGoalView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseWeeklyGoal), description: healthStoreVM.exerTimeDescription)
+                        
+                        
+                        
                         Image(systemName: "figure.walk")
                             .font(.largeTitle)
                         Text("\(healthStoreVM.currentStepCount) steps")
@@ -36,18 +41,12 @@ struct QuickView: View {
                             .padding(.bottom, 20)
                         
                         //MARK: - Quick Snapshot of health variables
-                        Grid(horizontalSpacing: 10) {
-                            GridRow {
-                                CurrentSummaryCardView(title: "Resting HR", description: healthStoreVM.restHRDescription, categoryValue: "\(healthStoreVM.currentRestHR)")
-                                
-                                CurrentSummaryCardView(title: "Exercise Time", description: healthStoreVM.exerTimeDescription, categoryValue: "\(healthStoreVM.currentExTime)")
-                                
-                             
-                            }
-                        }
-                        
-                        
-                        ProgressionStepBar(value: healthStoreVM.currentExTime, goalValue: 150)
+                  
+                                CurrentSummaryCardView(
+                                    title: "Resting HR",
+                                    description: healthStoreVM.restHRDescription,
+                                    categoryValue: "\(healthStoreVM.currentRestHR)"
+                                )
                     }
                     .frame(minWidth: geo.size.width * 0.8, maxWidth: .infinity)
                     .padding(.horizontal)
