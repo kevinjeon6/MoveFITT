@@ -9,7 +9,9 @@ import SwiftUI
 
 struct CurrentSummaryCardView: View {
     var title: String
+    var imageText: String
     var description: String
+    var color: Color
     var categoryValue: String?
     
     @State private var showInfoSheet = false
@@ -19,14 +21,16 @@ struct CurrentSummaryCardView: View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .stroke(.black.opacity(0.5), lineWidth: 3)
                 .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.5), radius: 5)
                 .padding(.horizontal)
-                .frame(width: 400, height: 100)
+                .frame(width: 400, height: 80)
             
             
             VStack(alignment: .leading) {
                 HStack {
+                    Image(systemName: imageText )
+                        .foregroundColor(color)
                     Text(title)
                         .font(.title3)
                     Spacer()
@@ -42,11 +46,12 @@ struct CurrentSummaryCardView: View {
                     
                 }
                 .padding(.trailing, 10)
-                .padding(.top, 30)
+                .padding(.top, 40)
          
         
                 Text(categoryValue ?? "Missing Data")
                     .font(.largeTitle)
+                    .bold()
                     .padding(.bottom, 20)
                 
         
@@ -61,6 +66,6 @@ struct CurrentSummaryCardView: View {
 
 struct CurrentSummaryCardView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentSummaryCardView(title: "Health Type", description: "Description Text Here")
+        CurrentSummaryCardView(title: "Health Type", imageText: "heart.fill", description: "Description Text Here", color: .red)
     }
 }
