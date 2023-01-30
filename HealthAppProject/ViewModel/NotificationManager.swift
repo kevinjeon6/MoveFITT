@@ -10,21 +10,23 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
-class NotificationManager {
+class NotificationManager: ObservableObject {
     
-//    @AppStorage
+    @AppStorage(Constants.notifications) var isNotificationOn = false
     
     // Singleton, since instance through the entire application rather than keep creating NotificationManager
-    static let instance = NotificationManager()
+//    static let instance = NotificationManager()
     
     //Need to request permission from user for notifcation
     
     func requestUserAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
-            if let error = error {
+            if success {
+                if self.isNotificationOn {
+                    self.scheduleDailyNotification()
+                }
+            } else if let error = error {
                 print("Error: \(error)")
-            } else {
-                print("success")
             }
         }
     }
