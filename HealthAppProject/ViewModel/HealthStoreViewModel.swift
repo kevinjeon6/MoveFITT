@@ -15,9 +15,11 @@ class HealthStoreViewModel: ObservableObject {
     var query: HKStatisticsCollectionQuery?
     var restingHRquery: HKStatisticsCollectionQuery?
     var exerciseTimeQuery: HKStatisticsCollectionQuery?
+    var caloriesBurnedQuery: HKStatisticsCollectionQuery?
     
     @Published var steps: [Step] = [Step]()
     @Published var restingHR: [RestingHeartRate] = [RestingHeartRate]()
+    @Published var kcalBurned: [CaloriesBurned] = [CaloriesBurned]()
     @Published var exerciseTime: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTimeMonth: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTime3Months: [ExerciseTime] = [ExerciseTime]()
@@ -58,6 +60,11 @@ class HealthStoreViewModel: ObservableObject {
     var exerTimeDescription: String {
         "It is recommended that individuals engage in 150 min/week of physical activity. Meeting the recommended guidelines may reduces heart attack incidences and "
     }
+    
+    
+    var currentKcalsBurned: Int {
+        kcalBurned.last?.kcal ?? 0
+    }
  
     
     init(){
@@ -80,8 +87,9 @@ class HealthStoreViewModel: ObservableObject {
         let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+        let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
         
-        let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType])
+        let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType, caloriesBurnedType])
         
         
         guard let healthStore = self.healthStore else {
@@ -95,7 +103,6 @@ class HealthStoreViewModel: ObservableObject {
             completion(success)
         }
     }
-    
     
     //MARK: - Calculate Data for One Week
     func calculateStepCountData() {
@@ -249,6 +256,81 @@ class HealthStoreViewModel: ObservableObject {
         guard let restingHRquery = self.restingHRquery else { return }
         self.healthStore?.execute(restingHRquery)
     }
+    
+    
+    //MARK: Active energy burned
+    func calculateCaloriesBurned() {
+        
+        
+        let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+        
+        //Set up anchor date. Which starts on a Monday at 12:00 AM
+        let anchorDate = Date.mondayAt12AM()
+        
+        //Set up daily to calculate health data daily
+        let daily = DateComponents(day: 1)
+        
+        //Go Back 7 days. This is the start date
+        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
+        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+        
+        //Define the predicate
+        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        
+        //MARK: - Query for Step Count
+        caloriesBurnedQuery = HKStatisticsCollectionQuery(quantityType: caloriesBurnedType,
+                                            quantitySamplePredicate: predicate,
+                                            options: .cumulativeSum,
+                                            anchorDate: anchorDate,
+                                            intervalComponents: daily)
+        
+        //Setting the results handler
+      caloriesBurnedQuery!.initialResultsHandler = {
+            calorieBurnedQuery, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return }
+            
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let kcalquantity = statistics.sumQuantity() {
+                    let kcaldate = statistics.startDate
+                    let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
+                    let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
+                    
+                   
+                    DispatchQueue.main.async {
+                        self.kcalBurned.append(kcals)
+                     
+                    }
+                }
+            }
+        }
+        
+        //Gets called when there's any new data that's coming into the database
+        caloriesBurnedQuery!.statisticsUpdateHandler = {
+            calorieBurnedQuery, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return }
+            
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let kcalquantity = statistics.sumQuantity() {
+                    let kcaldate = statistics.startDate
+                    let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
+                    let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
+                    
+                    DispatchQueue.main.async {
+                        self.kcalBurned.append(kcals)
+                    }
+                }
+            }
+        }
+        
+        //Execute our query.
+        guard let caloriesBurnedQuery = self.caloriesBurnedQuery else { return }
+        self.healthStore?.execute(caloriesBurnedQuery)
+    }
+    
+    
+    
     
     
     //MARK: One Week
