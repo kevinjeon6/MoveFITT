@@ -20,6 +20,7 @@
 		7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */; };
 		7438E699298733C600F571C7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E698298733C600F571C7 /* NotificationManager.swift */; };
 		7438E69E2987457D00F571C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69D2987457D00F571C7 /* Constants.swift */; };
+		7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */; };
 		7466602C297EB60B00C17C8A /* ExerciseGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */; };
 		7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */; };
 		746660322982B3FD00C17C8A /* StepCountGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746660312982B3FD00C17C8A /* StepCountGaugeView.swift */; };
@@ -52,6 +53,7 @@
 		7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekRestHRChartView.swift; sourceTree = "<group>"; };
 		7438E698298733C600F571C7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7438E69D2987457D00F571C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesBurnedView.swift; sourceTree = "<group>"; };
 		743AB91B295CE8B2004BD054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGoalView.swift; sourceTree = "<group>"; };
 		7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGaugeView.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
+				7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */,
 				74DF66FA295B77A50046F521 /* QuickView.swift */,
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 				7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */,
@@ -289,6 +292,7 @@
 				7438E699298733C600F571C7 /* NotificationManager.swift in Sources */,
 				74117142297A07C000328365 /* SettingsView.swift in Sources */,
 				7466602C297EB60B00C17C8A /* ExerciseGoalView.swift in Sources */,
+				7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */,
 				746660322982B3FD00C17C8A /* StepCountGaugeView.swift in Sources */,
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
 				74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */,

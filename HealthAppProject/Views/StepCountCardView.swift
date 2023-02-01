@@ -12,6 +12,7 @@ struct StepCountCardView: View {
     var minValue: Double
     var maxValue: Double
     var title: String
+    var goalText: Int
     
     var body: some View {
         ZStack {
@@ -21,20 +22,21 @@ struct StepCountCardView: View {
                 .padding(.horizontal)
                 .frame(width: 400, height: 80)
             
-            HStack(spacing: 30){
-    
+            HStack(spacing: 20){
+                Spacer()
                 VStack (alignment: .leading, spacing: 0) {
                     StepCountGaugeView(progress: progress, minValue: minValue, maxValue: maxValue, title: title)
                         .padding(.top, 5)
-                    Text("Goal: 10,000 steps")
+                    Text("\(goalText) steps")
                         .font(.caption)
                         .padding(.bottom, 5)
                 }
-
+                Spacer()
                 
                 Text("\(Int(progress)) steps")
                     .font(.title)
                     .bold()
+                Spacer()
             }
             .padding(.trailing, 30)
         }
@@ -43,6 +45,6 @@ struct StepCountCardView: View {
 
 struct StepCountCardView_Previews: PreviewProvider {
     static var previews: some View {
-        StepCountCardView(progress: 3500, minValue: 0, maxValue: 10_000, title: "35%")
+        StepCountCardView(progress: 3500, minValue: 0, maxValue: 10_000, title: "35%", goalText: 8000)
     }
 }

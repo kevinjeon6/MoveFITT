@@ -26,15 +26,18 @@ class HealthStoreViewModel: ObservableObject {
     //Associated with the segmented control. Week is set as the default
     @Published var timePeriodSelected = "week"
     
-    var currentStepCount: Int {
-        steps.last?.count ?? 0
-    }
+    //Select tab that is active
+    @Published var selectedTab = 1
     
     //AppStorage key name is step goal
     //In general, since using AppStorage. Can update variable directly. Can then put code in any view on app and it'll have the same access to the same variable
-    @AppStorage("step goal") var stepGoal: Int = 10_000
+    @AppStorage(Constants.stepGoal) var stepGoal: Int = 10_000
+    @AppStorage(Constants.exerciseWeeklyGoal)var exerciseWeeklyGoal: Int = 150
+    @AppStorage(Constants.exerciseDailyGoal)var exerciseDayGoal: Int = 30
     
-    var exerciseWeeklyGoal: Int = 150
+    var currentStepCount: Int {
+        steps.last?.count ?? 0
+    }
     
     var stepCountPercent: Int {
         ((currentStepCount * 100) / stepGoal)
@@ -288,6 +291,28 @@ class HealthStoreViewModel: ObservableObject {
                 }
             }
         }
+        
+        
+        exerciseTimeQuery!.statisticsUpdateHandler = {
+            exerciseTimeQuery, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return }
+            
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTime.append(exTime)
+                    }
+                }
+            }
+        }
+        
         
         
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
