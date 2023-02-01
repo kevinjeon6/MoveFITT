@@ -70,11 +70,7 @@ class HealthStoreViewModel: ObservableObject {
     init(){
         if HKHealthStore.isHealthDataAvailable(){
             healthStore = HKHealthStore()
-            calculateStepCountData()
-            calculateRestingHRData()
-            calculateSevenDaysExerciseTime()
-            calculateMonthExerciseTime()
-            calculate3MonthExerciseTime()
+            requestUserAuthorization()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -82,7 +78,7 @@ class HealthStoreViewModel: ObservableObject {
     
     
     //MARK: - Request User Authorization for Health Data
-    func requestUserAuthorization(completion: @escaping (Bool) -> Void) {
+    func requestUserAuthorization() {
     
         let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
@@ -100,7 +96,15 @@ class HealthStoreViewModel: ObservableObject {
         
         //Passing in an empty array for toShare since we are not writing any data yet. Want to read the user's data
         healthStore.requestAuthorization(toShare: [], read: healthTypes) { success, error in
-            completion(success)
+
+            if success {
+                self.calculateStepCountData()
+                self.calculateRestingHRData()
+                self.calculateSevenDaysExerciseTime()
+                self.calculateMonthExerciseTime()
+                self.calculate3MonthExerciseTime()
+                self.calculateCaloriesBurned()
+            }
         }
     }
     
