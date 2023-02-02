@@ -11,4 +11,7 @@ struct Constants {
     static var exerciseDailyGoal = "exercise daily goal"
     static var exerciseWeeklyGoal = "exercise weekly goal"
     static var notifications = "notifications"
+    
+    static var date = Date().formatted(.dateTime.day().month().year())
+    
 }

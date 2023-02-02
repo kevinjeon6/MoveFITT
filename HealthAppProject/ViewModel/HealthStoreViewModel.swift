@@ -179,16 +179,6 @@ class HealthStoreViewModel: ObservableObject {
         self.healthStore?.execute(query)
     }
     
-
-//    func stopQuery() {
-//        self.healthStore?.stop(query!)
-//        self.healthStore?.stop(restingHRquery!)
-//        self.healthStore?.stop(exerciseTimeQuery!)
-//
-//    }
-
-    
-    
     func calculateRestingHRData() {
         let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
         
