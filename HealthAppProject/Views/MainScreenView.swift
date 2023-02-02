@@ -12,15 +12,14 @@ struct MainScreenView: View {
     //@StateObject -> Use this on creation/ init
     //@ObservedObject -> Use this for subviews
     @StateObject var healthStore = HealthStoreViewModel()
-    
-    //Select tab that is active
-    @State private var selectedTab = 1
+
     
     
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $healthStore.selectedTab) {
             
-            QuickView(healthStoreVM: healthStore)
+            QuickView()
+                .environmentObject(HealthStoreViewModel())
                 .tabItem {
                     Label("Today", systemImage: "list.bullet.clipboard")
                 }
@@ -33,7 +32,11 @@ struct MainScreenView: View {
                 .tag(2)
             
             //The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
-            SettingsView(stepGoal: $healthStore.stepGoal, healthStoreVM: healthStore)
+            SettingsView(
+                stepGoal: $healthStore.stepGoal,
+                exerciseDayGoal: $healthStore.exerciseDayGoal,
+                exerciseWeeklyGoal: $healthStore.exerciseWeeklyGoal,
+                healthStoreVM: healthStore)
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
