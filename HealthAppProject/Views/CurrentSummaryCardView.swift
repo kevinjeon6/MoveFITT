@@ -46,18 +46,14 @@ struct CurrentSummaryCardView: View {
                     
                 }
                 .padding(.trailing, 10)
-                .padding(.top, 40)
          
         
                 Text(categoryValue ?? "Missing Data")
                     .font(.largeTitle)
                     .bold()
-                    .padding(.bottom, 20)
-                
-        
-                
+                    .padding(.bottom)
             }
-            .padding(.bottom)
+            .padding(.top)
             .padding(.leading)
             .frame(width: 350)
         }

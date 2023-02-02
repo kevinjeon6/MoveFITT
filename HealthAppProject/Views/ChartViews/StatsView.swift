@@ -35,12 +35,7 @@ struct StatsView: View {
                     } else {
                         ThreeMonthExerciseChartView(healthStoreVM: healthStoreVM)
                     }
-                    
-                    
-                    //TODO: Update the background of the charts
-                    OneWeekStepChartView(healthStoreVM: healthStoreVM)
-                    OneWeekRestHRChartView(healthStoreVM: healthStoreVM)
-                    OneWeekExerciseTimeChartView(healthStoreVM: healthStoreVM)
+                  
                 }
                 .padding(.horizontal)
                 .navigationTitle("Charts")

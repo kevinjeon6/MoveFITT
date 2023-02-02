@@ -24,10 +24,7 @@ struct OneWeekExerciseTimeChartView: View {
                     BarMark(x: .value("day", time.date, unit: .day),
                              y: .value("ex time", time.exerValue)
                     )
-                    .interpolationMethod(.catmullRom)
-                    .foregroundStyle(.purple)
-                    .symbol(Circle())
-                    
+                    .foregroundStyle(.purple)   
                 }
             }
             .frame(height: 400)

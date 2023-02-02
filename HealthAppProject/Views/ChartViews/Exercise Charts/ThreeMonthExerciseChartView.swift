@@ -21,9 +21,7 @@ struct ThreeMonthExerciseChartView: View {
                     BarMark(x: .value("day", value.date, unit: .day),
                              y: .value("ex time", value.exerValue)
                     )
-                    .interpolationMethod(.catmullRom)
                     .foregroundStyle(.purple)
-                    .symbol(Circle())
                 }
             }
             .frame(height: 400)
