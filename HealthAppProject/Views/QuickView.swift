@@ -22,9 +22,9 @@ struct QuickView: View {
                 ScrollView {
                     VStack(spacing: 5) {
 
-                            Text("\(Constants.date)")
+                            Text(Constants.currentWeekDatesString)
                                 .padding(.top, 40)
-                                .font(.largeTitle)
+                                .font(.title)
                             .bold()
                         
                         
