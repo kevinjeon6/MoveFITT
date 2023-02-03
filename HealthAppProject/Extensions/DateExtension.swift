@@ -8,8 +8,11 @@
 import Foundation
 
 extension Date {
-    static func mondayAt12AM() -> Date {
-        return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) ?? Date()
+    static func sundayAt12AM() -> Date {
+        let calendar = Calendar(identifier: .iso8601)
+        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
+        components.weekday = 1
+        return calendar.date(from: components) ?? Date()
     }
 }
 

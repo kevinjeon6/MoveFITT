@@ -115,7 +115,7 @@ class HealthStoreViewModel: ObservableObject {
         let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         
         //Set up anchor date. Which starts on a Monday at 12:00 AM
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         
         //Set up daily to calculate health data daily
         let daily = DateComponents(day: 1)
@@ -183,7 +183,7 @@ class HealthStoreViewModel: ObservableObject {
         let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
         
         
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         //Go Back 7 days. This is the start date
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
@@ -259,7 +259,7 @@ class HealthStoreViewModel: ObservableObject {
         let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
         
         //Set up anchor date. Which starts on a Monday at 12:00 AM
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         
         //Set up daily to calculate health data daily
         let daily = DateComponents(day: 1)
@@ -332,7 +332,7 @@ class HealthStoreViewModel: ObservableObject {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         //Go Back 7 days. This is the start date
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
@@ -401,7 +401,7 @@ class HealthStoreViewModel: ObservableObject {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let startDate = Calendar.current.date(byAdding: DateComponents(day: -29), to: Date())!
@@ -447,7 +447,7 @@ class HealthStoreViewModel: ObservableObject {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
-        let anchorDate = Date.mondayAt12AM()
+        let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: Date())!
         let startDate = Calendar.current.date(byAdding: DateComponents(day: -89), to: Date())!
