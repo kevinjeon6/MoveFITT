@@ -57,6 +57,10 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTime.last?.exerValue ?? 0
     }
     
+    var weeklyExTime: Int {
+        exerciseTime.reduce(0) { $0 + $1.exerValue }
+    }
+    
     var exerTimeDescription: String {
         "It is recommended that individuals engage in 150 min/week of physical activity. Meeting the recommended guidelines may reduces heart attack incidences and "
     }
@@ -335,8 +339,11 @@ class HealthStoreViewModel: ObservableObject {
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         //Go Back 7 days. This is the start date
+        let date = Date()
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+        let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: date)?.start
+//        Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+        let endDate = Calendar.current.date(byAdding: .day, value: 6, to: startDate!)
         
         
         let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
@@ -353,7 +360,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate!, to: endDate ?? Date()) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -374,7 +381,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate!, to: endDate ?? Date()) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     

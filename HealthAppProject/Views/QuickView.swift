@@ -32,7 +32,7 @@ struct QuickView: View {
                             ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today")
                             
   
-                            ExerciseGaugeView(progress: Double(healthStoreVM.exerciseTime.reduce(0) { $0 + $1.exerValue}),
+                            ExerciseGaugeView(progress: Double(healthStoreVM.weeklyExTime),
                                 minValue: 0.0,
                                 maxValue: Double(healthStoreVM.exerciseWeeklyGoal),
                                 title: "Weekly")
