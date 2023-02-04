@@ -43,13 +43,11 @@ struct SettingsView: View {
                 
                 Section {
                     Toggle("Notifications", isOn: notificationManager.$isNotificationOn)
-                        .toggleStyle(.switch)
                         .tint(.purple)
-                        .onChange(of: notificationManager.isNotificationOn) { newValue in
-                            notificationManager.requestUserAuthorization()
-                        }
-                       
                 }
+            }
+            .onChange(of: notificationManager.isNotificationOn) { _ in
+                notificationManager.requestUserAuthorization()
             }
             .navigationTitle("Settings")
         }
