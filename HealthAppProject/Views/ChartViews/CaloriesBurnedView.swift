@@ -15,7 +15,7 @@ struct CaloriesBurnedChartView: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
-            Text("Average: \(healthStoreVM.kcalBurned.reduce(0, { $0 + $1.kcal / 7})) kcal")
+            Text("Average: \(healthStoreVM.averageKcalsBurned) kcal")
                 .font(.headline)
 
             Chart {

@@ -15,7 +15,7 @@ struct OneWeekRestHRChartView: View {
         
         VStack(alignment: .leading, spacing: 10) {
       
-            Text("Average: \(healthStoreVM.restingHR.reduce(0) { $0 + $1.restingValue / 7}) bpm")
+            Text("Average: \(healthStoreVM.averageRestHR) bpm")
                 .font(.headline)
             
             Chart {

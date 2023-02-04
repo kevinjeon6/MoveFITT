@@ -16,7 +16,7 @@ struct OneWeekStepChartView: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 //reduce adds up the total count
-                Text("Average: \(healthStoreVM.steps.reduce(0, { $0 + $1.count / 7})) steps")
+                Text("Average: \(healthStoreVM.averageStepCount) steps")
                     .font(.headline)
 
                 Chart {

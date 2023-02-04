@@ -45,8 +45,16 @@ class HealthStoreViewModel: ObservableObject {
         ((currentStepCount * 100) / stepGoal)
     }
     
+    var averageStepCount: Int {
+        steps.reduce(0) { $0 + $1.count / 7 }
+    }
+    
     var currentRestHR: Int {
         restingHR.last?.restingValue ?? 0
+    }
+    
+    var averageRestHR: Int {
+        restingHR.reduce(0) { $0 + $1.restingValue / 7}
     }
     
     var restHRDescription: String {
@@ -68,6 +76,10 @@ class HealthStoreViewModel: ObservableObject {
     
     var currentKcalsBurned: Int {
         kcalBurned.last?.kcal ?? 0
+    }
+    
+    var averageKcalsBurned: Int {
+        kcalBurned.reduce(0) { $0 + $1.kcal / 7}
     }
  
     
