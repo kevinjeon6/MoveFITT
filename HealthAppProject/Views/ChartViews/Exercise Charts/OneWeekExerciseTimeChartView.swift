@@ -15,7 +15,9 @@ struct OneWeekExerciseTimeChartView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             
-            Text("Exercise Time Average: \(healthStoreVM.exerciseTime.reduce(0, { $0 + $1.exerValue / 7})) mins")
+            
+            Text("Exercise Time Average: \(healthStoreVM.weeklyExTime / 7) mins")
+
             
             Chart {
                 ForEach(healthStoreVM.exerciseTime, id: \.date) {
