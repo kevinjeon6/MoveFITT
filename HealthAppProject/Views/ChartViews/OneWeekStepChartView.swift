@@ -16,7 +16,8 @@ struct OneWeekStepChartView: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 //reduce adds up the total count
-                Text("Step Count Average: \(healthStoreVM.steps.reduce(0, { $0 + $1.count / 7}))")
+                Text("Average: \(healthStoreVM.steps.reduce(0, { $0 + $1.count / 7})) steps")
+                    .font(.headline)
 
                 Chart {
                     ForEach(healthStoreVM.steps, id: \.date) {
@@ -25,8 +26,7 @@ struct OneWeekStepChartView: View {
                         BarMark(x: .value("day", stepData.date, unit: .day),
                                  y: .value("steps", stepData.count)
                         )
-                        .foregroundStyle(.purple)
-
+                        .foregroundStyle(.cyan.gradient)
                     }
                 }
                 .frame(height: 200)
@@ -36,11 +36,6 @@ struct OneWeekStepChartView: View {
                         AxisValueLabel(format: .dateTime.day().month(), centered: true)
 
                     }
-                }
-                .chartPlotStyle { plotContent in
-                    plotContent
-                        .background(.purple.opacity(0.1))
-                        .border(.mint, width: 1)
                 }
             }
             .padding(.horizontal)
@@ -69,5 +64,6 @@ struct OneWeekStepChartView: View {
 struct OneWeekChartView_Previews: PreviewProvider {
     static var previews: some View {
         OneWeekStepChartView()
+            .environmentObject(HealthStoreViewModel())
     }
 }
