@@ -69,7 +69,7 @@ struct QuickView: View {
                             }
 
                             NavigationLink {
-                                CaloriesBurnedView()
+                                CaloriesBurnedChartView()
                             } label: {
                                 CurrentSummaryCardView(
                                     title: "Energy Burned",
