@@ -12,6 +12,8 @@ import UserNotifications
 
 class NotificationManager: ObservableObject {
     
+    let viewModel = HealthStoreViewModel()
+    
     @AppStorage(Constants.notifications) var isNotificationOn = false
     
     // Singleton, since instance through the entire application rather than keep creating NotificationManager
@@ -20,10 +22,11 @@ class NotificationManager: ObservableObject {
     //Need to request permission from user for notifcation
     
     func requestUserAuthorization() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { success, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { success, error in
             if success {
                 if self.isNotificationOn {
                     self.scheduleDailyNotification()
+                    self.scheduleWeeklyNotification()
                 }
             } else if let error = error {
                 print("Error: \(error)")
@@ -33,26 +36,41 @@ class NotificationManager: ObservableObject {
     
     func scheduleDailyNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "This is the first notification"
-        content.subtitle = "This is something new I'm learning"
+        content.title = "Here is today's physical activity summary"
+        content.subtitle = "You performed \(viewModel.currentExTime) minutes today"
         content.sound = .default
-        content.badge = 1
-        
-        
+ 
         //Trigger. 3 types. Time, Calendar, Location
         var dateComponents = DateComponents()
         dateComponents.hour = 22
-        dateComponents.minute = 30
-        
-        
-        //Scheduling a notificaiton on a weekday. 1 = Sunday
-        dateComponents.weekday = 1
+        dateComponents.minute = 0
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(
             identifier: UUID().uuidString,
             content: content,
             trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request)
+    }
+    
+    func scheduleWeeklyNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Here is your weekly physical activity summary"
+        content.subtitle = "You performed \(viewModel.weeklyExTime) minutes this week"
+        content.sound = .default
+        
+        var dateComponents = DateComponents()
+        dateComponents.hour = 22
+        dateComponents.minute = 0
+        dateComponents.weekday = 7
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let weeklyRequest = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger)
+        UNUserNotificationCenter.current().add(weeklyRequest)
     }
     
     
