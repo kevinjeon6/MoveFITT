@@ -15,7 +15,8 @@ struct OneWeekRestHRChartView: View {
         
         VStack(alignment: .leading, spacing: 10) {
       
-            Text("Resting Heart Rate Average: \(healthStoreVM.restingHR.reduce(0) { $0 + $1.restingValue / 7})")
+            Text("Average: \(healthStoreVM.restingHR.reduce(0) { $0 + $1.restingValue / 7}) bpm")
+                .font(.headline)
             
             Chart {
                 ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
@@ -25,9 +26,12 @@ struct OneWeekRestHRChartView: View {
                              y: .value("RHR", restHrData.restingValue)
                     )
                     .interpolationMethod(.catmullRom)
-                    .foregroundStyle(.purple)
-                    .symbol(Circle())
-                
+                    .foregroundStyle(.red)
+                    .symbol() {
+                        Circle()
+                            .fill(.red)
+                            .frame(width: 15)
+                    }
                 }
             }
             .frame(height: 200)
@@ -39,16 +43,11 @@ struct OneWeekRestHRChartView: View {
                     
                 }
             }
-            .chartPlotStyle { plotContent in
-                plotContent
-                    .background(.purple.opacity(0.1))
-                    .border(.mint, width: 1)
-            }
         }
         .padding(.horizontal)
         
         List{
-            ForEach(healthStoreVM.restingHR, id: \.date) {
+            ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
                 restHR in
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
@@ -70,5 +69,6 @@ struct OneWeekRestHRChartView: View {
 struct OneWeekRestHRChartView_Previews: PreviewProvider {
     static var previews: some View {
         OneWeekRestHRChartView()
+            .environmentObject(HealthStoreViewModel())
     }
 }
