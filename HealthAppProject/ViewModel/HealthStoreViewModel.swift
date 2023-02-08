@@ -21,6 +21,7 @@ class HealthStoreViewModel: ObservableObject {
     @Published var restingHR: [RestingHeartRate] = [RestingHeartRate]()
     @Published var kcalBurned: [CaloriesBurned] = [CaloriesBurned]()
     @Published var exerciseTime: [ExerciseTime] = [ExerciseTime]()
+    @Published var exerciseTime7Days: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTimeMonth: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTime3Months: [ExerciseTime] = [ExerciseTime]()
     
@@ -117,6 +118,7 @@ class HealthStoreViewModel: ObservableObject {
                 self.calculateStepCountData()
                 self.calculateRestingHRData()
                 self.calculateSevenDaysExerciseTime()
+                self.getOneWeekExerciseChart()
                 self.calculateMonthExerciseTime()
                 self.calculate3MonthExerciseTime()
                 self.calculateCaloriesBurned()
@@ -406,6 +408,55 @@ class HealthStoreViewModel: ObservableObject {
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }
+    
+//MARK: Work around to display Exercise time for the week in a Chart
+    func getOneWeekExerciseChart() {
+        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+        
+        
+        let anchorDate = Date.sundayAt12AM()
+        let daily = DateComponents(day: 1)
+        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
+        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+        
+        
+        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+
+        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                       quantitySamplePredicate: predicate,
+                                                       options: .cumulativeSum,
+                                                       anchorDate: anchorDate,
+                                                       intervalComponents: daily)
+    
+        exerciseTimeQuery!.initialResultsHandler = {
+            exerciseTimeQuery, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating exercise time
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTime7Days.append(exTime)
+                    }
+                }
+            }
+        }
+       
+        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
+        self.healthStore?.execute(exerciseTimeQuery)
+    }
+    
+    
+    
+    
+    
     
     //MARK: One Month Exercise Time
     

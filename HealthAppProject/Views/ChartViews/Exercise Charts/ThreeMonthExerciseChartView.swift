@@ -18,7 +18,7 @@ struct ThreeMonthExerciseChartView: View {
                 ForEach(healthStoreVM.exerciseTime3Months, id: \.date) {
                     value in
                     
-                    BarMark(x: .value("day", value.date, unit: .day),
+                    BarMark(x: .value("day", value.date, unit: .weekOfYear),
                              y: .value("ex time", value.exerValue)
                     )
                     .foregroundStyle(.purple)
@@ -26,10 +26,9 @@ struct ThreeMonthExerciseChartView: View {
             }
             .frame(height: 400)
             .chartXAxis {
-                AxisMarks(values: .automatic(minimumStride: 30)) {
+                AxisMarks(values: .stride(by: .month )) {
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.day().month())
-                    
+                    AxisValueLabel(format: .dateTime.month().year())
                 }
             }
             .chartPlotStyle { plotContent in

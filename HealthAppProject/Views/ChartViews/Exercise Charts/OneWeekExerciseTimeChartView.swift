@@ -20,7 +20,7 @@ struct OneWeekExerciseTimeChartView: View {
 
             
             Chart {
-                ForEach(healthStoreVM.exerciseTime, id: \.date) {
+                ForEach(healthStoreVM.exerciseTime7Days, id: \.date) {
                     time in
                     
                     BarMark(x: .value("day", time.date, unit: .day),
