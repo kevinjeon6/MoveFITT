@@ -24,7 +24,7 @@ struct QuickView: View {
 
                             Text(Constants.currentWeekDatesString)
                                 .padding(.top, 40)
-                                .font(.title)
+                                .font(.title3)
                             .bold()
                         
                         
@@ -42,9 +42,7 @@ struct QuickView: View {
                         VStack (spacing: 5) {
                             
                             
-                            NavigationLink {
-                                OneWeekStepChartView()
-                            } label: {
+                            NavigationLink(value: 1) {
                                 StepCountCardView(
                                     progress: Double(healthStoreVM.currentStepCount),
                                     minValue: 0.0,
@@ -53,13 +51,9 @@ struct QuickView: View {
                                     goalText: healthStoreVM.stepGoal)
                                 .foregroundColor(.black)
                             }
-                            .toolbar(.hidden)
+                            
                           
-
-                           
-                            NavigationLink {
-                               OneWeekRestHRChartView()
-                            } label: {
+                            NavigationLink(value: 2) {
                                 CurrentSummaryCardView(
                                     title: "Resting HR",
                                     imageText: "heart.fill",
@@ -68,9 +62,8 @@ struct QuickView: View {
                                 .foregroundColor(.black)
                             }
 
-                            NavigationLink {
-                                CaloriesBurnedChartView()
-                            } label: {
+
+                            NavigationLink(value: 3) {
                                 CurrentSummaryCardView(
                                     title: "Energy Burned",
                                     imageText: "flame.fill",
@@ -79,13 +72,18 @@ struct QuickView: View {
                                     categoryValue: "\(healthStoreVM.currentKcalsBurned)")
                                 .foregroundColor(.black)
                             }
-
-                           
-                            
-                         
                         }
                         .padding(.top, 30)
                     }
+                    .navigationDestination(for: Int.self, destination: { chart in
+                        if chart == 1 {
+                            OneWeekStepChartView()
+                        } else if chart == 2 {
+                            OneWeekRestHRChartView()
+                        } else if chart == 3 {
+                            CaloriesBurnedChartView()
+                        }
+                    })
                     .frame(minWidth: geo.size.width * 0.8, maxWidth: .infinity)
                     .padding(.horizontal)
                    
@@ -98,5 +96,6 @@ struct QuickView: View {
 struct QuickView_Previews: PreviewProvider {
     static var previews: some View {
         QuickView()
+            .environmentObject(HealthStoreViewModel())
     }
 }
