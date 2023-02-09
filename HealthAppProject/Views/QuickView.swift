@@ -12,8 +12,6 @@ struct QuickView: View {
   
     @EnvironmentObject var healthStoreVM: HealthStoreViewModel
     @State private var showInfoSheet = false
-   
-    
  
     var body: some View {
       
@@ -39,7 +37,15 @@ struct QuickView: View {
                         }
                         .padding(.top, 20)
                    
-                        VStack (spacing: 5) {
+                        VStack (spacing: 10) {
+                            
+                            
+                            StrengthTrainingGoalView(
+                                title: "Muscle Strengthening Goal",
+                                imageText: "dumbbell.fill",
+                                description: "doit",
+                                color: .purple)
+                                .foregroundColor(.black)
                             
                             
                             NavigationLink(value: 1) {

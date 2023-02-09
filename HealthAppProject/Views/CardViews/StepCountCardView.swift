@@ -25,7 +25,12 @@ struct StepCountCardView: View {
             HStack(spacing: 20){
                 Spacer()
                 VStack (alignment: .leading, spacing: 0) {
-                    StepCountGaugeView(progress: progress, minValue: minValue, maxValue: maxValue, title: title)
+                    ProgressGaugeView(progress: progress,
+                                       minValue: minValue,
+                                       maxValue: maxValue,
+                                       scaleValue: 0.8,
+                                       gaugeColor: .blue,
+                                       title: title)
                         .padding(.top, 5)
                     Text("\(goalText) steps")
                         .font(.caption)

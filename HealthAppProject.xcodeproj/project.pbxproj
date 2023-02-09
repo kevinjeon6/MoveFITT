@@ -21,9 +21,9 @@
 		7438E699298733C600F571C7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E698298733C600F571C7 /* NotificationManager.swift */; };
 		7438E69E2987457D00F571C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69D2987457D00F571C7 /* Constants.swift */; };
 		7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */; };
-		7466602C297EB60B00C17C8A /* ExerciseGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */; };
+		7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */; };
 		7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */; };
-		746660322982B3FD00C17C8A /* StepCountGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746660312982B3FD00C17C8A /* StepCountGaugeView.swift */; };
+		746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746660312982B3FD00C17C8A /* ProgressGaugeView.swift */; };
 		7466603429843BCA00C17C8A /* StepCountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466603329843BCA00C17C8A /* StepCountCardView.swift */; };
 		74666036298487EE00C17C8A /* CaloriesBurned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74666035298487EE00C17C8A /* CaloriesBurned.swift */; };
 		7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */; };
@@ -55,9 +55,9 @@
 		7438E69D2987457D00F571C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesBurnedView.swift; sourceTree = "<group>"; };
 		743AB91B295CE8B2004BD054 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGoalView.swift; sourceTree = "<group>"; };
+		7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthTrainingGoalView.swift; sourceTree = "<group>"; };
 		7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGaugeView.swift; sourceTree = "<group>"; };
-		746660312982B3FD00C17C8A /* StepCountGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountGaugeView.swift; sourceTree = "<group>"; };
+		746660312982B3FD00C17C8A /* ProgressGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressGaugeView.swift; sourceTree = "<group>"; };
 		7466603329843BCA00C17C8A /* StepCountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountCardView.swift; sourceTree = "<group>"; };
 		74666035298487EE00C17C8A /* CaloriesBurned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesBurned.swift; sourceTree = "<group>"; };
 		7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekExerciseTimeChartView.swift; sourceTree = "<group>"; };
@@ -93,9 +93,18 @@
 				7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */,
 				7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */,
 				74117143297B4FBA00328365 /* Exercise Charts */,
-				74338BC32974D03800EEC9B9 /* StatsView.swift */,
 			);
 			path = ChartViews;
+			sourceTree = "<group>";
+		};
+		740D0DF92995767800776E3D /* CardViews */ = {
+			isa = PBXGroup;
+			children = (
+				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
+				7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */,
+				7466603329843BCA00C17C8A /* StepCountCardView.swift */,
+			);
+			path = CardViews;
 			sourceTree = "<group>";
 		};
 		74117143297B4FBA00328365 /* Exercise Charts */ = {
@@ -142,7 +151,7 @@
 				74D30639296E1E95004D153B /* ProgressionStepBar.swift */,
 				74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */,
 				7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */,
-				746660312982B3FD00C17C8A /* StepCountGaugeView.swift */,
+				746660312982B3FD00C17C8A /* ProgressGaugeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -194,10 +203,9 @@
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* QuickView.swift */,
-				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
-				7466602B297EB60B00C17C8A /* ExerciseGoalView.swift */,
-				7466603329843BCA00C17C8A /* StepCountCardView.swift */,
+				74338BC32974D03800EEC9B9 /* StatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
+				740D0DF92995767800776E3D /* CardViews */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
 			);
@@ -291,9 +299,9 @@
 				7466603429843BCA00C17C8A /* StepCountCardView.swift in Sources */,
 				7438E699298733C600F571C7 /* NotificationManager.swift in Sources */,
 				74117142297A07C000328365 /* SettingsView.swift in Sources */,
-				7466602C297EB60B00C17C8A /* ExerciseGoalView.swift in Sources */,
+				7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */,
 				7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */,
-				746660322982B3FD00C17C8A /* StepCountGaugeView.swift in Sources */,
+				746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */,
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
 				74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */,
 				7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */,

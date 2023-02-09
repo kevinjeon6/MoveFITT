@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct StepCountGaugeView: View {
+struct ProgressGaugeView: View {
     
     var progress: Double
     var minValue: Double
     var maxValue: Double
+    var scaleValue: Double
+    var gaugeColor: Color
     var title: String
     
     
@@ -20,13 +22,13 @@ struct StepCountGaugeView: View {
             Text(title)
         }
         .gaugeStyle(.accessoryCircularCapacity)
-        .tint(.blue)
-        .scaleEffect(0.8)
+        .tint(gaugeColor)
+        .scaleEffect(scaleValue)
     }
 }
 
-struct StepCountGaugeView_Previews: PreviewProvider {
+struct ProgressGaugeView_Previews: PreviewProvider {
     static var previews: some View {
-        StepCountGaugeView(progress: 2500, minValue: 0, maxValue: 10_000, title: "25%")
+        ProgressGaugeView(progress: 2500, minValue: 0, maxValue: 10_000, scaleValue: 0.8, gaugeColor: .blue, title: "25%")
     }
 }
