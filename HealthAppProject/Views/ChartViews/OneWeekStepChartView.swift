@@ -27,6 +27,7 @@ struct OneWeekStepChartView: View {
                                  y: .value("steps", stepData.count)
                         )
                         .foregroundStyle(.cyan.gradient)
+                        .cornerRadius(5)
                     }
                 }
                 .frame(height: 200)

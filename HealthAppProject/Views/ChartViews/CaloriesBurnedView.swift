@@ -26,6 +26,7 @@ struct CaloriesBurnedChartView: View {
                             y: .value("kcal", kcalData.kcal)
                     )
                     .foregroundStyle(.orange.gradient)
+                    .cornerRadius(5)
                 }
             }
             .frame(height: 200)

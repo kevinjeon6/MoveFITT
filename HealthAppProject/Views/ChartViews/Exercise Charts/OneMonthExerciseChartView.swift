@@ -21,7 +21,8 @@ struct OneMonthExerciseChartView: View {
                     BarMark(x: .value("day", time.date, unit: .day),
                              y: .value("ex time", time.exerValue)
                     )
-                    .foregroundStyle(.green)
+                    .foregroundStyle(.green.gradient)
+                    .cornerRadius(2)
                 }
             }
             .frame(height: 400)
@@ -36,7 +37,7 @@ struct OneMonthExerciseChartView: View {
         .padding(.horizontal)
         
         List {
-            ForEach(healthStoreVM.exerciseTimeMonth, id: \.date) { exTime in
+            ForEach(healthStoreVM.exerciseTimeMonth.reversed(), id: \.date) { exTime in
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
                         Image(systemName: "figure.mixed.cardio")
@@ -50,6 +51,7 @@ struct OneMonthExerciseChartView: View {
                 }
             }
         }
+        .listStyle(.inset)
     }
 }
 
