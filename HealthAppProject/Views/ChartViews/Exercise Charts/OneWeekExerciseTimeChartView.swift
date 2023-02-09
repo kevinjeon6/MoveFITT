@@ -26,7 +26,7 @@ struct OneWeekExerciseTimeChartView: View {
                     BarMark(x: .value("day", time.date, unit: .day),
                              y: .value("ex time", time.exerValue)
                     )
-                    .foregroundStyle(.purple)   
+                    .foregroundStyle(.green)   
                 }
             }
             .frame(height: 400)
@@ -37,12 +37,6 @@ struct OneWeekExerciseTimeChartView: View {
                     
                 }
             }
-            .chartPlotStyle { plotContent in
-                plotContent
-                    .background(.purple.opacity(0.1))
-                    .border(.mint, width: 1)
-            }
-
         }
         .padding(.horizontal)
     }

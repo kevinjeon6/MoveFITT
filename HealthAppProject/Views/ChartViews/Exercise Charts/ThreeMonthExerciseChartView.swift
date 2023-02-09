@@ -21,7 +21,7 @@ struct ThreeMonthExerciseChartView: View {
                     BarMark(x: .value("day", value.date, unit: .weekOfYear),
                              y: .value("ex time", value.exerValue)
                     )
-                    .foregroundStyle(.purple)
+                    .foregroundStyle(.green)
                 }
             }
             .frame(height: 400)
@@ -30,11 +30,6 @@ struct ThreeMonthExerciseChartView: View {
                     AxisGridLine()
                     AxisValueLabel(format: .dateTime.month().year())
                 }
-            }
-            .chartPlotStyle { plotContent in
-                plotContent
-                    .background(.purple.opacity(0.1))
-                    .border(.mint, width: 1)
             }
         }
         .padding(.horizontal)
