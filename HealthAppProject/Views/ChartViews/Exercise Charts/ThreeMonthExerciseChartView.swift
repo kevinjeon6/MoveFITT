@@ -33,6 +33,23 @@ struct ThreeMonthExerciseChartView: View {
             }
         }
         .padding(.horizontal)
+        
+        List {
+            ForEach(healthStoreVM.exerciseTime3Months, id: \.date) { exTime in
+                VStack(alignment: .leading, spacing: 5){
+                    HStack {
+                        Image(systemName: "figure.mixed.cardio")
+                            .foregroundColor(.green)
+                        Text("\(exTime.exerValue)")
+                            .font(.title2)
+                            .bold()
+                    }
+                    Text(exTime.date, style: .date)
+                        .opacity(0.5)
+                }
+            }
+        }
+        
     }
 }
 
