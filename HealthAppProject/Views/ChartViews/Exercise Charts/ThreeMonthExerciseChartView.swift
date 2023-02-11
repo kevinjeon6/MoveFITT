@@ -50,7 +50,7 @@ struct ThreeMonthExerciseChartView: View {
                 }
             }
         }
-        
+        .listStyle(.inset)
     }
 }
 

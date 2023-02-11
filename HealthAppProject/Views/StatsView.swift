@@ -16,7 +16,6 @@ struct StatsView: View {
     var body: some View {
         
         NavigationStack {
-            ScrollView {
                 VStack(spacing: 20){
                     Picker("Choose data", selection: $healthStoreVM.timePeriodSelected.animation(.easeInOut)) {
                             Text("Week").tag("week")
@@ -40,7 +39,6 @@ struct StatsView: View {
                 .padding(.horizontal)
                 .navigationTitle("Charts")
                 .navigationBarTitleDisplayMode(.inline)
-            }
         }
     }
 }

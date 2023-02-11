@@ -5,7 +5,6 @@
 //  Created by Kevin Mattocks on 1/13/23.
 //
 import Charts
-import HealthKit
 import SwiftUI
 
 struct OneWeekRestHRChartView: View {

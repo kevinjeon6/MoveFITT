@@ -5,7 +5,6 @@
 //  Created by Kevin Mattocks on 1/30/23.
 //
 import Charts
-import HealthKit
 import SwiftUI
 
 struct CaloriesBurnedChartView: View {
