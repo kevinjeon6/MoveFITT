@@ -25,7 +25,7 @@ struct OneMonthExerciseChartView: View {
                     .cornerRadius(2)
                 }
             }
-            .frame(height: 400)
+            .frame(height: 200)
             .chartXAxis {
                 AxisMarks(values: .automatic(minimumStride: 7)) {
                     AxisGridLine()
@@ -42,7 +42,7 @@ struct OneMonthExerciseChartView: View {
                     HStack {
                         Image(systemName: "figure.mixed.cardio")
                             .foregroundColor(.green)
-                        Text("\(exTime.exerValue)")
+                        Text("\(exTime.exerValue) mins")
                             .font(.title2)
                             .bold()
                     }
