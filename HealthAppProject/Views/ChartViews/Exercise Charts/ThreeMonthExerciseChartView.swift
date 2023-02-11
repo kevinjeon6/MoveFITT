@@ -41,7 +41,7 @@ struct ThreeMonthExerciseChartView: View {
                     HStack {
                         Image(systemName: "figure.mixed.cardio")
                             .foregroundColor(.green)
-                        Text("\(exTime.exerValue) mins")
+                        Text("\(exTime.exerValue) min")
                             .font(.title2)
                             .bold()
                     }
