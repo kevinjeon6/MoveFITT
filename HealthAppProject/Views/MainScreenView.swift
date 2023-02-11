@@ -27,7 +27,7 @@ struct MainScreenView: View {
             
             StatsView(healthStoreVM: healthStore)
                 .tabItem {
-                    Label("Statistics", systemImage: "chart.xyaxis.line")
+                    Label("Exercise Stats", systemImage: "chart.xyaxis.line")
                 }
                 .tag(2)
             

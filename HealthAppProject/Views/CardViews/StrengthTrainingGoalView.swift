@@ -25,35 +25,34 @@ struct StrengthTrainingGoalView: View {
                 .padding(.horizontal)
                 .frame(width: 400, height: 200)
    
-            VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Image(systemName: imageText)
-                            .foregroundColor(color)
-                        Text(title)
-                            .font(.title2)
-                        Spacer()
-                        Button {
-                            showInfoSheet.toggle()
-                        } label: {
-                            Image(systemName: "info.circle")
+            VStack {
+                VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Image(systemName: imageText)
+                                .foregroundColor(color)
+                            Text(title)
+                                .font(.title2)
+                            Spacer()
+                            Button {
+                                showInfoSheet.toggle()
+                            } label: {
+                                Image(systemName: "info.circle")
+                            }
+                            .sheet(isPresented: $showInfoSheet){
+                                InfoView(description: description)
+                                    .presentationDetents([.medium])
+                            }
                         }
-                        .sheet(isPresented: $showInfoSheet){
-                            InfoView(description: description)
-                                .presentationDetents([.medium])
-                        }
-                    }
-                  
-                Spacer()
+                    
+                    Text("Goal is to perform ") + Text("3 ").bold() + Text("muscle strengthening activities this week")
+                }
+                .padding(.bottom, 20)
+    
+                ProgressGaugeView(progress: 2, minValue: 0, maxValue: 3, scaleValue: 1.5, gaugeColor: .purple, title: "2")
             }
-            .padding(.trailing, 10)
-            .padding(.leading)
-            .padding(.top)
+            .padding(.horizontal, 10)
+            .padding(.bottom, 20)
             .frame(width: 350, height: 200)
-            VStack(alignment: .center) {
-                ProgressGaugeView(progress: 2, minValue: 0, maxValue: 3, scaleValue: 2.0, gaugeColor: .purple,
-                                   title: "2")
-                    .padding(.top, 40)
-            }
         }
     }
 }

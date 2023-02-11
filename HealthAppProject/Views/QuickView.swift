@@ -41,7 +41,7 @@ struct QuickView: View {
                             
                             
                             StrengthTrainingGoalView(
-                                title: "Muscle Strengthening Goal",
+                                title: "Muscle Strengthening",
                                 imageText: "dumbbell.fill",
                                 description: "doit",
                                 color: .purple)
@@ -57,7 +57,6 @@ struct QuickView: View {
                                     goalText: healthStoreVM.stepGoal)
                                 .foregroundColor(.black)
                             }
-                            
                           
                             NavigationLink(value: 2) {
                                 CurrentSummaryCardView(
