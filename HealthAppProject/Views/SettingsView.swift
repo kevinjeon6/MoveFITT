@@ -13,6 +13,7 @@ struct SettingsView: View {
     @Binding var stepGoal: Int
     @Binding var exerciseDayGoal: Int
     @Binding var exerciseWeeklyGoal: Int
+    @Binding var muscleWeeklyGoal: Int
     @ObservedObject var healthStoreVM: HealthStoreViewModel
     @StateObject var notificationManager = NotificationManager()
     
@@ -33,6 +34,8 @@ struct SettingsView: View {
                     Stepper("\(exerciseDayGoal)", value: $healthStoreVM.exerciseDayGoal, in: 5...75, step: 5)
                     
                     Stepper("\(exerciseWeeklyGoal)", value: $healthStoreVM.exerciseWeeklyGoal, in: 75...450, step: 15)
+                    
+                    Stepper("\(muscleWeeklyGoal)", value: $healthStoreVM.muscleWeeklyGoal, in: 2...7, step: 1)
                     
                     
                 } header: {
@@ -56,6 +59,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), healthStoreVM: HealthStoreViewModel(), notificationManager: NotificationManager())
+        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2), healthStoreVM: HealthStoreViewModel(), notificationManager: NotificationManager())
     }
 }

@@ -36,6 +36,7 @@ struct MainScreenView: View {
                 stepGoal: $healthStore.stepGoal,
                 exerciseDayGoal: $healthStore.exerciseDayGoal,
                 exerciseWeeklyGoal: $healthStore.exerciseWeeklyGoal,
+                muscleWeeklyGoal: $healthStore.muscleWeeklyGoal,
                 healthStoreVM: healthStore)
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")

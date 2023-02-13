@@ -37,6 +37,7 @@ class HealthStoreViewModel: ObservableObject {
     @AppStorage(Constants.stepGoal) var stepGoal: Int = 10_000
     @AppStorage(Constants.exerciseWeeklyGoal)var exerciseWeeklyGoal: Int = 150
     @AppStorage(Constants.exerciseDailyGoal)var exerciseDayGoal: Int = 30
+    @AppStorage(Constants.muscleStrengtheningWeeklyGoal) var muscleWeeklyGoal: Int = 2
     
     var currentStepCount: Int {
         steps.last?.count ?? 0

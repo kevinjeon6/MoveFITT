@@ -10,6 +10,7 @@ struct Constants {
     static var stepGoal = "step goal"
     static var exerciseDailyGoal = "exercise daily goal"
     static var exerciseWeeklyGoal = "exercise weekly goal"
+    static var muscleStrengtheningWeeklyGoal = "muscle strengthening weekly goal"
     static var notifications = "notifications"
     
 
