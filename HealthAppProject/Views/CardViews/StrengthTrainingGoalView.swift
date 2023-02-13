@@ -12,6 +12,7 @@ struct StrengthTrainingGoalView: View {
     var title: String
     var imageText: String
     var description: String
+    var goalText: Int
     var color: Color
     
     @State private var showInfoSheet = false
@@ -44,7 +45,7 @@ struct StrengthTrainingGoalView: View {
                             }
                         }
                     
-                    Text("Goal is to perform ") + Text("3 ").bold() + Text("muscle strengthening activities this week")
+                    Text("Goal is to perform ") + Text("\(goalText) ").bold() + Text("muscle strengthening activities this week")
                 }
                 .padding(.bottom, 20)
     
@@ -59,6 +60,6 @@ struct StrengthTrainingGoalView: View {
 
 struct StrengthTrainingGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        StrengthTrainingGoalView(title: "Muscle Strength Goal", imageText: "dumbbell.fill", description: "Train 2x/week", color: .purple)
+        StrengthTrainingGoalView(title: "Muscle Strength Goal", imageText: "dumbbell.fill", description: "Train 2x/week", goalText: 3, color: .purple)
     }
 }

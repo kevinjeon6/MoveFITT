@@ -44,6 +44,7 @@ struct QuickView: View {
                                 title: "Muscle Strengthening",
                                 imageText: "dumbbell.fill",
                                 description: "doit",
+                                goalText: healthStoreVM.muscleWeeklyGoal,
                                 color: .purple)
                                 .foregroundColor(.black)
                             
