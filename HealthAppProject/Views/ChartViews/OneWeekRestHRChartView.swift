@@ -51,7 +51,7 @@ struct OneWeekRestHRChartView: View {
                 
                 DataListView(imageText: "heart.fill",
                              imageColor: .red,
-                             valueText: "\(restHR.restingValue)",
+                             valueText: "\(restHR.restingValue) bpm",
                              date: restHR.date)
             }
         }

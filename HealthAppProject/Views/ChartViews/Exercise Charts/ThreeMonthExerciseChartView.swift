@@ -40,7 +40,7 @@ struct ThreeMonthExerciseChartView: View {
                 
                 DataListView(imageText: "figure.mixed.cardio",
                              imageColor: .green,
-                             valueText: "\(exTime.exerValue)",
+                             valueText: "\(exTime.exerValue) min",
                              date: exTime.date)
     
             }

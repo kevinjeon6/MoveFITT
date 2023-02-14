@@ -46,7 +46,7 @@ struct CaloriesBurnedChartView: View {
                 
                 DataListView(imageText: "flame.fill",
                              imageColor: .orange,
-                             valueText: "\(burn.kcal)",
+                             valueText: "\(burn.kcal) kcal",
                              date: burn.date)
             }
         }
