@@ -43,17 +43,11 @@ struct CaloriesBurnedChartView: View {
         List {
             ForEach(healthStoreVM.kcalBurned.reversed(), id: \.date) {
                 burn in
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Image(systemName: "flame.fill")
-                            .foregroundColor(.orange)
-                        Text("\(burn.kcal) kcal")
-                            .font(.title2)
-                            .bold()
-                    }
-                    Text(burn.date, style: .date)
-                        .opacity(0.5)
-                }
+                
+                DataListView(imageText: "flame.fill",
+                             imageColor: .orange,
+                             valueText: "\(burn.kcal)",
+                             date: burn.date)
             }
         }
         .listStyle(.inset)

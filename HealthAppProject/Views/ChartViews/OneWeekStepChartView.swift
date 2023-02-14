@@ -44,17 +44,11 @@ struct OneWeekStepChartView: View {
         List{
             ForEach(healthStoreVM.steps.reversed(), id: \.date) {
                 step in
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Image(systemName: "figure.walk")
-                            .foregroundColor(.cyan)
-                        Text("\(step.count)")
-                            .font(.title2)
-                            .bold()
-                    }
-                    Text(step.date, style: .date)
-                        .opacity(0.5)
-                }
+                
+                DataListView(imageText: "figure.walk",
+                             imageColor: .cyan,
+                             valueText: "\(step.count) steps",
+                             date: step.date)
             }
         }
         .listStyle(.inset)

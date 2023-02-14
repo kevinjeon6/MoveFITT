@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7405CDC0296893D30061A8D1 /* HKHealthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7405CDBF296893D30061A8D1 /* HKHealthType.swift */; };
+		740D0E012999D3F500776E3D /* MuscleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E002999D3F500776E3D /* MuscleView.swift */; };
+		740D0E03299B27F100776E3D /* DataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E02299B27F100776E3D /* DataListView.swift */; };
 		74117142297A07C000328365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117141297A07C000328365 /* SettingsView.swift */; };
 		74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */; };
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		7405CDBF296893D30061A8D1 /* HKHealthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKHealthType.swift; sourceTree = "<group>"; };
+		740D0E002999D3F500776E3D /* MuscleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleView.swift; sourceTree = "<group>"; };
+		740D0E02299B27F100776E3D /* DataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataListView.swift; sourceTree = "<group>"; };
 		74117141297A07C000328365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */,
 				7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */,
 				746660312982B3FD00C17C8A /* ProgressGaugeView.swift */,
+				740D0E02299B27F100776E3D /* DataListView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				74DF66FA295B77A50046F521 /* QuickView.swift */,
 				74338BC32974D03800EEC9B9 /* StatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
+				740D0E002999D3F500776E3D /* MuscleView.swift */,
 				740D0DF92995767800776E3D /* CardViews */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
@@ -305,6 +311,7 @@
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
 				74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */,
 				7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */,
+				740D0E012999D3F500776E3D /* MuscleView.swift in Sources */,
 				74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
@@ -314,6 +321,7 @@
 				74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */,
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,
 				74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */,
+				740D0E03299B27F100776E3D /* DataListView.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,

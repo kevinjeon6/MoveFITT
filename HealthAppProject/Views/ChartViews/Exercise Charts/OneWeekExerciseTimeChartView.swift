@@ -43,18 +43,12 @@ struct OneWeekExerciseTimeChartView: View {
         
         List{
             ForEach(healthStoreVM.exerciseTime7Days.reversed(), id: \.date) { exTime in
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Image(systemName: "figure.mixed.cardio")
-                            .foregroundColor(.green)
-                        Text("\(exTime.exerValue) min")
-                            .font(.title2)
-                            .bold()
-                    }
-                    Text(exTime.date, style: .date)
-                        .opacity(0.5)
-                    
-                }
+                
+                DataListView(imageText: "figure.mixed.cardio",
+                             imageColor: .green,
+                             valueText: "\(exTime.exerValue)",
+                             date: exTime.date)
+                
             }
         }
         .listStyle(.inset)

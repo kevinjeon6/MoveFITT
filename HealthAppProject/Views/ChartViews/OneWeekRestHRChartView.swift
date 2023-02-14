@@ -48,17 +48,11 @@ struct OneWeekRestHRChartView: View {
         List{
             ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
                 restHR in
-                VStack(alignment: .leading, spacing: 5) {
-                    HStack {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
-                        Text("\(restHR.restingValue) bpm")
-                            .font(.title2)
-                            .bold()
-                    }
-                    Text(restHR.date, style: .date)
-                        .opacity(0.5)
-                }
+                
+                DataListView(imageText: "heart.fill",
+                             imageColor: .red,
+                             valueText: "\(restHR.restingValue)",
+                             date: restHR.date)
             }
         }
         .listStyle(.inset)
