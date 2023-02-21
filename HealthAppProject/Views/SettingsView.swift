@@ -31,11 +31,11 @@ struct SettingsView: View {
                 
                 //MARK: Exercise Daily Goal
                 Section {
-                    Stepper("\(exerciseDayGoal)", value: $healthStoreVM.exerciseDayGoal, in: 5...75, step: 5)
+                    Stepper("Daily Goal: \(exerciseDayGoal)", value: $healthStoreVM.exerciseDayGoal, in: 5...75, step: 5)
                     
-                    Stepper("\(exerciseWeeklyGoal)", value: $healthStoreVM.exerciseWeeklyGoal, in: 75...450, step: 15)
+                    Stepper("Weekly Goal: \(exerciseWeeklyGoal)", value: $healthStoreVM.exerciseWeeklyGoal, in: 75...450, step: 15)
                     
-                    Stepper("\(muscleWeeklyGoal)", value: $healthStoreVM.muscleWeeklyGoal, in: 2...7, step: 1)
+                    Stepper("Strength Goal: \(muscleWeeklyGoal)", value: $healthStoreVM.muscleWeeklyGoal, in: 2...7, step: 1)
                     
                     
                 } header: {
