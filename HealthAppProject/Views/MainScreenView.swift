@@ -21,7 +21,7 @@ struct MainScreenView: View {
             QuickView()
                 .environmentObject(HealthStoreViewModel())
                 .tabItem {
-                    Label("Today", systemImage: "list.bullet.clipboard")
+                    Label("Summary", systemImage: "list.bullet.clipboard")
                 }
                 .tag(1)
             

@@ -18,26 +18,24 @@ struct QuickView: View {
         NavigationStack {
             GeometryReader { geo in
                 ScrollView {
-                    VStack(spacing: 5) {
-
-                            Text(Constants.currentWeekDatesString)
-                                .padding(.top, 40)
-                                .font(.title3)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Activity Overview")
+                            .padding([.top, .leading], 20)
+                            .font(.largeTitle)
                             .bold()
                         
                         
-                        HStack(spacing: 50) {
-                            ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today")
-                            
-  
-                            ExerciseGaugeView(progress: Double(healthStoreVM.weeklyExTime),
-                                minValue: 0.0,
-                                maxValue: Double(healthStoreVM.exerciseWeeklyGoal),
-                                title: "Weekly")
-                        }
-                        .padding(.top, 20)
-                   
                         VStack (spacing: 10) {
+                            HStack(spacing: 50) {
+                                ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today", dateText: Constants.todayDateString)
+                                
+      
+                                ExerciseGaugeView(progress: Double(healthStoreVM.weeklyExTime),
+                                    minValue: 0.0,
+                                    maxValue: Double(healthStoreVM.exerciseWeeklyGoal),
+                                                  title: "Weekly Total", dateText: Constants.currentWeekDatesString)
+                            }
+                            .padding(.bottom, 20)
                             
                             
                             StrengthTrainingGoalView(

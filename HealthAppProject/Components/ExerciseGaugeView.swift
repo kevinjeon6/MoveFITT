@@ -12,6 +12,7 @@ struct ExerciseGaugeView: View {
     var minValue: Double
     var maxValue: Double
     var title: String
+    var dateText: String
     
     let gradient = Gradient(colors: [.red, .orange, .yellow, .mint, .green])
     
@@ -32,12 +33,15 @@ struct ExerciseGaugeView: View {
         
             
             Text(title)
+            Text(dateText)
+                .font(.caption)
+                
         }//VStack
     }
 }
 
 struct ExerciseGaugeView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseGaugeView(progress: 75, minValue: 0, maxValue: 150, title: "Weekly Goal")
+        ExerciseGaugeView(progress: 75, minValue: 0, maxValue: 150, title: "Today", dateText: "Tuesday, Feb 21")
     }
 }

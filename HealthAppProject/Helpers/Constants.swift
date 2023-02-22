@@ -14,7 +14,7 @@ struct Constants {
     static var notifications = "notifications"
     
 
-    
+    static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month().day())
     
     
     static var currentWeekDatesString: String {
@@ -26,7 +26,7 @@ struct Constants {
         let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek!)
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy"
+        dateFormatter.dateFormat = "MMM d"
         
         let startOfWeekString = dateFormatter.string(from: startOfWeek!)
         let endOfWeekString = dateFormatter.string(from: endOfWeek!)
