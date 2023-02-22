@@ -41,7 +41,7 @@ struct QuickView: View {
                             StrengthTrainingGoalView(
                                 title: "Muscle Strengthening",
                                 imageText: "dumbbell.fill",
-                                description: "doit",
+                                description: HealthInfoText.strengthActivityDescription,
                                 goalText: healthStoreVM.muscleWeeklyGoal,
                                 color: .purple)
                                 .foregroundColor(.black)
@@ -61,7 +61,7 @@ struct QuickView: View {
                                 CurrentSummaryCardView(
                                     title: "Resting HR",
                                     imageText: "heart.fill",
-                                    description: healthStoreVM.restHRDescription, color: .red,
+                                    description: HealthInfoText.restHRDescription, color: .red,
                                     categoryValue: "\(healthStoreVM.currentRestHR)")
                                 .foregroundColor(.black)
                             }

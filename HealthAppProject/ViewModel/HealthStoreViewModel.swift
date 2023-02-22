@@ -59,9 +59,7 @@ class HealthStoreViewModel: ObservableObject {
         restingHR.reduce(0) { $0 + $1.restingValue / 7}
     }
     
-    var restHRDescription: String {
-        " Resting Heart Rate is your heart rate while resting for a period of time. Your heart is primarily controlled by sympathetic and parasympathetic input to the sinoatrial (SA) node. A "
-    }
+ 
     
     var currentExTime: Int {
         exerciseTime.last?.exerValue ?? 0
@@ -71,9 +69,7 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTime.reduce(0) { $0 + $1.exerValue }
     }
     
-    var exerTimeDescription: String {
-        "It is recommended that individuals engage in 150 min/week of physical activity. Meeting the recommended guidelines may reduces heart attack incidences and "
-    }
+   
     
     
     var currentKcalsBurned: Int {
