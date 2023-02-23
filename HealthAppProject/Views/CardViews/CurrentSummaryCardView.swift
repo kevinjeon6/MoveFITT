@@ -21,7 +21,7 @@ struct CurrentSummaryCardView: View {
         
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(.white)
+                .fill(Color.darkModeColor)
                 .shadow(color: .black.opacity(0.5), radius: 5)
                 .padding(.horizontal)
                 .frame(width: 400, height: 80)
@@ -29,7 +29,7 @@ struct CurrentSummaryCardView: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Image(systemName: imageText )
+                    Image(systemName: imageText)
                         .foregroundColor(color)
                     Text(title)
                         .font(.title3)

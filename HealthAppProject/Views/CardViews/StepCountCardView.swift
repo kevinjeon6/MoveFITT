@@ -17,7 +17,7 @@ struct StepCountCardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundColor(.white)
+                .fill(Color.darkModeColor)
                 .shadow(color: .black.opacity(0.5), radius: 5)
                 .padding(.horizontal)
                 .frame(width: 400, height: 80)
