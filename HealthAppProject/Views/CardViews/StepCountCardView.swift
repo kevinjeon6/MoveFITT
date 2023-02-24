@@ -34,6 +34,7 @@ struct StepCountCardView: View {
                         .padding(.top, 5)
                     Text("\(goalText) steps")
                         .font(.caption)
+                        .foregroundColor(.primary)
                         .padding(.bottom, 5)
                 }
                 Spacer()
@@ -41,6 +42,7 @@ struct StepCountCardView: View {
                 Text("\(Int(progress)) steps")
                     .font(.title)
                     .bold()
+                    .foregroundColor(.primary)
                 Spacer()
             }
             .padding(.trailing, 30)

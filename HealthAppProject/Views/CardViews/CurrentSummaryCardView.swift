@@ -33,6 +33,7 @@ struct CurrentSummaryCardView: View {
                         .foregroundColor(color)
                     Text(title)
                         .font(.title3)
+                        .foregroundColor(.primary)
                     Spacer()
                     Button {
                         showInfoSheet.toggle()
@@ -51,6 +52,7 @@ struct CurrentSummaryCardView: View {
                 Text(categoryValue ?? "Missing Data")
                     .font(.largeTitle)
                     .bold()
+                    .foregroundColor(.primary)
                     .padding(.bottom, 5)
             }
             .padding(.leading)

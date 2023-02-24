@@ -20,6 +20,7 @@ struct ProgressGaugeView: View {
     var body: some View {
         Gauge(value: progress, in: minValue...maxValue) {
             Text(title)
+                .foregroundColor(.primary)
         }
         .gaugeStyle(.accessoryCircularCapacity)
         .tint(gaugeColor)
