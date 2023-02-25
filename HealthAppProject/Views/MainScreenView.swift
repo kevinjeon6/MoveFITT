@@ -42,6 +42,12 @@ struct MainScreenView: View {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
                 .tag(3)
+            
+            MuscleView(healthStoreVM: healthStore)
+                .tabItem {
+                    Label("Workout", systemImage: "dumbbell.fill")
+                }
+                .tag(4)
         }
     }
 }

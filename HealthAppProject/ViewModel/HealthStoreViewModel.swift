@@ -16,6 +16,8 @@ class HealthStoreViewModel: ObservableObject {
     var restingHRquery: HKStatisticsCollectionQuery?
     var exerciseTimeQuery: HKStatisticsCollectionQuery?
     var caloriesBurnedQuery: HKStatisticsCollectionQuery?
+    var selectedWorkoutQuery: HKQuery?
+
     
     @Published var steps: [Step] = [Step]()
     @Published var restingHR: [RestingHeartRate] = [RestingHeartRate]()
@@ -24,6 +26,8 @@ class HealthStoreViewModel: ObservableObject {
     @Published var exerciseTime7Days: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTimeMonth: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTime3Months: [ExerciseTime] = [ExerciseTime]()
+    @Published var muscleStrength: [HKWorkout] = [HKWorkout]()
+
     
     
     //Associated with the segmented control. Week is set as the default
@@ -98,8 +102,10 @@ class HealthStoreViewModel: ObservableObject {
         let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+        let workoutType = HKWorkoutType.workoutType()
         
-        let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType, caloriesBurnedType])
+        
+        let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType, caloriesBurnedType, workoutType])
         
         
         guard let healthStore = self.healthStore else {
@@ -119,6 +125,7 @@ class HealthStoreViewModel: ObservableObject {
                 self.calculateMonthExerciseTime()
                 self.calculate3MonthExerciseTime()
                 self.calculateCaloriesBurned()
+                self.getWorkoutData()
             }
         }
     }
@@ -409,8 +416,6 @@ class HealthStoreViewModel: ObservableObject {
 //MARK: Work around to display Exercise time for the week in a Chart
     func getOneWeekExerciseChart() {
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
-        
-        
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
@@ -505,8 +510,6 @@ class HealthStoreViewModel: ObservableObject {
     
     func calculate3MonthExerciseTime(){
         let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
-        
-        
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: Date())!
@@ -547,6 +550,36 @@ class HealthStoreViewModel: ObservableObject {
         self.healthStore?.execute(exerciseTimeQuery)
     
     }
+    
+
+    func getWorkoutData()  {
+
+        let strengthPredicate = HKQuery.predicateForWorkoutActivities(workoutActivityType: .traditionalStrengthTraining)
+        let traditionalStrengthTrainingPredicate = HKQuery.predicateForWorkouts(activityPredicate: strengthPredicate)
+        
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)
+        
+        let selectedWorkoutQuery = HKSampleQuery(
+            sampleType: HKWorkoutType.workoutType(),
+            predicate: traditionalStrengthTrainingPredicate,
+            limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { strengthQuery, samples, error in
+            
+            guard let samples = samples else {
+                fatalError("An error has occured \(error?.localizedDescription)")
+            }
+            
+            guard let workouts = samples as? [HKWorkout] else { return }
+            
+            
+            DispatchQueue.main.async {
+                self.muscleStrength.append(contentsOf: workouts)
+                print(workouts)
+            }
+        }
+        
+        self.healthStore?.execute(selectedWorkoutQuery)
+    }
+    
 }
   
 

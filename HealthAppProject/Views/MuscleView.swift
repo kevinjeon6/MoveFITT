@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct MuscleView: View {
+    
+    @ObservedObject var healthStoreVM: HealthStoreViewModel
    
     
     var body: some View {
-        VStack {
-            Text("Workouts go here")
+        List(healthStoreVM.muscleStrength, id: \.self) {
+            workout in
+            
+            Text("\(workout.workoutActivityType.rawValue)")
+            Text("\(workout.workoutActivities.description)")
+          
         }
    
     }
@@ -20,6 +26,6 @@ struct MuscleView: View {
 
 struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
-        MuscleView()
+        MuscleView(healthStoreVM: HealthStoreViewModel())
     }
 }
