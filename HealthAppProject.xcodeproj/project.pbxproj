@@ -39,6 +39,7 @@
 		74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */; };
 		74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE532978C2D300E2A42C /* InfoView.swift */; };
 		74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */; };
+		74F02F5C29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 		74DF670B295B843C0046F521 /* HealthStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStoreViewModel.swift; sourceTree = "<group>"; };
 		74E4DE532978C2D300E2A42C /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderComponent.swift; sourceTree = "<group>"; };
+		74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKWorkoutActivityTypeExtension.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				743818E2295DFC8200FE4613 /* DateExtension.swift */,
+				74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */,
+				744095C029A71C5C0098ACA7 /* ColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -146,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				7438E69D2987457D00F571C7 /* Constants.swift */,
-				744095C029A71C5C0098ACA7 /* ColorExtension.swift */,
 				744095B829A5C6930098ACA7 /* HealthTypeInfoText.swift */,
 			);
 			path = Helpers;
@@ -309,6 +312,7 @@
 				74117142297A07C000328365 /* SettingsView.swift in Sources */,
 				7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */,
 				744095B929A5C6930098ACA7 /* HealthTypeInfoText.swift in Sources */,
+				74F02F5C29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift in Sources */,
 				7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */,
 				746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */,
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
