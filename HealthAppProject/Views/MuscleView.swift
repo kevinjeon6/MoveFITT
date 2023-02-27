@@ -13,12 +13,18 @@ struct MuscleView: View {
    
     
     var body: some View {
-        List(healthStoreVM.muscleStrength, id: \.self) {
-            workout in
-            
-            Text("\(workout.workoutActivityType.rawValue)")
-            Text("\(workout.workoutActivities.description)")
-          
+    
+        NavigationStack {
+            List(healthStoreVM.muscleStrength, id: \.self) {
+                workout in
+                
+                VStack(alignment: .leading) {
+                    Text("\(workout.workoutActivityType.name)")
+                    Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
+                        .font(.subheadline)
+                }
+            }
+            .navigationTitle("Workouts")
         }
    
     }
