@@ -73,15 +73,16 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTime.reduce(0) { $0 + $1.exerValue }
     }
     
-   
-    
-    
     var currentKcalsBurned: Int {
         kcalBurned.last?.kcal ?? 0
     }
     
     var averageKcalsBurned: Int {
         kcalBurned.reduce(0) { $0 + $1.kcal / 7}
+    }
+    
+    var currentStrengthTraining: Int {
+        muscleStrength.count
     }
  
     
@@ -213,9 +214,7 @@ class HealthStoreViewModel: ObservableObject {
         
         
         let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
-        //        let restingHRanchorDate = Calendar.current.startOfDay(for: Date())
-        //        let hourly = DateComponents(hour: 1)
-        //        let oneDayCount = Calendar.current.date(byAdding: DateComponents(day: -1), to: Date())
+
 
         restingHRquery =   HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
                                                        quantitySamplePredicate: predicate,
@@ -553,15 +552,21 @@ class HealthStoreViewModel: ObservableObject {
     
 
     func getWorkoutData()  {
-
+        let date = Date()
+        let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: date)?.start
+        let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: .strictStartDate)
+        
+        
         let strengthPredicate = HKQuery.predicateForWorkoutActivities(workoutActivityType: .traditionalStrengthTraining)
         let traditionalStrengthTrainingPredicate = HKQuery.predicateForWorkouts(activityPredicate: strengthPredicate)
+        
+        let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, traditionalStrengthTrainingPredicate])
         
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
         
         let selectedWorkoutQuery = HKSampleQuery(
             sampleType: HKWorkoutType.workoutType(),
-            predicate: traditionalStrengthTrainingPredicate,
+            predicate: combinedPredicate,
             limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { strengthQuery, samples, error in
             
             guard let samples = samples else {
