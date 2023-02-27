@@ -39,11 +39,13 @@ struct QuickView: View {
                             
                             
                             StrengthTrainingGoalView(
-                                title: "Muscle Strengthening",
-                                imageText: "dumbbell.fill",
-                                description: HealthInfoText.strengthActivityDescription,
+                                progress: Double(healthStoreVM.currentStrengthTraining),
+                                minValue: 0.0,
+                                maxValue: Double(healthStoreVM.muscleWeeklyGoal),
+                                title: "\(healthStoreVM.currentStrengthTraining)",
+                                imageText: "dumbbell.fill", description: "NO",
                                 goalText: healthStoreVM.muscleWeeklyGoal,
-                                color: .purple)
+                                color: .green)
                                 .foregroundColor(.black)
                             
                             
@@ -61,7 +63,8 @@ struct QuickView: View {
                                 CurrentSummaryCardView(
                                     title: "Resting HR",
                                     imageText: "heart.fill",
-                                    description: HealthInfoText.restHRDescription, color: .red,
+                                    description: HealthInfoText.restHRDescription,
+                                    color: .red,
                                     categoryValue: "\(healthStoreVM.currentRestHR)")
                                 .foregroundColor(.black)
                             }

@@ -9,11 +9,16 @@ import SwiftUI
 
 struct StrengthTrainingGoalView: View {
     
+    var progress: Double
+    var minValue: Double
+    var maxValue: Double
     var title: String
     var imageText: String
     var description: String
     var goalText: Int
     var color: Color
+    
+    
     
     @State private var showInfoSheet = false
     
@@ -31,7 +36,7 @@ struct StrengthTrainingGoalView: View {
                         HStack {
                             Image(systemName: imageText)
                                 .foregroundColor(color)
-                            Text(title)
+                            Text("Strength Training")
                                 .font(.title2)
                             Spacer()
                             Button {
@@ -49,7 +54,7 @@ struct StrengthTrainingGoalView: View {
                 }
                 .padding(.bottom, 20)
     
-                ProgressGaugeView(progress: 2, minValue: 0, maxValue: 3, scaleValue: 1.5, gaugeColor: .purple, title: "2")
+                ProgressGaugeView(progress: progress, minValue: minValue, maxValue: maxValue, scaleValue: 1.5, gaugeColor: .purple, title: title)
             }
             .padding(.horizontal, 10)
             .padding(.bottom, 20)
@@ -60,6 +65,6 @@ struct StrengthTrainingGoalView: View {
 
 struct StrengthTrainingGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        StrengthTrainingGoalView(title: "Muscle Strength Goal", imageText: "dumbbell.fill", description: "Train 2x/week", goalText: 3, color: .purple)
+        StrengthTrainingGoalView(progress: 2, minValue: 0, maxValue: 3, title: "2", imageText: "dumbbell.fill", description: "ad", goalText: 3, color: .purple)
     }
 }
