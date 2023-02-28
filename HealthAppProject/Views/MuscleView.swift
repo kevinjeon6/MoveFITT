@@ -22,6 +22,7 @@ struct MuscleView: View {
                     Text("\(workout.workoutActivityType.name)")
                     Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
                         .font(.subheadline)
+                    Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
                 }
             }
             .navigationTitle("Workouts")

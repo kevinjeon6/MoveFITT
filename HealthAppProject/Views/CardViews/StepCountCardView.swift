@@ -43,6 +43,7 @@ struct StepCountCardView: View {
                     .font(.title)
                     .bold()
                     .foregroundColor(.primary)
+                Image(systemName: "chevron.forward")
                 Spacer()
             }
             .padding(.trailing, 30)

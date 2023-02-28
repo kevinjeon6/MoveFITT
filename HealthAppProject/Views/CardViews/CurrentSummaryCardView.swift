@@ -35,15 +35,7 @@ struct CurrentSummaryCardView: View {
                         .font(.title3)
                         .foregroundColor(.primary)
                     Spacer()
-                    Button {
-                        showInfoSheet.toggle()
-                    } label: {
-                        Image(systemName: "info.circle")
-                    }
-                    .sheet(isPresented: $showInfoSheet) {
-                        InfoView(description: description)
-                            .presentationDetents([.medium])
-                    }
+                    Image(systemName: "chevron.forward")
                     
                 }
                 .padding(.trailing, 10)
