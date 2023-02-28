@@ -11,6 +11,12 @@ import SwiftUI
 
 class HealthStoreViewModel: ObservableObject {
     
+    let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
+    let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
+    let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+    let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+    let workoutType = HKWorkoutType.workoutType()
+    
     var healthStore: HKHealthStore?
     var query: HKStatisticsCollectionQuery?
     var restingHRquery: HKStatisticsCollectionQuery?
@@ -99,15 +105,7 @@ class HealthStoreViewModel: ObservableObject {
     //MARK: - Request User Authorization for Health Data
     func requestUserAuthorization() {
     
-        let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
-        let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
-        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
-        let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
-        let workoutType = HKWorkoutType.workoutType()
-        
-        
         let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType, caloriesBurnedType, workoutType])
-        
         
         guard let healthStore = self.healthStore else {
             //returning false
@@ -133,9 +131,6 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: - Calculate Data for One Week
     func calculateStepCountData() {
-        
-        
-        let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         
         //Set up anchor date. Which starts on a Monday at 12:00 AM
         let anchorDate = Date.sundayAt12AM()
@@ -203,9 +198,6 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     func calculateRestingHRData() {
-        let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
-        
-        
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         //Go Back 7 days. This is the start date
@@ -275,9 +267,6 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: Active energy burned
     func calculateCaloriesBurned() {
-        
-        
-        let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
         
         //Set up anchor date. Which starts on a Monday at 12:00 AM
         let anchorDate = Date.sundayAt12AM()
@@ -349,9 +338,7 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: One Week Exercise Time
     func calculateSevenDaysExerciseTime() {
-        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
-        
-        
+   
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let date = Date()
@@ -414,7 +401,7 @@ class HealthStoreViewModel: ObservableObject {
     
 //MARK: Work around to display Exercise time for the week in a Chart
     func getOneWeekExerciseChart() {
-        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+        
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
@@ -462,7 +449,6 @@ class HealthStoreViewModel: ObservableObject {
     //MARK: One Month Exercise Time
     
     func calculateMonthExerciseTime() {
-        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
         
         
         let anchorDate = Date.sundayAt12AM()
@@ -508,7 +494,7 @@ class HealthStoreViewModel: ObservableObject {
     //MARK: Three Months Exercise Time
     
     func calculate3MonthExerciseTime(){
-        let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
+
         let anchorDate = Date.sundayAt12AM()
         let daily = DateComponents(day: 1)
         let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: Date())!
@@ -574,8 +560,7 @@ class HealthStoreViewModel: ObservableObject {
             }
             
             guard let workouts = samples as? [HKWorkout] else { return }
-            
-            
+
             DispatchQueue.main.async {
                 self.muscleStrength.append(contentsOf: workouts)
                 print(workouts)
