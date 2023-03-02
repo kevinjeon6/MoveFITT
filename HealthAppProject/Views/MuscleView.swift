@@ -18,11 +18,22 @@ struct MuscleView: View {
             List(healthStoreVM.muscleStrength, id: \.self) {
                 workout in
                 
-                VStack(alignment: .leading) {
-                    Text("\(workout.workoutActivityType.name)")
-                    Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
-                        .font(.subheadline)
-                    Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
+                HStack(spacing: 30) {
+                    Image(systemName: "\(workout.workoutActivityType.fitnessIcon)")
+                        .imageScale(.large)
+                        .foregroundColor(.green)
+                        .background(
+                        Circle()
+                            .fill(.green.opacity(0.3))
+                            .frame(width: 50, height: 50)
+                        )
+                    VStack(alignment: .leading) {
+                        Text("\(workout.workoutActivityType.name)")
+                        Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
+                            .font(.subheadline)
+                        Text("\(workout.startDate.formatted(.dateTime.weekday() .month().day()))")
+                        Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
+                    }
                 }
             }
             .navigationTitle("Workouts")
