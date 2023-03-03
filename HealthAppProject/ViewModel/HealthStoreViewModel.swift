@@ -13,6 +13,7 @@ class HealthStoreViewModel: ObservableObject {
     
     let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
     let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
+    let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
     let exerciseTimeType = HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!
     let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
     let workoutType = HKWorkoutType.workoutType()
@@ -20,6 +21,7 @@ class HealthStoreViewModel: ObservableObject {
     var healthStore: HKHealthStore?
     var query: HKStatisticsCollectionQuery?
     var restingHRquery: HKStatisticsCollectionQuery?
+    var hrvQuery: HKStatisticsCollectionQuery?
     var exerciseTimeQuery: HKStatisticsCollectionQuery?
     var caloriesBurnedQuery: HKStatisticsCollectionQuery?
     var selectedWorkoutQuery: HKQuery?
@@ -27,6 +29,7 @@ class HealthStoreViewModel: ObservableObject {
     
     @Published var steps: [Step] = [Step]()
     @Published var restingHR: [RestingHeartRate] = [RestingHeartRate]()
+    @Published var hrvHR: [HeartRateVariability] = [HeartRateVariability]()
     @Published var kcalBurned: [CaloriesBurned] = [CaloriesBurned]()
     @Published var exerciseTime: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTime7Days: [ExerciseTime] = [ExerciseTime]()
@@ -49,6 +52,8 @@ class HealthStoreViewModel: ObservableObject {
     @AppStorage(Constants.exerciseDailyGoal)var exerciseDayGoal: Int = 30
     @AppStorage(Constants.muscleStrengtheningWeeklyGoal) var muscleWeeklyGoal: Int = 2
     
+    
+    // MARK: Step Count
     var currentStepCount: Int {
         steps.last?.count ?? 0
     }
@@ -61,6 +66,8 @@ class HealthStoreViewModel: ObservableObject {
         steps.reduce(0) { $0 + $1.count / 7 }
     }
     
+    // MARK: Resting HR
+    
     var currentRestHR: Int {
         restingHR.last?.restingValue ?? 0
     }
@@ -69,8 +76,12 @@ class HealthStoreViewModel: ObservableObject {
         restingHR.reduce(0) { $0 + $1.restingValue / 7}
     }
     
- 
+    var currentHRV: Int {
+        hrvHR.last?.hrvValue ?? 0
+    }
     
+ 
+// MARK: Exercise Time
     var currentExTime: Int {
         exerciseTime.last?.exerValue ?? 0
     }
@@ -79,6 +90,8 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTime.reduce(0) { $0 + $1.exerValue }
     }
     
+    
+    // MARK: kcals burned
     var currentKcalsBurned: Int {
         kcalBurned.last?.kcal ?? 0
     }
@@ -105,7 +118,7 @@ class HealthStoreViewModel: ObservableObject {
     //MARK: - Request User Authorization for Health Data
     func requestUserAuthorization() {
     
-        let healthTypes = Set([stepType, restingHeartRateType, exerciseTimeType, caloriesBurnedType, workoutType])
+        let healthTypes = Set([stepType, restingHeartRateType, hrvType, exerciseTimeType, caloriesBurnedType, workoutType])
         
         guard let healthStore = self.healthStore else {
             //returning false
@@ -119,6 +132,7 @@ class HealthStoreViewModel: ObservableObject {
             if success {
                 self.calculateStepCountData()
                 self.calculateRestingHRData()
+                self.calculateHRVData()
                 self.calculateSevenDaysExerciseTime()
                 self.getOneWeekExerciseChart()
                 self.calculateMonthExerciseTime()
@@ -262,6 +276,71 @@ class HealthStoreViewModel: ObservableObject {
         
         guard let restingHRquery = self.restingHRquery else { return }
         self.healthStore?.execute(restingHRquery)
+    }
+    
+    
+    
+    func calculateHRVData() {
+        let anchorDate = Date.sundayAt12AM()
+        let daily = DateComponents(day: 1)
+        //Go Back 7 days. This is the start date
+        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
+        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+        
+        
+        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        
+        hrvQuery = HKStatisticsCollectionQuery(quantityType: hrvType,
+                                               quantitySamplePredicate: predicate,
+                                               options: .mostRecent,
+                                               anchorDate: anchorDate,
+                                               intervalComponents: daily)
+        
+        hrvQuery!.initialResultsHandler = {
+           hrvQuery, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating resting HR
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let hrvQuantity = statistics.mostRecentQuantity() {
+                    let hrvdate = statistics.startDate
+                    
+                    //HR Units
+                   
+                    let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
+                    let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
+                    
+                    DispatchQueue.main.async {
+                        self.hrvHR.append(hrvHR)
+                    }
+                }
+            }
+        }
+        
+        hrvQuery!.statisticsUpdateHandler = {
+           hrvQuery, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+       
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let hrvQuantity = statistics.mostRecentQuantity() {
+                    let hrvdate = statistics.startDate
+                    
+                    let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
+                    let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
+                    
+                    DispatchQueue.main.async {
+                        self.hrvHR.append(hrvHR)
+                    }
+                }
+            }
+        }
+        
+        
+        guard let hrvQuery = self.hrvQuery else { return }
+        self.healthStore?.execute(hrvQuery)
     }
     
     
@@ -436,7 +515,27 @@ class HealthStoreViewModel: ObservableObject {
                 }
             }
         }
-       
+        
+        
+        exerciseTimeQuery!.statisticsUpdateHandler = {
+            exerciseTimeQuery, statistics, statisticsCollection, error in
+            
+            guard let statisticsCollection = statisticsCollection else { return }
+            
+            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTime7Days.append(exTime)
+                    }
+                }
+            }
+        }
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }

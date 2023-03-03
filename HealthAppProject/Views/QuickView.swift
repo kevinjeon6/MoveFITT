@@ -48,35 +48,29 @@ struct QuickView: View {
                             .padding()
                             .cardBackground()
                             
+                                HStack {
+                                    NavigationLink(value: 1) {
+                                        StepCountTileView(currentValue: healthStoreVM.currentStepCount, goalText: healthStoreVM.stepGoal, stepPercent: healthStoreVM.stepCountPercent)
+                                            
+                                    }
+                                    .foregroundColor(.primary)
+                                  
                             
-                            
-                            NavigationLink(value: 1) {
-                                StepCountCardView(
-                                    progress: Double(healthStoreVM.currentStepCount),
-                                    minValue: 0.0,
-                                    maxValue: Double(healthStoreVM.stepGoal),
-                                    title: "\(healthStoreVM.stepCountPercent)%",
-                                    goalText: healthStoreVM.stepGoal)
-                                .foregroundColor(.black)
-                            }
-                          
-                            NavigationLink(value: 2) {
-                                CurrentSummaryCardView(
-                                    title: "Resting HR",
-                                    imageText: "heart.fill",
-                                    color: .red,
-                                    categoryValue: "\(healthStoreVM.currentRestHR)")
-                                .foregroundColor(.black)
-                            }
+                                    NavigationLink(value: 3) {
+                                        HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
+                                    }
+                                    .foregroundColor(.primary)
+                                }
+                                .padding(.horizontal)
 
-
-                            NavigationLink(value: 3) {
-                                CurrentSummaryCardView(
-                                    title: "Energy Burned",
-                                    imageText: "flame.fill",
-                                    color: .orange,
-                                    categoryValue: "\(healthStoreVM.currentKcalsBurned)")
-                                .foregroundColor(.black)
+                               
+                            HStack {
+                                NavigationLink(value: 2) {
+                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthStoreVM.currentRestHR)
+                                }
+                                .foregroundColor(.primary)
+                                
+                                HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
                             }
                         }
                         .padding(.top, 30)
