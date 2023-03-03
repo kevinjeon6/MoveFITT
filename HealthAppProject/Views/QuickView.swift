@@ -11,7 +11,7 @@ import SwiftUI
 struct QuickView: View {
   
     @EnvironmentObject var healthStoreVM: HealthStoreViewModel
-    @State private var showInfoSheet = false
+
  
     var body: some View {
       
@@ -43,10 +43,11 @@ struct QuickView: View {
                                 minValue: 0.0,
                                 maxValue: Double(healthStoreVM.muscleWeeklyGoal),
                                 title: "\(healthStoreVM.currentStrengthTraining)",
-                                imageText: "dumbbell.fill", description: "NO",
                                 goalText: healthStoreVM.muscleWeeklyGoal,
                                 color: .green)
-                                .foregroundColor(.black)
+                            .padding()
+                            .cardBackground()
+                            
                             
                             
                             NavigationLink(value: 1) {
@@ -63,7 +64,6 @@ struct QuickView: View {
                                 CurrentSummaryCardView(
                                     title: "Resting HR",
                                     imageText: "heart.fill",
-                                    description: HealthInfoText.restHRDescription,
                                     color: .red,
                                     categoryValue: "\(healthStoreVM.currentRestHR)")
                                 .foregroundColor(.black)
@@ -74,7 +74,6 @@ struct QuickView: View {
                                 CurrentSummaryCardView(
                                     title: "Energy Burned",
                                     imageText: "flame.fill",
-                                    description: "",
                                     color: .orange,
                                     categoryValue: "\(healthStoreVM.currentKcalsBurned)")
                                 .foregroundColor(.black)

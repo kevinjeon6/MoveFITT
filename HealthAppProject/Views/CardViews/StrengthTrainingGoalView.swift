@@ -13,14 +13,9 @@ struct StrengthTrainingGoalView: View {
     var minValue: Double
     var maxValue: Double
     var title: String
-    var imageText: String
-    var description: String
     var goalText: Int
     var color: Color
     
-    
-    
-    @State private var showInfoSheet = false
     
     var body: some View {
         
@@ -29,16 +24,21 @@ struct StrengthTrainingGoalView: View {
                 VStack(alignment: .leading) {
                     Text("Strength training")
                         .font(.title2)
+                        .foregroundColor(.primary)
                     Text("Your goal: \(title) / \(goalText) workouts")
                         .font(.footnote)
+                        .foregroundColor(.primary)
                         .padding(.bottom, 10)
                     Text("Meet the guidelines?")
                         .font(.headline)
+                        .foregroundColor(.primary)
                     HStack {
                         Text("\(title)/2 ")
                             .font(.footnote)
+                            .foregroundColor(.primary)
                         Image(systemName: "circle")
                             .font(.footnote)
+                            .foregroundColor(.primary)
                     }
                 }
             }
@@ -49,7 +49,7 @@ struct StrengthTrainingGoalView: View {
                 minValue: minValue,
                 maxValue: maxValue,
                 scaleValue: 1.5,
-                gaugeColor: .purple,
+                gaugeColor: color,
                 title: title)
             Spacer()
         }
@@ -59,6 +59,6 @@ struct StrengthTrainingGoalView: View {
 
 struct StrengthTrainingGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        StrengthTrainingGoalView(progress: 2, minValue: 0, maxValue: 3, title: "2", imageText: "dumbbell.fill", description: "ad", goalText: 3, color: .purple)
+        StrengthTrainingGoalView(progress: 2, minValue: 0, maxValue: 3, title: "2", goalText: 3, color: .purple)
     }
 }

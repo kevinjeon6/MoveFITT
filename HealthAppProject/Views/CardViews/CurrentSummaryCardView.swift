@@ -10,13 +10,10 @@ import SwiftUI
 struct CurrentSummaryCardView: View {
     var title: String
     var imageText: String
-    var description: String
     var color: Color
-    var categoryValue: String?
+    var categoryValue: String
     
-    @State private var showInfoSheet = false
-    
-    
+   
     var body: some View {
         
         ZStack {
