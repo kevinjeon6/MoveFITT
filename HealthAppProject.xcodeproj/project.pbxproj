@@ -41,6 +41,7 @@
 		74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */; };
 		74F02F5C29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */; };
 		74F02F6729B1A34A00AEB8BE /* Cardbackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6629B1A34A00AEB8BE /* Cardbackground.swift */; };
+		74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderComponent.swift; sourceTree = "<group>"; };
 		74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKWorkoutActivityTypeExtension.swift; sourceTree = "<group>"; };
 		74F02F6629B1A34A00AEB8BE /* Cardbackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardbackground.swift; sourceTree = "<group>"; };
+		74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountTileView.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 				7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */,
 				7466603329843BCA00C17C8A /* StepCountCardView.swift */,
+				74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */,
 			);
 			path = CardViews;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
+				74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */,
 				7438E69E2987457D00F571C7 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
