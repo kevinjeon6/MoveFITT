@@ -61,7 +61,7 @@ struct QuickView: View {
                                     }
                                     .foregroundColor(.primary)
                                 }
-                                .padding(.horizontal)
+                                .padding()
 
                                
                             HStack {
@@ -70,7 +70,9 @@ struct QuickView: View {
                                 }
                                 .foregroundColor(.primary)
                                 
-                                HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
+                                NavigationLink(value: 4) {
+                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
+                                }
                             }
                         }
                         .padding(.top, 30)
@@ -82,6 +84,8 @@ struct QuickView: View {
                             OneWeekRestHRChartView()
                         } else if chart == 3 {
                             CaloriesBurnedChartView()
+                        } else {
+                            OneWeekHRVChartView()
                         }
                     })
                     .frame(minWidth: geo.size.width * 0.8, maxWidth: .infinity)

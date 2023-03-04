@@ -44,6 +44,7 @@
 		74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */; };
 		74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */; };
 		74F02F6F29B2807100AEB8BE /* HeartRateVariability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6E29B2807100AEB8BE /* HeartRateVariability.swift */; };
+		74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountTileView.swift; sourceTree = "<group>"; };
 		74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfoTileView.swift; sourceTree = "<group>"; };
 		74F02F6E29B2807100AEB8BE /* HeartRateVariability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVariability.swift; sourceTree = "<group>"; };
+		74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekHRVChartView.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,6 +109,7 @@
 			children = (
 				74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */,
 				7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */,
+				74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */,
 				7438E69F2988B9F800F571C7 /* CaloriesBurnedView.swift */,
 				74117143297B4FBA00328365 /* Exercise Charts */,
 			);
@@ -344,6 +347,7 @@
 				74DF670C295B843C0046F521 /* HealthStoreViewModel.swift in Sources */,
 				744095C129A71C5C0098ACA7 /* ColorExtension.swift in Sources */,
 				740D0E03299B27F100776E3D /* DataListView.swift in Sources */,
+				74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */,
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
