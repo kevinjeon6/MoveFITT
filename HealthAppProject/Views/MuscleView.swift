@@ -19,13 +19,13 @@ struct MuscleView: View {
                 workout in
                 
                 HStack(spacing: 30) {
-                    Image(systemName: "\(workout.workoutActivityType.fitnessIcon)")
+                    workout.workoutActivityType.fitnessIcon
                         .imageScale(.large)
                         .foregroundColor(.green)
                         .background(
-                        Circle()
-                            .fill(.green.opacity(0.3))
-                            .frame(width: 50, height: 50)
+                            Circle()
+                                .fill(.green.opacity(0.3))
+                                .frame(width: 50, height: 50)
                         )
                     VStack(alignment: .leading) {
                         Text("\(workout.workoutActivityType.name)")
@@ -38,7 +38,6 @@ struct MuscleView: View {
             }
             .navigationTitle("Workouts")
         }
-   
     }
 }
 

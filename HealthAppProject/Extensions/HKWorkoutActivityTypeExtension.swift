@@ -27,6 +27,7 @@ extension HKWorkoutActivityType {
          case .bowling:                      return "Bowling"
          case .boxing:                       return "Boxing"
          case .climbing:                     return "Climbing"
+         case .cooldown:                     return "Cooldown"
          case .crossTraining:                return "Cross Training"
          case .curling:                      return "Curling"
          case .cycling:                      return "Cycling"
