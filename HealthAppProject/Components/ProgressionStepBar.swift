@@ -24,7 +24,7 @@ struct ProgressionStepBar: View {
                     
                     Capsule()
                         .fill(Color.black.opacity(0.1))
-                        .frame(height: 18)
+                        .frame(height: 12)
                     
                     LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .leading, endPoint: .trailing)
                         .clipShape(Capsule())
@@ -32,7 +32,7 @@ struct ProgressionStepBar: View {
                 }
             }
         }
-        .frame(height: 18)
+        .frame(width: 120, height: 12)
     }
 }
 

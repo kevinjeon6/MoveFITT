@@ -15,6 +15,15 @@ struct StrengthTrainingGoalView: View {
     var title: String
     var goalText: Int
     var color: Color
+    var guidelines: Int = 2
+    
+    var meetGoal: Bool {
+        if title == String(guidelines) {
+            return true
+        } else {
+            return false
+        }
+    }
     
     
     var body: some View {
@@ -33,12 +42,12 @@ struct StrengthTrainingGoalView: View {
                         .font(.headline)
                         .foregroundColor(.primary)
                     HStack {
-                        Text("\(title)/2 ")
+                        Text("\(title)/\(guidelines) ")
                             .font(.footnote)
                             .foregroundColor(.primary)
-                        Image(systemName: "circle")
+                        Image(systemName: meetGoal ? "checkmark.circle.fill" : "circle")
                             .font(.footnote)
-                            .foregroundColor(.primary)
+                            .foregroundColor(meetGoal ? .green : .primary)
                     }
                 }
             }
