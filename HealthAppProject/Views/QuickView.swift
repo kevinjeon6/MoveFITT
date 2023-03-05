@@ -73,6 +73,7 @@ struct QuickView: View {
                                 NavigationLink(value: 4) {
                                     HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
                                 }
+                                .foregroundColor(.primary)
                             }
                         }
                         .padding(.top, 30)
