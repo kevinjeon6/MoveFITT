@@ -11,6 +11,9 @@ import SwiftUI
 
 class HealthStoreViewModel: ObservableObject {
     
+    var healthStore: HKHealthStore?
+    
+    // MARK: Health Types
     let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
     let restingHeartRateType = HKQuantityType.quantityType(forIdentifier: .restingHeartRate)!
     let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
@@ -18,7 +21,7 @@ class HealthStoreViewModel: ObservableObject {
     let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
     let workoutType = HKWorkoutType.workoutType()
     
-    var healthStore: HKHealthStore?
+    // MARK: Health Type Queries
     var query: HKStatisticsCollectionQuery?
     var restingHRquery: HKStatisticsCollectionQuery?
     var hrvQuery: HKStatisticsCollectionQuery?
@@ -27,6 +30,7 @@ class HealthStoreViewModel: ObservableObject {
     var selectedWorkoutQuery: HKQuery?
 
     
+    // MARK: Health Type data
     @Published var steps: [Step] = [Step]()
     @Published var restingHR: [RestingHeartRate] = [RestingHeartRate]()
     @Published var hrvHR: [HeartRateVariability] = [HeartRateVariability]()
@@ -36,8 +40,25 @@ class HealthStoreViewModel: ObservableObject {
     @Published var exerciseTimeMonth: [ExerciseTime] = [ExerciseTime]()
     @Published var exerciseTime3Months: [ExerciseTime] = [ExerciseTime]()
     @Published var muscleStrength: [HKWorkout] = [HKWorkout]()
+    
+    
+    
 
     
+    // MARK: Dates for calculating data
+    //Set up anchor date. Which starts on a Monday at 12:00 AM
+    let anchorDate = Date.sundayAt12AM()
+    
+    //Set up daily to calculate health data daily
+    let daily = DateComponents(day: 1)
+    let date = Date()
+    
+    //Go Back 7 days. This is the start date
+    let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
+    let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+    
+   
+
     
     //Associated with the segmented control. Week is set as the default
     @Published var timePeriodSelected = "week"
@@ -146,22 +167,13 @@ class HealthStoreViewModel: ObservableObject {
     //MARK: - Calculate Data for One Week
     func calculateStepCountData() {
         
-        //Set up anchor date. Which starts on a Monday at 12:00 AM
-        let anchorDate = Date.sundayAt12AM()
-        
-        //Set up daily to calculate health data daily
-        let daily = DateComponents(day: 1)
-        
-        //Go Back 7 days. This is the start date
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
-        
         //Define the predicate
-        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        let stepCountpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+      
         
         //MARK: - Query for Step Count
         query = HKStatisticsCollectionQuery(quantityType: stepType,
-                                            quantitySamplePredicate: predicate,
+                                            quantitySamplePredicate: stepCountpredicate,
                                             options: .cumulativeSum,
                                             anchorDate: anchorDate,
                                             intervalComponents: daily)
@@ -172,7 +184,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let quantity = statistics.sumQuantity() {
                     let date = statistics.startDate
                     let value = quantity.doubleValue(for: .count())
@@ -193,7 +205,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let quantity = statistics.sumQuantity() {
                     let date = statistics.startDate
                     let value = quantity.doubleValue(for: .count())
@@ -212,18 +224,12 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     func calculateRestingHRData() {
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
-        //Go Back 7 days. This is the start date
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
         
-        
-        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        let restingHRpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
 
 
         restingHRquery =   HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
-                                                       quantitySamplePredicate: predicate,
+                                                       quantitySamplePredicate: restingHRpredicate,
                                                        options: .discreteAverage,
                                                        anchorDate: anchorDate,
                                                        intervalComponents: daily)
@@ -235,7 +241,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let restHRquantity = statistics.averageQuantity() {
                     let hrdate = statistics.startDate
                     
@@ -257,7 +263,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let restHRquantity = statistics.averageQuantity() {
                     let hrdate = statistics.startDate
                     
@@ -281,17 +287,11 @@ class HealthStoreViewModel: ObservableObject {
     
     
     func calculateHRVData() {
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
-        //Go Back 7 days. This is the start date
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
-        
-        
-        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+
+        let hrvPredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
         hrvQuery = HKStatisticsCollectionQuery(quantityType: hrvType,
-                                               quantitySamplePredicate: predicate,
+                                               quantitySamplePredicate: hrvPredicate,
                                                options: .mostRecent,
                                                anchorDate: anchorDate,
                                                intervalComponents: daily)
@@ -302,7 +302,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let hrvQuantity = statistics.mostRecentQuantity() {
                     let hrvdate = statistics.startDate
                     
@@ -324,7 +324,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
        
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let hrvQuantity = statistics.mostRecentQuantity() {
                     let hrvdate = statistics.startDate
                     
@@ -346,22 +346,13 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: Active energy burned
     func calculateCaloriesBurned() {
-        
-        //Set up anchor date. Which starts on a Monday at 12:00 AM
-        let anchorDate = Date.sundayAt12AM()
-        
-        //Set up daily to calculate health data daily
-        let daily = DateComponents(day: 1)
-        
-        //Go Back 7 days. This is the start date
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
+
         
         //Define the predicate
-        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        let kCalsBurnedPredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
         caloriesBurnedQuery = HKStatisticsCollectionQuery(quantityType: caloriesBurnedType,
-                                            quantitySamplePredicate: predicate,
+                                            quantitySamplePredicate: kCalsBurnedPredicate,
                                             options: .cumulativeSum,
                                             anchorDate: anchorDate,
                                             intervalComponents: daily)
@@ -372,7 +363,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+          statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let kcalquantity = statistics.sumQuantity() {
                     let kcaldate = statistics.startDate
                     let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
@@ -393,7 +384,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let kcalquantity = statistics.sumQuantity() {
                     let kcaldate = statistics.startDate
                     let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
@@ -412,15 +403,8 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     
-    
-    
-    
     //MARK: One Week Exercise Time
     func calculateSevenDaysExerciseTime() {
-   
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
-        let date = Date()
         let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: date)?.start
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: .strictStartDate)
 
@@ -436,7 +420,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate!, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate!, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -457,7 +441,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate!, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: startDate!, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -481,16 +465,10 @@ class HealthStoreViewModel: ObservableObject {
 //MARK: Work around to display Exercise time for the week in a Chart
     func getOneWeekExerciseChart() {
         
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
-        let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
-        
-        
-        let predicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
+        let sevenDayExerChartpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
 
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                       quantitySamplePredicate: predicate,
+                                                       quantitySamplePredicate: sevenDayExerChartpredicate,
                                                        options: .cumulativeSum,
                                                        anchorDate: anchorDate,
                                                        intervalComponents: daily)
@@ -501,7 +479,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -522,7 +500,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -549,17 +527,14 @@ class HealthStoreViewModel: ObservableObject {
     
     func calculateMonthExerciseTime() {
         
-        
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -29), to: Date())!
+        let oneMonthStartDate = Calendar.current.date(byAdding: DateComponents(day: -29), to: Date())!
         
         
-        let predicate = HKQuery.predicateForSamples(withStart: oneMonthAgo, end: nil, options: .strictStartDate)
+        let oneMonthExTimepredicate = HKQuery.predicateForSamples(withStart: oneMonthAgo, end: nil, options: .strictStartDate)
 
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                       quantitySamplePredicate: predicate,
+                                                       quantitySamplePredicate: oneMonthExTimepredicate,
                                                        options: .cumulativeSum,
                                                        anchorDate: anchorDate,
                                                        intervalComponents: daily)
@@ -570,7 +545,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -594,16 +569,14 @@ class HealthStoreViewModel: ObservableObject {
     
     func calculate3MonthExerciseTime(){
 
-        let anchorDate = Date.sundayAt12AM()
-        let daily = DateComponents(day: 1)
         let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: Date())!
-        let startDate = Calendar.current.date(byAdding: DateComponents(day: -89), to: Date())!
+        let threeMonthStartDate = Calendar.current.date(byAdding: DateComponents(day: -89), to: Date())!
         
         
-        let predicate = HKQuery.predicateForSamples(withStart: threeMonthsAgo, end: nil, options: .strictStartDate)
+        let threeMonthExTimePredicate = HKQuery.predicateForSamples(withStart: threeMonthsAgo, end: nil, options: .strictStartDate)
 
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                       quantitySamplePredicate: predicate,
+                                                       quantitySamplePredicate: threeMonthExTimePredicate,
                                                        options: .cumulativeSum,
                                                        anchorDate: anchorDate,
                                                        intervalComponents: daily)
@@ -614,7 +587,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate, to: Date()) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
