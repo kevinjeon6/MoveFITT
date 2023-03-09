@@ -12,13 +12,13 @@ struct StrengthTrainingGoalView: View {
     var progress: Double
     var minValue: Double
     var maxValue: Double
-    var title: String
+    var title: Int
     var goalText: Int
     var color: Color
     var guidelines: Int = 2
     
     var meetGoal: Bool {
-        if title == String(guidelines) {
+        if title == guidelines {
             return true
         } else {
             return false
@@ -51,7 +51,7 @@ struct StrengthTrainingGoalView: View {
                     }
                 }
             }
-            .padding(.leading, 20)
+
             Spacer()
             ProgressGaugeView(
                 progress: progress,
@@ -62,12 +62,13 @@ struct StrengthTrainingGoalView: View {
                 title: title)
             Spacer()
         }
-        .padding(.trailing)
+        .padding()
+        .cardBackground()
     }
 }
 
 struct StrengthTrainingGoalView_Previews: PreviewProvider {
     static var previews: some View {
-        StrengthTrainingGoalView(progress: 2, minValue: 0, maxValue: 3, title: "2", goalText: 3, color: .purple)
+        StrengthTrainingGoalView(progress: 2, minValue: 0, maxValue: 3, title: 2, goalText: 3, color: .purple)
     }
 }

@@ -42,11 +42,12 @@ struct QuickView: View {
                                 progress: Double(healthStoreVM.currentStrengthTraining),
                                 minValue: 0.0,
                                 maxValue: Double(healthStoreVM.muscleWeeklyGoal),
-                                title: "\(healthStoreVM.currentStrengthTraining)",
+                                title: healthStoreVM.currentStrengthTraining,
                                 goalText: healthStoreVM.muscleWeeklyGoal,
-                                color: .green)
-                            .padding()
-                            .cardBackground()
+                                color: .green
+                            )
+            
+                        
                             
                                 HStack {
                                     NavigationLink(value: 1) {
