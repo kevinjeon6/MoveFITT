@@ -11,7 +11,7 @@ struct StepCountCardView: View {
     var progress: Double
     var minValue: Double
     var maxValue: Double
-    var title: String
+    var title: Int
     var goalText: Int
     
     var body: some View {
@@ -53,6 +53,6 @@ struct StepCountCardView: View {
 
 struct StepCountCardView_Previews: PreviewProvider {
     static var previews: some View {
-        StepCountCardView(progress: 3500, minValue: 0, maxValue: 10_000, title: "35%", goalText: 8000)
+        StepCountCardView(progress: 3500, minValue: 0, maxValue: 10_000, title: 35, goalText: 8000)
     }
 }

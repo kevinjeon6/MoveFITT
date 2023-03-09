@@ -14,12 +14,12 @@ struct ProgressGaugeView: View {
     var maxValue: Double
     var scaleValue: Double
     var gaugeColor: Color
-    var title: String
+    var title: Int
     
     
     var body: some View {
         Gauge(value: progress, in: minValue...maxValue) {
-            Text(title)
+            Text("\(title)")
                 .foregroundColor(.primary)
         }
         .gaugeStyle(.accessoryCircularCapacity)
@@ -30,6 +30,6 @@ struct ProgressGaugeView: View {
 
 struct ProgressGaugeView_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressGaugeView(progress: 2500, minValue: 0, maxValue: 10_000, scaleValue: 0.8, gaugeColor: .blue, title: "25%")
+        ProgressGaugeView(progress: 2500, minValue: 0, maxValue: 10_000, scaleValue: 0.8, gaugeColor: .blue, title: 25)
     }
 }
