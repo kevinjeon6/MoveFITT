@@ -613,24 +613,32 @@ class HealthStoreViewModel: ObservableObject {
         let date = Date()
         let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: date)?.start
         let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: .strictStartDate)
-        
-        
+
+
+
         let strengthPredicate = HKQuery.predicateForWorkoutActivities(workoutActivityType: .traditionalStrengthTraining)
+        let functionalStrengthPredicate = HKQuery.predicateForWorkoutActivities(workoutActivityType: .functionalStrengthTraining)
+        
         let traditionalStrengthTrainingPredicate = HKQuery.predicateForWorkouts(activityPredicate: strengthPredicate)
+        let functionalStrengthTrainingPredicate = HKQuery.predicateForWorkouts(activityPredicate: functionalStrengthPredicate)
+
+//        let allWorkoutsPredicate = HKQuery.predicateForWorkouts(with: .greaterThanOrEqualTo, duration: 1)
         
-        let combinedPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, traditionalStrengthTrainingPredicate])
-        
+        let tradStrengthPredicate =  NSCompoundPredicate(andPredicateWithSubpredicates: [traditionalStrengthTrainingPredicate, datePredicate])
+        let funcStrengthPredicate =  NSCompoundPredicate(andPredicateWithSubpredicates: [functionalStrengthTrainingPredicate, datePredicate])
+        let nestedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [tradStrengthPredicate, funcStrengthPredicate])
+
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-        
+
         let selectedWorkoutQuery = HKSampleQuery(
             sampleType: HKWorkoutType.workoutType(),
-            predicate: combinedPredicate,
+            predicate: nestedPredicate,
             limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { strengthQuery, samples, error in
-            
+
             guard let samples = samples else {
-                fatalError("An error has occured \(error?.localizedDescription)")
+                fatalError("An error has occurred \(error?.localizedDescription)")
             }
-            
+
             guard let workouts = samples as? [HKWorkout] else { return }
 
             DispatchQueue.main.async {
@@ -638,7 +646,7 @@ class HealthStoreViewModel: ObservableObject {
                 print(workouts)
             }
         }
-        
+
         self.healthStore?.execute(selectedWorkoutQuery)
     }
     
