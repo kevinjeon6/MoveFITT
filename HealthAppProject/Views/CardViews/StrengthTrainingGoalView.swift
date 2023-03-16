@@ -18,7 +18,7 @@ struct StrengthTrainingGoalView: View {
     var guidelines: Int = 2
     
     var meetGoal: Bool {
-        if title == guidelines {
+        if title >= guidelines {
             return true
         } else {
             return false

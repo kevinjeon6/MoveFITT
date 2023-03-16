@@ -38,7 +38,7 @@ struct CurrentSummaryCardView: View {
                 .padding(.trailing, 10)
          
         
-                Text(categoryValue ?? "Missing Data")
+                Text("\(categoryValue)")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
@@ -52,6 +52,6 @@ struct CurrentSummaryCardView: View {
 
 struct CurrentSummaryCardView_Previews: PreviewProvider {
     static var previews: some View {
-        CurrentSummaryCardView(title: "Health Type", imageText: "heart.fill", description: "Description Text Here", color: .red)
+        CurrentSummaryCardView(title: "Health Type", imageText: "heart.fill", color: .red, categoryValue: "63")
     }
 }
