@@ -27,7 +27,7 @@ struct MainScreenView: View {
             
             StatsView(healthStoreVM: healthStore)
                 .tabItem {
-                    Label("Exercise Stats", systemImage: "chart.xyaxis.line")
+                    Label("Physical Activity", systemImage: "chart.xyaxis.line")
                 }
                 .tag(2)
             
@@ -45,9 +45,16 @@ struct MainScreenView: View {
             
             MuscleView(healthStoreVM: healthStore)
                 .tabItem {
-                    Label("Workout", systemImage: "dumbbell.fill")
+                    Label("Workouts", systemImage: "dumbbell.fill")
                 }
                 .tag(4)
+            
+        }
+        .onAppear {
+            let appearance = UITabBarAppearance()
+            appearance.backgroundColor = UIColor(.white.opacity(0.9))
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
         }
     }
 }

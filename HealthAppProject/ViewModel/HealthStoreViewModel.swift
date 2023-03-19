@@ -107,8 +107,16 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTime.last?.exerValue ?? 0
     }
     
+    
+    //This is for the week starting Sunday - Saturday
     var weeklyExTime: Int {
         exerciseTime.reduce(0) { $0 + $1.exerValue }
+    }
+    
+    
+  //Work around to display Exercise time for the week in a Chart. This is a work around to get the correct amount of exercise time for the past 7 days. This is not calculating the time based off the start of a brand new week like strength training from Sunday - Saturday.
+    var chartAverageExTime: Int {
+        exerciseTime7Days.reduce(0) {$0 + $1.exerValue / 7}
     }
     
     

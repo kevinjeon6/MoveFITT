@@ -37,7 +37,7 @@ struct StatsView: View {
                   
                 }
                 .padding(.horizontal)
-                .navigationTitle("Charts")
+                .navigationTitle("Physical Activity")
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
