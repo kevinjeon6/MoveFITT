@@ -11,8 +11,8 @@ struct ProgressionStepBar: View {
     
     let value: Int
     let goalValue: Int
-    var color1: Color = .mint
-    var color2: Color = .green
+    var color1: Color = .cyan
+    var color2: Color = .blue
    
     
     

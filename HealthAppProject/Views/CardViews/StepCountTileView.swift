@@ -16,6 +16,7 @@ struct StepCountTileView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: "figure.walk")
+                    .foregroundColor(.cyan)
                 Text("Steps")
                 Spacer()
                 Image(systemName: "chevron.forward")
