@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct HealthAppProjectApp: App {
+    
+    @StateObject var vm = HealthStoreViewModel()
+    @AppStorage("onboarding") var isOnboardingViewShowing: Bool = true
+    
     var body: some Scene {
         WindowGroup {
-            MainScreenView()
+            if isOnboardingViewShowing {
+                OnboardingView()
+                    .environmentObject(vm)
+            } else {
+                MainScreenView()
+                    .environmentObject(vm)
+            }
         }
     }
 }

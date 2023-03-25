@@ -39,13 +39,16 @@ struct QuickView: View {
                             
                             
                             StrengthTrainingGoalView(
-                                progress: Double(healthStoreVM.currentStrengthTraining),
+                                progress: Double(healthStoreVM.strengthActivityWeekCount.count),
                                 minValue: 0.0,
                                 maxValue: Double(healthStoreVM.muscleWeeklyGoal),
-                                title: healthStoreVM.currentStrengthTraining,
+                                title: healthStoreVM.strengthActivityWeekCount.count,
                                 goalText: healthStoreVM.muscleWeeklyGoal,
                                 color: .green
                             )
+                            
+                            StrengthActivityWeekView(healthStoreVM: healthStoreVM)
+
             
                         
                             
@@ -62,7 +65,7 @@ struct QuickView: View {
                                     }
                                     .foregroundColor(.primary)
                                 }
-                                .padding()
+                                .padding(.horizontal)
 
                                
                             HStack {

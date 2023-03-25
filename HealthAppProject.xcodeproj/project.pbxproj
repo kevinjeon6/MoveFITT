@@ -13,6 +13,7 @@
 		74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */; };
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */; };
+		7429988429C414E20044E890 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429988329C414E20044E890 /* OnboardingView.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* StatsView.swift */; };
 		74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC52975675A00EEC9B9 /* ExerciseTime.swift */; };
@@ -57,6 +58,7 @@
 		74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		7411E8E9296CF8EB00C1FB8A /* RestingHeartRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestingHeartRate.swift; sourceTree = "<group>"; };
+		7429988329C414E20044E890 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		74338BC52975675A00EEC9B9 /* ExerciseTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTime.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			path = "Exercise Charts";
 			sourceTree = "<group>";
 		};
+		7429988229C414950044E890 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7429988329C414E20044E890 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		743818E1295DFC7200FE4613 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,6 +225,7 @@
 				743818E4295E0BAD00FE4613 /* Model */,
 				743818E1295DFC7200FE4613 /* Extensions */,
 				74DF6708295B84090046F521 /* ViewModel */,
+				7429988229C414950044E890 /* Onboarding */,
 				74DF6707295B83FF0046F521 /* Views */,
 				74DF66FC295B77AC0046F521 /* Assets.xcassets */,
 				74DF66FE295B77AC0046F521 /* Preview Content */,
@@ -348,6 +359,7 @@
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
+				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
 				7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */,
 				74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */,
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,

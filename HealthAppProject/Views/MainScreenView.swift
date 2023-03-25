@@ -11,21 +11,21 @@ struct MainScreenView: View {
     
     //@StateObject -> Use this on creation/ init
     //@ObservedObject -> Use this for subviews
-    @StateObject var healthStore = HealthStoreViewModel()
+//    @StateObject var healthStore = HealthStoreViewModel()
+    @EnvironmentObject var healthStore: HealthStoreViewModel
 
-    
+    @AppStorage("onboarding") var isOnboardingViewShowing: Bool = false
     
     var body: some View {
         TabView(selection: $healthStore.selectedTab) {
             
             QuickView()
-                .environmentObject(HealthStoreViewModel())
                 .tabItem {
                     Label("Summary", systemImage: "list.bullet.clipboard")
                 }
                 .tag(1)
             
-            StatsView(healthStoreVM: healthStore)
+            StatsView()
                 .tabItem {
                     Label("Physical Activity", systemImage: "chart.xyaxis.line")
                 }
@@ -36,14 +36,14 @@ struct MainScreenView: View {
                 stepGoal: $healthStore.stepGoal,
                 exerciseDayGoal: $healthStore.exerciseDayGoal,
                 exerciseWeeklyGoal: $healthStore.exerciseWeeklyGoal,
-                muscleWeeklyGoal: $healthStore.muscleWeeklyGoal,
-                healthStoreVM: healthStore)
+                muscleWeeklyGoal: $healthStore.muscleWeeklyGoal
+              )
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
                 .tag(3)
             
-            MuscleView(healthStoreVM: healthStore)
+            MuscleView()
                 .tabItem {
                     Label("Workouts", systemImage: "dumbbell.fill")
                 }
@@ -62,5 +62,6 @@ struct MainScreenView: View {
 struct MainScreenView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
+            .environmentObject(HealthStoreViewModel())
     }
 }

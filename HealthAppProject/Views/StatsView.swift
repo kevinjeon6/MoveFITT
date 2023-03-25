@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StatsView: View {
     
-    @ObservedObject var healthStoreVM: HealthStoreViewModel
+    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
     
     
     var body: some View {
@@ -45,6 +45,7 @@ struct StatsView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsView(healthStoreVM: HealthStoreViewModel())
+        StatsView()
+            .environmentObject(HealthStoreViewModel())
     }
 }

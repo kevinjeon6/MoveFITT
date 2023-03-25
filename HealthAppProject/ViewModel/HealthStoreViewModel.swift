@@ -143,7 +143,6 @@ class HealthStoreViewModel: ObservableObject {
     init(){
         if HKHealthStore.isHealthDataAvailable(){
             healthStore = HKHealthStore()
-            requestUserAuthorization()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -195,6 +194,20 @@ class HealthStoreViewModel: ObservableObject {
         query!.initialResultsHandler = {
             query, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
+            
+            
             guard let statisticsCollection = statisticsCollection else { return }
             
             statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
@@ -215,6 +228,18 @@ class HealthStoreViewModel: ObservableObject {
         //Gets called when there's any new data that's coming into the database
         query!.statisticsUpdateHandler = {
             query, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return }
             
@@ -251,6 +276,18 @@ class HealthStoreViewModel: ObservableObject {
         restingHRquery!.initialResultsHandler = {
             restingQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
@@ -272,6 +309,18 @@ class HealthStoreViewModel: ObservableObject {
         
         restingHRquery!.statisticsUpdateHandler = {
             restingQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return}
             
@@ -312,6 +361,18 @@ class HealthStoreViewModel: ObservableObject {
         hrvQuery!.initialResultsHandler = {
             hrvQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating resting HR
@@ -333,6 +394,18 @@ class HealthStoreViewModel: ObservableObject {
         
         hrvQuery!.statisticsUpdateHandler = {
             hrvQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return}
             
@@ -374,6 +447,18 @@ class HealthStoreViewModel: ObservableObject {
         caloriesBurnedQuery!.initialResultsHandler = {
             calorieBurnedQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return }
             
             statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
@@ -394,6 +479,18 @@ class HealthStoreViewModel: ObservableObject {
         //Gets called when there's any new data that's coming into the database
         caloriesBurnedQuery!.statisticsUpdateHandler = {
             calorieBurnedQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return }
             
@@ -430,6 +527,18 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTimeQuery!.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
@@ -451,6 +560,18 @@ class HealthStoreViewModel: ObservableObject {
         
         exerciseTimeQuery!.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return }
             
@@ -489,6 +610,18 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTimeQuery!.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
@@ -510,6 +643,18 @@ class HealthStoreViewModel: ObservableObject {
         
         exerciseTimeQuery!.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
             
             guard let statisticsCollection = statisticsCollection else { return }
             
@@ -555,6 +700,18 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTimeQuery!.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
@@ -597,6 +754,18 @@ class HealthStoreViewModel: ObservableObject {
         exerciseTimeQuery!.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
@@ -634,6 +803,18 @@ class HealthStoreViewModel: ObservableObject {
             sampleType: HKWorkoutType.workoutType(),
             predicate: allPredicate,
             limit: HKObjectQueryNoLimit, sortDescriptors: [sortDescriptor]) { strengthQuery, samples, error in
+                
+                //Handle errors here
+                if let error = error as? HKError {
+                    switch (error.code) {
+                    case .errorHealthDataUnavailable:
+                        return
+                    case .errorNoData:
+                        return
+                    default:
+                        return
+                    }
+                }
                 
                 guard let samples = samples else {
                     fatalError("An error has occurred \(error?.localizedDescription)")
