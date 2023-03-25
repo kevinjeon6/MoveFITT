@@ -11,22 +11,15 @@ struct MuscleView: View {
     
     @ObservedObject var healthStoreVM: HealthStoreViewModel
    
-    
     var body: some View {
-    
+
         NavigationStack {
             List(healthStoreVM.muscleStrength, id: \.self) {
                 workout in
-                
+
                 HStack(spacing: 30) {
                     workout.workoutActivityType.fitnessIcon
-                        .imageScale(.large)
-                        .foregroundColor(.green)
-                        .background(
-                            Circle()
-                                .fill(.green.opacity(0.3))
-                                .frame(width: 50, height: 50)
-                        )
+                        .modifier(FitnessIconModifier())
                     VStack(alignment: .leading) {
                         Text("\(workout.workoutActivityType.name)")
                         Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
@@ -36,7 +29,7 @@ struct MuscleView: View {
                     }
                 }
             }
-            .navigationTitle("Workouts")
+            .navigationTitle("Workout History")
         }
     }
 }

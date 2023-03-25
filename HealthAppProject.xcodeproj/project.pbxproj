@@ -32,6 +32,8 @@
 		7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */; };
 		74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
+		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
+		74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */; };
 		74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */; };
 		74DF66FB295B77A50046F521 /* QuickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66FA295B77A50046F521 /* QuickView.swift */; };
 		74DF66FD295B77AC0046F521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FC295B77AC0046F521 /* Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekExerciseTimeChartView.swift; sourceTree = "<group>"; };
 		74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSummaryCardView.swift; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
+		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
+		74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessIconModifier.swift; sourceTree = "<group>"; };
 		74DF66F5295B77A50046F521 /* HealthAppProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAppProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppProjectApp.swift; sourceTree = "<group>"; };
 		74DF66FA295B77A50046F521 /* QuickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickView.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 			children = (
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 				7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */,
+				74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */,
 				7466603329843BCA00C17C8A /* StepCountCardView.swift */,
 				74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */,
 				74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */,
@@ -204,6 +209,7 @@
 				743AB91B295CE8B2004BD054 /* Info.plist */,
 				74DF6706295B80450046F521 /* HealthAppProject.entitlements */,
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
+				74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */,
 				7438E69A29873D4C00F571C7 /* Helpers */,
 				74D30638296E1E71004D153B /* Components */,
 				743818E4295E0BAD00FE4613 /* Model */,
@@ -324,6 +330,7 @@
 				74DF66FB295B77A50046F521 /* QuickView.swift in Sources */,
 				7466603429843BCA00C17C8A /* StepCountCardView.swift in Sources */,
 				74F02F6F29B2807100AEB8BE /* HeartRateVariability.swift in Sources */,
+				74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */,
 				7438E699298733C600F571C7 /* NotificationManager.swift in Sources */,
 				74117142297A07C000328365 /* SettingsView.swift in Sources */,
 				7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */,
@@ -352,6 +359,7 @@
 				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,
+				74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
 				74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */,
 				7438E69E2987457D00F571C7 /* Constants.swift in Sources */,
