@@ -35,20 +35,19 @@ struct StrengthTrainingGoalView: View {
                         .font(.title2)
                         .foregroundColor(.primary)
                     Text("Your goal: \(title) / \(goalText) workouts")
-                        .font(.footnote)
+                        .font(.subheadline)
                         .foregroundColor(.primary)
                         .padding(.bottom, 10)
                     Text("Meet the guidelines?")
-                        .font(.headline)
+                        .font(.title2)
                         .foregroundColor(.primary)
                     HStack {
-                        Text("\(title)/\(guidelines) ")
-                            .font(.footnote)
+                        Text("\(title) / \(guidelines) ")
                             .foregroundColor(.primary)
                         Image(systemName: meetGoal ? "checkmark.circle.fill" : "circle")
-                            .font(.footnote)
                             .foregroundColor(meetGoal ? .green : .primary)
                     }
+                    .font(.subheadline)
                 }
             }
 

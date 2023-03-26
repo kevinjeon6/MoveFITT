@@ -15,7 +15,7 @@ struct StrengthActivityWeekView: View {
         
         VStack(alignment: .leading) {
             Text(Constants.currentWeekDatesString)
-                .font(.title2)
+                .font(.title3)
                 .bold()
                 .foregroundColor(.primary)
                 .padding(.bottom, 5)
