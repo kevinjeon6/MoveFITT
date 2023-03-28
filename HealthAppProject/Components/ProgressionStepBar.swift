@@ -31,8 +31,9 @@ struct ProgressionStepBar: View {
                         .frame(width: geo.size.width * CGFloat(value) / CGFloat(goalValue))
                 }
             }
+            .frame(width: geo.size.width * 0.9, height: 12)
+            .frame(width: geo.size.width, height: geo.size.height)
         }
-        .frame(width: 120, height: 12)
     }
 }
 

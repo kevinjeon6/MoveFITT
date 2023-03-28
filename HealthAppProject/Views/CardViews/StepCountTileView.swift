@@ -27,11 +27,12 @@ struct StepCountTileView: View {
             HStack {
                 ProgressionStepBar(value: currentValue, goalValue: goalText)
                 Text("\(stepPercent)%")
+                    .layoutPriority(1)
             }
             
         }
         .padding()
-        .frame(width: 200)
+        .frame(width: .infinity, height: 145)
         .cardBackground()
  
     }
@@ -39,6 +40,7 @@ struct StepCountTileView: View {
 
 struct StepCountTileView_Previews: PreviewProvider {
     static var previews: some View {
-        StepCountTileView(currentValue: 7_000, goalText: 10_000, stepPercent: 70)
+        StepCountTileView(currentValue: 10_000, goalText: 10_000, stepPercent: 100)
+            .previewDevice("iPhone SE")
     }
 }
