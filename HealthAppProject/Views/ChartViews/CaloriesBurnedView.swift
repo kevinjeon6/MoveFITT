@@ -38,6 +38,8 @@ struct CaloriesBurnedChartView: View {
             }
         }
         .padding(.horizontal)
+        .navigationTitle("Kcals Burned")
+
         
         
         List {

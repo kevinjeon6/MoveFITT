@@ -40,6 +40,7 @@ struct OneWeekStepChartView: View {
                 }
             }
             .padding(.horizontal)
+            .navigationTitle("Steps")
             
         List{
             ForEach(healthStoreVM.steps.reversed(), id: \.date) {

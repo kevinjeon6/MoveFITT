@@ -44,6 +44,8 @@ struct OneWeekRestHRChartView: View {
             }
         }
         .padding(.horizontal)
+        .navigationTitle("Resting Heart Rate")
+
         
         List{
             ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
