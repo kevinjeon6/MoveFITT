@@ -46,6 +46,8 @@ struct InfoView: View {
                 HStack {
                     Spacer()
                     Text(" Physical Activity Guidelines for Americans, 2nd edition")
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.1)
                 }
                 
             }

@@ -34,13 +34,19 @@ struct StrengthTrainingGoalView: View {
                     Text("Strength training")
                         .font(.title2)
                         .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.1)
                     Text("Your goal: \(title) / \(goalText) workouts")
                         .font(.subheadline)
                         .foregroundColor(.primary)
                         .padding(.bottom, 10)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.1)
                     Text("Meet the guidelines?")
                         .font(.title2)
                         .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.1)
                     HStack {
                         Text("\(title) / \(guidelines) ")
                             .foregroundColor(.primary)
@@ -61,8 +67,10 @@ struct StrengthTrainingGoalView: View {
                 title: title)
             Spacer()
         }
+        .frame(width: nil)
         .padding()
         .cardBackground()
+
     }
 }
 
