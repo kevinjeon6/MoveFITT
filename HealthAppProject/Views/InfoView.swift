@@ -9,27 +9,54 @@ import SwiftUI
 
 struct InfoView: View {
     
-    var description: String
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(spacing: 20) {
-        
-            InfoHeaderComponent()
-            
-            Text(description)
-                .font(.system(size: 22, weight: .semibold, design: .rounded))
-                .foregroundColor(.primary)
-            Spacer()
-            
+        ZStack {
+            VStack(alignment: .leading, spacing: 20) {
+                
+                InfoHeaderComponent()
+                    .frame(maxWidth: .infinity)
+                
+                Group {
+                    Text("Step Goal")
+                        .modifier(GoalTextModifier())
+                    
+                    Text(HealthInfoText.stepCountDescription)
+                        .foregroundColor(.primary)
+                    
+                    Text("Daily Exercise Goal")
+                        .modifier(GoalTextModifier())
+                    Text(HealthInfoText.exerTimeDescription)
+                        .foregroundColor(.primary)
+                    
+                    Text("Weekly Exercise Goal")
+                        .modifier(GoalTextModifier())
+                    Text(HealthInfoText.weeklyExerciseTimeDescription)
+                        .foregroundColor(.primary)
+                    
+                    
+                    Text("Strength Goal")
+                        .modifier(GoalTextModifier())
+                    Text(HealthInfoText.strengthGoalDescription)
+                }
+               
+                
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text(" Physical Activity Guidelines for Americans, 2nd edition")
+                }
+                
+            }
+            .padding(.top, 25)
+            .padding()
         }
-        .padding(.top, 25)
-        .padding(.horizontal)
     }
 }
 
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView(description: "This is some description text")
+        InfoView()
     }
 }

@@ -32,6 +32,7 @@
 		74666036298487EE00C17C8A /* CaloriesBurned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74666035298487EE00C17C8A /* CaloriesBurned.swift */; };
 		7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */; };
 		74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */; };
+		747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
 		74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */; };
@@ -78,6 +79,7 @@
 		74666035298487EE00C17C8A /* CaloriesBurned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesBurned.swift; sourceTree = "<group>"; };
 		7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekExerciseTimeChartView.swift; sourceTree = "<group>"; };
 		74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSummaryCardView.swift; sourceTree = "<group>"; };
+		747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTextModifier.swift; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
 		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
 		74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessIconModifier.swift; sourceTree = "<group>"; };
@@ -220,6 +222,8 @@
 				74DF6706295B80450046F521 /* HealthAppProject.entitlements */,
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
 				74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */,
+				747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */,
+				7429641D29CF673E00EE7CCA /* LaunchView.swift */,
 				7438E69A29873D4C00F571C7 /* Helpers */,
 				74D30638296E1E71004D153B /* Components */,
 				743818E4295E0BAD00FE4613 /* Model */,
@@ -360,6 +364,7 @@
 				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
 				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
+				747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */,
 				7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */,
 				74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */,
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,
@@ -513,8 +518,8 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app requires to access your health data";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -525,7 +530,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -547,8 +552,8 @@
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app requires to access your health data";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -559,7 +564,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
