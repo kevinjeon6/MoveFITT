@@ -22,22 +22,12 @@ struct OnboardingView: View {
                 WelcomeView()
                     .tag(0)
                 
-                VStack(spacing: 20) {
-                    Text(HealthInfoText.physicalActivityDescription)
-                    Text(HealthInfoText.strengthActivityDescription)
-                    Text("It is recommended that individuals aim for 30 minutes of physical activity a day. If you are unable to perform 30 continous minutes of physical activity, you can split it up into three separate 10 minute bouts.")
-                    
-                    Text("You can change your goals in the \"Settings\" tab.")
-                    Text("Your initial goals are set to 10,000 steps per day, Muscle strengthening activity goal is set to 2, and your weekly goal is set to 150 minutes per week. ")
-                }
-                .padding()
-                
-                
-                
-                VStack {
-                    Text("To get started and start setting your goals, please authorize")
-                }
-                .tag(2)
+                OnboardTextView()
+                    .tag(1)
+         
+            
+                AuthorizationView()
+                    .tag(2)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -50,36 +40,31 @@ struct OnboardingView: View {
                     onBoardingTabSelection = 1
                    
                 } else {
+                    //Request to read health data from user
                     vm.requestUserAuthorization()
                     isOnboardingViewShowing = false
                 }
                 
             } label: {
-                    Text(onBoardingTabSelection == 0 ? "Next" : "Request Authorization")
-                }
-                    
+                Text(onBoardingTabSelection != 2 ? "Next" : "Request Authorization")
             }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .foregroundColor(.white)
+            .background(.green)
+            .clipShape(Capsule())
+            
         }
+        .padding(.horizontal)
+        .padding(.bottom)
+        
     }
+}
 
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
             .environmentObject(HealthStoreViewModel())
-    }
-}
-
-struct WelcomeView: View {
-    var body: some View {
-        VStack {
-            Image("workout-st")
-                .resizable()
-                .scaledToFit()
-            
-            Text("Welcome to the \"Health App\". This is to help keep track of hitting your physical activity recommendation and meet the muscle strengthening activity recommendation")
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-        }
     }
 }
