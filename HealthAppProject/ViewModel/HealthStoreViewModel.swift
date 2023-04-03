@@ -143,6 +143,7 @@ class HealthStoreViewModel: ObservableObject {
     init(){
         if HKHealthStore.isHealthDataAvailable(){
             healthStore = HKHealthStore()
+            showAllExerciseData()
         } else {
             print("HealthKit is unavailable on this platform")
         }
@@ -164,17 +165,22 @@ class HealthStoreViewModel: ObservableObject {
         healthStore.requestAuthorization(toShare: [], read: healthTypes) { success, error in
             
             if success {
-                self.calculateStepCountData()
-                self.calculateRestingHRData()
-                self.calculateHRVData()
-                self.calculateSevenDaysExerciseTime()
-                self.getOneWeekExerciseChart()
-                self.calculateMonthExerciseTime()
-                self.calculate3MonthExerciseTime()
-                self.calculateCaloriesBurned()
-                self.getWorkoutData()
+                self.showAllExerciseData()
             }
         }
+    }
+    
+    
+    func showAllExerciseData() {
+        self.calculateStepCountData()
+        self.calculateRestingHRData()
+        self.calculateHRVData()
+        self.calculateSevenDaysExerciseTime()
+        self.getOneWeekExerciseChart()
+        self.calculateMonthExerciseTime()
+        self.calculate3MonthExerciseTime()
+        self.calculateCaloriesBurned()
+        self.getWorkoutData()
     }
     
     //MARK: - Calculate Data for One Week
@@ -515,8 +521,8 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: One Week Exercise Time
     func calculateSevenDaysExerciseTime() {
-        let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: date)?.start
-        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: nil, options: .strictStartDate)
+//        let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start
+        let predicate = HKQuery.predicateForSamples(withStart: strengthActivityWeek, end: nil, options: .strictStartDate)
         
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
                                                          quantitySamplePredicate: predicate,
@@ -542,7 +548,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: startDate!, to: self.date) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.strengthActivityWeek, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -550,6 +556,7 @@ class HealthStoreViewModel: ObservableObject {
                     let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
                     let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                     
+       
                     DispatchQueue.main.async {
                         self.exerciseTime.append(exTime)
                     }
@@ -575,7 +582,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: startDate!, to: self.date) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: self.strengthActivityWeek, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -672,6 +679,7 @@ class HealthStoreViewModel: ObservableObject {
                 }
             }
         }
+        
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }

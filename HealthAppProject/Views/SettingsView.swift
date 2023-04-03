@@ -24,7 +24,7 @@ struct SettingsView: View {
             Form {
                 //MARK: Step Goal
                 Section {
-                    Stepper("\(stepGoal) steps", value: $healthStoreVM.stepGoal, in: 100...15_000, step: 100)
+                    Stepper("\(stepGoal) steps", value: $healthStoreVM.stepGoal, in: 5_000...15_000, step: 100)
                         .foregroundColor(.blue)
                 } header: {
                     Text("Set your Daily Step Goal Here")
@@ -66,8 +66,8 @@ struct SettingsView: View {
                         Image(systemName: "info.circle")
                     }
                     .sheet(isPresented: $isShowingInfoSheet) {
-                        InfoView(description: "add stuff here")
-                            .presentationDetents([.medium])
+                        InfoView()
+                            .presentationDetents([.large])
                     }
                 }
             }

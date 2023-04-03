@@ -14,8 +14,6 @@ struct MainScreenView: View {
 //    @StateObject var healthStore = HealthStoreViewModel()
     @EnvironmentObject var healthStore: HealthStoreViewModel
 
-    @AppStorage("onboarding") var isOnboardingViewShowing: Bool = false
-    
     var body: some View {
         TabView(selection: $healthStore.selectedTab) {
             
@@ -52,7 +50,7 @@ struct MainScreenView: View {
         }
         .onAppear {
             let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor(.white.opacity(0.9))
+            appearance.backgroundColor = UIColor(.darkModeColor)
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }

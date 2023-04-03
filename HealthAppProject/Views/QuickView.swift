@@ -12,6 +12,11 @@ struct QuickView: View {
   
     @EnvironmentObject var healthStoreVM: HealthStoreViewModel
 
+    let columns = [
+        GridItem(.flexible(), spacing: 10),
+        GridItem(.flexible(), spacing: 10)
+    
+    ]
  
     var body: some View {
       
@@ -19,12 +24,6 @@ struct QuickView: View {
             GeometryReader { geo in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Activity Overview")
-                            .padding([.top, .leading], 20)
-                            .font(.largeTitle)
-                            .bold()
-                        
-                        
                         VStack (spacing: 10) {
                             HStack(spacing: 50) {
                                 ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today", dateText: Constants.todayDateString)
@@ -37,7 +36,7 @@ struct QuickView: View {
                             }
                             .padding(.bottom, 20)
                             
-                            
+                         
                             StrengthTrainingGoalView(
                                 progress: Double(healthStoreVM.strengthActivityWeekCount.count),
                                 minValue: 0.0,
@@ -50,25 +49,20 @@ struct QuickView: View {
                             StrengthActivityWeekView(healthStoreVM: healthStoreVM)
 
             
-                        
-                            
-                                HStack {
-                                    NavigationLink(value: 1) {
-                                        StepCountTileView(currentValue: healthStoreVM.currentStepCount, goalText: healthStoreVM.stepGoal, stepPercent: healthStoreVM.stepCountPercent)
-                                            
-                                    }
-                                    .foregroundColor(.primary)
-                                  
-                            
-                                    NavigationLink(value: 3) {
-                                        HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
-                                    }
-                                    .foregroundColor(.primary)
+                            LazyVGrid(columns: columns, spacing: 10) {
+                                NavigationLink(value: 1) {
+                                    StepCountTileView(currentValue: healthStoreVM.currentStepCount, goalText: healthStoreVM.stepGoal, stepPercent: healthStoreVM.stepCountPercent)
+                                        
                                 }
-                                .padding(.horizontal)
-
-                               
-                            HStack {
+                                .foregroundColor(.primary)
+             
+                                
+                                NavigationLink(value: 3) {
+                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
+                                }
+                                .foregroundColor(.primary)
+                      
+                                
                                 NavigationLink(value: 2) {
                                     HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthStoreVM.currentRestHR)
                                 }
@@ -97,6 +91,7 @@ struct QuickView: View {
                     .padding(.horizontal)
                    
                 }
+                .navigationTitle("Activity Overview")
             }
         }
     }
