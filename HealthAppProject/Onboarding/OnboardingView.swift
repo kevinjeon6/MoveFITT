@@ -78,6 +78,9 @@ struct OnboardingView: View {
         }
         .padding(.horizontal)
         .padding(.bottom)
+        .background(
+            RadialGradient(colors: [.green, .white], center: .center, startRadius: 10, endRadius: 420)  
+        )
 
         
     }

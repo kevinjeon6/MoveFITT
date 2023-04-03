@@ -16,6 +16,7 @@ struct OnboardInitialGoalDescription: View {
             Text("You can change your goals in the \"Settings\" tab")
         }
         .font(.title2)
+        .bold()
     }
 }
 

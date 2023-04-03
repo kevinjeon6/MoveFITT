@@ -13,6 +13,7 @@ struct OnboardTextView: View {
 
             Text(HealthInfoText.onboardingPhysicalActivityDescription)
                 .font(.title2)
+                .bold()
 
         }
     }

@@ -13,6 +13,7 @@ struct OnboardStrengthDescription: View {
         VStack(alignment: .leading) {
             Text(HealthInfoText.onboardingStrengthActivityDescription)
                 .font(.title2)
+                .bold()
         }
     }
 }

@@ -12,6 +12,7 @@ struct OnboardStepDescription: View {
         VStack(alignment: .leading, spacing: 20) {
             Text(HealthInfoText.onboardingStepCountDescription)
                 .font(.title2)
+                .bold()
         }
     }
 }

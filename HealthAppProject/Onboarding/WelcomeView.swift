@@ -15,8 +15,9 @@ struct WelcomeView: View {
                 .resizable()
                 .scaledToFit()
             
-            Text("Welcome to the \"Health App\". This is to help keep track of hitting your physical activity recommendation and meet the muscle strengthening activity recommendation")
+            Text("Welcome to the MoveFITT. This is to help keep track of hitting your physical activity recommendation and meet the muscle strengthening activity recommendation")
                 .font(.title3)
+                .bold()
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
         }

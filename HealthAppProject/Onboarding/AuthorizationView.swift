@@ -11,7 +11,8 @@ struct AuthorizationView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("To get started, please authorize")
-                .font(.title2)        
+                .font(.title2)
+                .bold()
         }
     }
 }
