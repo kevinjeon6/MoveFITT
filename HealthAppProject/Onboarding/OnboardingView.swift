@@ -14,6 +14,7 @@ struct OnboardingView: View {
     @EnvironmentObject var vm: HealthStoreViewModel
   
     @State private var onBoardingTabSelection = 0
+    @State private var change = false
     
     var body: some View {
         VStack{
@@ -24,10 +25,19 @@ struct OnboardingView: View {
                 
                 OnboardTextView()
                     .tag(1)
+                
+                OnboardStrengthDescription()
+                    .tag(2)
+                
+                OnboardStepDescription()
+                    .tag(3)
+                
+                OnboardInitialGoalDescription()
+                    .tag(4)
          
             
                 AuthorizationView()
-                    .tag(2)
+                    .tag(5)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -35,28 +45,38 @@ struct OnboardingView: View {
             
             // MARK: Button
             
-            Button {
-                if onBoardingTabSelection == 0 {
-                    onBoardingTabSelection = 1
-                   
-                } else {
-                    //Request to read health data from user
-                    vm.requestUserAuthorization()
-                    isOnboardingViewShowing = false
-                }
-                
-            } label: {
-                Text(onBoardingTabSelection != 2 ? "Next" : "Request Authorization")
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .foregroundColor(.white)
-            .background(.green)
-            .clipShape(Capsule())
+            if onBoardingTabSelection != 5 {
+                    Button {
+                        onBoardingTabSelection += 1
+                    } label: {
+                        ZStack {
+                            Capsule()
+                                .fill(.green)
+                                .frame(height: 48)
+                            
+                            Text("Next")
+                                .foregroundColor(.darkModeColor)
+                        }
+                    }
+            } else {
             
+                    Button {
+                        vm.requestUserAuthorization()
+                        isOnboardingViewShowing = false
+                    } label: {
+                        ZStack {
+                            Capsule()
+                                .fill(.green)
+                                .frame(height: 48)
+                            Text("Request Authorization")
+                                .foregroundColor(.darkModeColor)
+                        }
+                }
+            }
         }
         .padding(.horizontal)
         .padding(.bottom)
+
         
     }
 }

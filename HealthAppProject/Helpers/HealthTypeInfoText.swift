@@ -20,7 +20,7 @@ struct HealthInfoText {
     }
     
     static var stepCountDescription: String {
-        "Having a step goal can increase your physical activity. The typical target goal for step count in a day is 10,000 steps. However, a baseline of 5,000 steps per day should be aimed for. "
+        "Having a step goal can increase your physical activity. The typical target goal for step count in a day is 10,000 steps. However, a baseline of 5,000 steps per day should be aimed for."
     }
     
     static var strengthGoalDescription: String {
@@ -30,8 +30,12 @@ struct HealthInfoText {
     
     // MARK: Onboarding Description
   
+    static var onboardingInitialGoalDescription: String {
+        "Your initial goals are set to 10,000 steps per day, Muscle strengthening activity goal is set to 2 times per week, and your weekly goal is set to 150 minutes per week."
+    }
+    
     static var onboardingStepCountDescription: String {
-        "Your initial goals are set to 10,000 steps per day, Muscle strengthening activity goal is set to 2, and your weekly goal is set to 150 minutes per week."
+        "Having a step goal can increase your physical activity. The typical target goal for step count in a day is 10,000 steps. However, a baseline of 5,000 steps per day should be aimed for."
     }
     
     static var onboardingStrengthActivityDescription: String {

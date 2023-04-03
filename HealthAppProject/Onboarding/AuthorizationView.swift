@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AuthorizationView: View {
     var body: some View {
-        VStack {
-            Text("To get started and start setting your goals, please authorize")
-                .font(.title2)
+        VStack(alignment: .leading, spacing: 20) {
+            Text("To get started, please authorize")
+                .font(.title2)        
         }
     }
 }

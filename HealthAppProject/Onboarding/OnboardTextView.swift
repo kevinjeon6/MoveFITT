@@ -9,20 +9,12 @@ import SwiftUI
 
 struct OnboardTextView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading) {
 
-            Text("• " + HealthInfoText.onboardingPhysicalActivityDescription)
-            Text("• " + HealthInfoText.onboardingStrengthActivityDescription)
-            Text("• " + HealthInfoText.onboardingStepCountDescription)
-            Text("• " + "You can change your goals in the \"Settings\" tab")
+            Text(HealthInfoText.onboardingPhysicalActivityDescription)
+                .font(.title2)
 
-       
-  
-            Spacer()
         }
-        .font(.title3)
-        .padding(.vertical, 30)
-        .padding(.horizontal)
     }
 }
 
