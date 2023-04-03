@@ -14,34 +14,36 @@ struct OnboardingView: View {
     @EnvironmentObject var vm: HealthStoreViewModel
   
     @State private var onBoardingTabSelection = 0
-    @State private var change = false
+   
     
     var body: some View {
         VStack{
             
-            TabView(selection: $onBoardingTabSelection) {
-                WelcomeView()
-                    .tag(0)
-                
-                OnboardTextView()
-                    .tag(1)
-                
-                OnboardStrengthDescription()
-                    .tag(2)
-                
-                OnboardStepDescription()
-                    .tag(3)
-                
-                OnboardInitialGoalDescription()
-                    .tag(4)
+                TabView(selection: $onBoardingTabSelection) {
+                    WelcomeView()
+                        .tag(0)
+                    
+                    OnboardTextView()
+                        .tag(1)
+                    
+                    OnboardStrengthDescription()
+                        .tag(2)
+                    
+                    OnboardStepDescription()
+                        .tag(3)
+                    
+                    OnboardInitialGoalDescription()
+                        .tag(4)
+                    
+                    AuthorizationView()
+                        .tag(5)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .always))
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                .transition(.slide)
+                .animation(.default, value: onBoardingTabSelection)
+   
          
-            
-                AuthorizationView()
-                    .tag(5)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .indexViewStyle(.page(backgroundDisplayMode: .always))
-            
             
             // MARK: Button
             
