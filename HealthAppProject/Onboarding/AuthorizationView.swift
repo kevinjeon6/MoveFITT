@@ -10,7 +10,7 @@ import SwiftUI
 struct AuthorizationView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("To get started, please authorize")
+            Text("MoveFITT needs to connect to Apple Health to help hit your goals")
                 .font(.title2)
                 .bold()
         }

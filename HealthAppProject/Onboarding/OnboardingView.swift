@@ -53,7 +53,7 @@ struct OnboardingView: View {
                     } label: {
                         ZStack {
                             Capsule()
-                                .fill(.green)
+                                .fill(Color("First-green"))
                                 .frame(height: 48)
                             
                             Text("Next")
@@ -68,9 +68,9 @@ struct OnboardingView: View {
                     } label: {
                         ZStack {
                             Capsule()
-                                .fill(.green)
+                                .fill(Color("First-green"))
                                 .frame(height: 48)
-                            Text("Request Authorization")
+                            Text("Connect")
                                 .foregroundColor(.darkModeColor)
                         }
                 }
@@ -79,7 +79,7 @@ struct OnboardingView: View {
         .padding(.horizontal)
         .padding(.bottom)
         .background(
-            RadialGradient(colors: [.green, .white], center: .center, startRadius: 10, endRadius: 420)  
+            RadialGradient(colors: [Color("First-green"), .white], center: .center, startRadius: 10, endRadius: 420)
         )
 
         
