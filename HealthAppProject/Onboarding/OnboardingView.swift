@@ -53,7 +53,7 @@ struct OnboardingView: View {
                     } label: {
                         ZStack {
                             Capsule()
-                                .fill(Color("First-green"))
+                                .fill(Color.tangBlue)
                                 .frame(height: 48)
                             
                             Text("Next")
@@ -68,7 +68,7 @@ struct OnboardingView: View {
                     } label: {
                         ZStack {
                             Capsule()
-                                .fill(Color("First-green"))
+                                .fill(Color.tangBlue)
                                 .frame(height: 48)
                             Text("Connect")
                                 .foregroundColor(.darkModeColor)
@@ -79,7 +79,7 @@ struct OnboardingView: View {
         .padding(.horizontal)
         .padding(.bottom)
         .background(
-            RadialGradient(colors: [Color("First-green"), .white], center: .center, startRadius: 10, endRadius: 420)
+            LinearGradient(colors: [.tangBlue, .white], startPoint: .top, endPoint: .bottom)
         )
 
         

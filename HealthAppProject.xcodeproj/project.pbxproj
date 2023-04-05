@@ -164,6 +164,7 @@
 		7429988229C414950044E890 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				7429641D29CF673E00EE7CCA /* LaunchView.swift */,
 				7429988329C414E20044E890 /* OnboardingView.swift */,
 				7496020B29D77B2500B6B824 /* WelcomeView.swift */,
 				7496020D29D77B5F00B6B824 /* OnboardTextView.swift */,
@@ -241,9 +242,7 @@
 				743AB91B295CE8B2004BD054 /* Info.plist */,
 				74DF6706295B80450046F521 /* HealthAppProject.entitlements */,
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
-				74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */,
-				747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */,
-				7429641D29CF673E00EE7CCA /* LaunchView.swift */,
+				74F81BEC29DC700100D13B4C /* Modifiers */,
 				7438E69A29873D4C00F571C7 /* Helpers */,
 				74D30638296E1E71004D153B /* Components */,
 				743818E4295E0BAD00FE4613 /* Model */,
@@ -273,8 +272,8 @@
 				74338BC32974D03800EEC9B9 /* StatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
 				740D0E002999D3F500776E3D /* MuscleView.swift */,
-				740D0DF92995767800776E3D /* CardViews */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
+				740D0DF92995767800776E3D /* CardViews */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
 			);
 			path = Views;
@@ -287,6 +286,15 @@
 				7438E698298733C600F571C7 /* NotificationManager.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		74F81BEC29DC700100D13B4C /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */,
+				747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

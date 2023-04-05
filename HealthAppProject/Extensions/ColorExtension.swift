@@ -10,4 +10,5 @@ import SwiftUI
 
 extension Color {
     static let darkModeColor = Color("Dark-mode")
+    static let tangBlue = Color("Tang-Blue")
 }

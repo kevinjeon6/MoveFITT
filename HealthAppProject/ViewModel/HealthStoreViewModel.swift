@@ -183,13 +183,13 @@ class HealthStoreViewModel: ObservableObject {
         self.getWorkoutData()
     }
     
-    //MARK: - Calculate Data for One Week
+    //MARK: - Calculate Step Data for One Week
     func calculateStepCountData() {
         
         //Define the predicate
         let stepCountpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
-        //MARK: - Query for Step Count
+        // Query for Step Count
         query = HKStatisticsCollectionQuery(quantityType: stepType,
                                             quantitySamplePredicate: stepCountpredicate,
                                             options: .cumulativeSum,
@@ -521,7 +521,6 @@ class HealthStoreViewModel: ObservableObject {
     
     //MARK: One Week Exercise Time
     func calculateSevenDaysExerciseTime() {
-//        let startDate = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start
         let predicate = HKQuery.predicateForSamples(withStart: strengthActivityWeek, end: nil, options: .strictStartDate)
         
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
@@ -738,6 +737,39 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
+        exerciseTimeQuery!.statisticsUpdateHandler = {
+            exerciseTimeQuery, statistics, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating exercise time
+            statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTimeMonth.append(exTime)
+                    }
+                }
+            }
+        }
+        
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }
@@ -761,6 +793,39 @@ class HealthStoreViewModel: ObservableObject {
         
         exerciseTimeQuery!.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
+            
+            //Handle errors here
+            if let error = error as? HKError {
+                switch (error.code) {
+                case .errorHealthDataUnavailable:
+                    return
+                case .errorNoData:
+                    return
+                default:
+                    return
+                }
+            }
+            
+            guard let statisticsCollection = statisticsCollection else { return}
+            
+            //Calculating exercise time
+            statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
+                if let exerciseTimequantity = statistics.sumQuantity() {
+                    let exerciseTimedate = statistics.startDate
+                    
+                    //Exercise Time
+                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                    
+                    DispatchQueue.main.async {
+                        self.exerciseTime3Months.append(exTime)
+                    }
+                }
+            }
+        }
+        
+        exerciseTimeQuery!.statisticsUpdateHandler = {
+            exerciseTimeQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
             if let error = error as? HKError {
