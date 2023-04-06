@@ -11,7 +11,7 @@ struct WelcomeView: View {
     var body: some View {
         VStack {
             //Need to update image for actual app. Current image is a placeholder
-            Image("workout-st")
+            Image("Welcome-image")
                 .resizable()
                 .scaledToFit()
             

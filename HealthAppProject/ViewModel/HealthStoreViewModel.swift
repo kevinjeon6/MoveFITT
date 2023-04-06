@@ -267,6 +267,7 @@ class HealthStoreViewModel: ObservableObject {
         self.healthStore?.execute(query)
     }
     
+    // MARK: Resting HR data
     func calculateRestingHRData() {
         
         let restingHRpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
@@ -353,7 +354,7 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     
-    
+    // MARK: Heart rate variability data
     func calculateHRVData() {
         
         let hrvPredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
