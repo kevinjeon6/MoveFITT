@@ -23,13 +23,13 @@ struct OnboardingView: View {
                     WelcomeView()
                         .tag(0)
                     
-                    OnboardTextView()
+                    OnboardTextDescription(onboardText: HealthInfoText.onboardingPhysicalActivityDescription)
                         .tag(1)
                     
-                    OnboardStrengthDescription()
+                    OnboardTextDescription(onboardText: HealthInfoText.onboardingStrengthActivityDescription)
                         .tag(2)
                     
-                    OnboardStepDescription()
+                    OnboardTextDescription(onboardText: HealthInfoText.onboardingStepCountDescription)
                         .tag(3)
                     
                     OnboardInitialGoalDescription()

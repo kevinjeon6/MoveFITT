@@ -35,7 +35,6 @@
 		74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */; };
 		747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */; };
 		7496020C29D77B2500B6B824 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020B29D77B2500B6B824 /* WelcomeView.swift */; };
-		7496020E29D77B5F00B6B824 /* OnboardTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020D29D77B5F00B6B824 /* OnboardTextView.swift */; };
 		7496021029D77B7E00B6B824 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020F29D77B7E00B6B824 /* AuthorizationView.swift */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
@@ -53,8 +52,7 @@
 		74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */; };
 		74F02F6F29B2807100AEB8BE /* HeartRateVariability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6E29B2807100AEB8BE /* HeartRateVariability.swift */; };
 		74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */; };
-		74F81BE729DA42EF00D13B4C /* OnboardStrengthDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F81BE629DA42EF00D13B4C /* OnboardStrengthDescription.swift */; };
-		74F81BE929DA435300D13B4C /* OnboardStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F81BE829DA435300D13B4C /* OnboardStepDescription.swift */; };
+		74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F07AC329E06654004FC83D /* OnboardTextDescription.swift */; };
 		74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
@@ -89,12 +87,11 @@
 		74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSummaryCardView.swift; sourceTree = "<group>"; };
 		747ED72029D65A4800F4FE16 /* GoalTextModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTextModifier.swift; sourceTree = "<group>"; };
 		7496020B29D77B2500B6B824 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		7496020D29D77B5F00B6B824 /* OnboardTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardTextView.swift; sourceTree = "<group>"; };
 		7496020F29D77B7E00B6B824 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
 		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
 		74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessIconModifier.swift; sourceTree = "<group>"; };
-		74DF66F5295B77A50046F521 /* HealthAppProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HealthAppProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		74DF66F5295B77A50046F521 /* MoveFITT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoveFITT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppProjectApp.swift; sourceTree = "<group>"; };
 		74DF66FA295B77A50046F521 /* QuickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickView.swift; sourceTree = "<group>"; };
 		74DF66FC295B77AC0046F521 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,8 +106,7 @@
 		74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfoTileView.swift; sourceTree = "<group>"; };
 		74F02F6E29B2807100AEB8BE /* HeartRateVariability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateVariability.swift; sourceTree = "<group>"; };
 		74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekHRVChartView.swift; sourceTree = "<group>"; };
-		74F81BE629DA42EF00D13B4C /* OnboardStrengthDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardStrengthDescription.swift; sourceTree = "<group>"; };
-		74F81BE829DA435300D13B4C /* OnboardStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardStepDescription.swift; sourceTree = "<group>"; };
+		74F07AC329E06654004FC83D /* OnboardTextDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardTextDescription.swift; sourceTree = "<group>"; };
 		74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardInitialGoalDescription.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,9 +163,7 @@
 				7429641D29CF673E00EE7CCA /* LaunchView.swift */,
 				7429988329C414E20044E890 /* OnboardingView.swift */,
 				7496020B29D77B2500B6B824 /* WelcomeView.swift */,
-				7496020D29D77B5F00B6B824 /* OnboardTextView.swift */,
-				74F81BE629DA42EF00D13B4C /* OnboardStrengthDescription.swift */,
-				74F81BE829DA435300D13B4C /* OnboardStepDescription.swift */,
+				74F07AC329E06654004FC83D /* OnboardTextDescription.swift */,
 				74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */,
 				7496020F29D77B7E00B6B824 /* AuthorizationView.swift */,
 			);
@@ -231,7 +225,7 @@
 		74DF66F6295B77A50046F521 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				74DF66F5295B77A50046F521 /* HealthAppProject.app */,
+				74DF66F5295B77A50046F521 /* MoveFITT.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,9 +294,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		74DF66F4295B77A50046F521 /* HealthAppProject */ = {
+		74DF66F4295B77A50046F521 /* MoveFITT */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 74DF6703295B77AC0046F521 /* Build configuration list for PBXNativeTarget "HealthAppProject" */;
+			buildConfigurationList = 74DF6703295B77AC0046F521 /* Build configuration list for PBXNativeTarget "MoveFITT" */;
 			buildPhases = (
 				74DF66F1295B77A50046F521 /* Sources */,
 				74DF66F2295B77A50046F521 /* Frameworks */,
@@ -312,9 +306,9 @@
 			);
 			dependencies = (
 			);
-			name = HealthAppProject;
+			name = MoveFITT;
 			productName = HealthAppProject;
-			productReference = 74DF66F5295B77A50046F521 /* HealthAppProject.app */;
+			productReference = 74DF66F5295B77A50046F521 /* MoveFITT.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -345,7 +339,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				74DF66F4295B77A50046F521 /* HealthAppProject */,
+				74DF66F4295B77A50046F521 /* MoveFITT */,
 			);
 		};
 /* End PBXProject section */
@@ -385,7 +379,6 @@
 				7429641E29CF673E00EE7CCA /* LaunchView.swift in Sources */,
 				7438E6A02988B9F800F571C7 /* CaloriesBurnedView.swift in Sources */,
 				746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */,
-				7496020E29D77B5F00B6B824 /* OnboardTextView.swift in Sources */,
 				74338BC62975675A00EEC9B9 /* ExerciseTime.swift in Sources */,
 				74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */,
 				7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */,
@@ -395,7 +388,6 @@
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				743818E6295E0C4500FE4613 /* Step.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
-				74F81BE929DA435300D13B4C /* OnboardStepDescription.swift in Sources */,
 				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
 				747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */,
 				7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */,
@@ -407,9 +399,9 @@
 				740D0E03299B27F100776E3D /* DataListView.swift in Sources */,
 				74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */,
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
-				74F81BE729DA42EF00D13B4C /* OnboardStrengthDescription.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
 				7411E8EA296CF8EB00C1FB8A /* RestingHeartRate.swift in Sources */,
+				74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,
 				74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */,
 				74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */,
@@ -562,7 +554,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinjeon.MoveFITT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MoveFITT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -597,7 +589,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinjeon.MoveFITT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MoveFITT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -617,7 +609,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		74DF6703295B77AC0046F521 /* Build configuration list for PBXNativeTarget "HealthAppProject" */ = {
+		74DF6703295B77AC0046F521 /* Build configuration list for PBXNativeTarget "MoveFITT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				74DF6704295B77AC0046F521 /* Debug */,
