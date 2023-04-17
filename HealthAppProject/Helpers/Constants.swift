@@ -15,20 +15,22 @@ struct Constants {
     
 
     static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month().day())
+    static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+    //Start of the week is Sunday - Saturday
     
     
     static var currentWeekDatesString: String {
-        let date = Date()
+//        let date = Date()
         let calendar = Calendar.current
         
-        let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: date)?.start
+//        let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: date)?.start
         //End week is Adding 6 days from the start of a new week. Example. Jan 29 is the 5th week of the year and is the start of a new week
-        let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek!)
+        let endOfWeek = calendar.date(byAdding: .day, value: 6, to: Constants.strengthActivityWeek)
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
         
-        let startOfWeekString = dateFormatter.string(from: startOfWeek!)
+        let startOfWeekString = dateFormatter.string(from: Constants.strengthActivityWeek)
         let endOfWeekString = dateFormatter.string(from: endOfWeek!)
     
         

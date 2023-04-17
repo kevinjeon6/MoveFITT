@@ -61,7 +61,7 @@ class HealthStoreViewModel: ObservableObject {
     let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
     let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
     
-    let strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+//    let strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
     
     
     
@@ -135,7 +135,7 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     var strengthActivityWeekCount: [HKWorkout] {
-        muscleStrength.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= strengthActivityWeek && $0.startDate <= date || $0.workoutActivityType.rawValue == 20  && $0.startDate >= strengthActivityWeek && $0.startDate <= date)
+        muscleStrength.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= date || $0.workoutActivityType.rawValue == 20  && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= date)
         }
     }
     
@@ -249,13 +249,16 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                if let quantity = statistics.sumQuantity() {
-                    let date = statistics.startDate
-                    let value = quantity.doubleValue(for: .count())
-                    let step = Step(count: Int(value), date: date)
+       
                     
                     DispatchQueue.main.async {
+                        
+                        self.steps.removeAll()
+                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                            if let quantity = statistics.sumQuantity() {
+                                let date = statistics.startDate
+                                let value = quantity.doubleValue(for: .count())
+                                let step = Step(count: Int(value), date: date)
                         self.steps.append(step)
                     }
                 }
@@ -331,17 +334,19 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-            //Calculating resting HR
-            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                if let restHRquantity = statistics.averageQuantity() {
-                    let hrdate = statistics.startDate
-                    
-                    //HR Units
-                    let hrUnit = HKUnit(from: "count/min")
-                    let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
-                    let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
+       
                     
                     DispatchQueue.main.async {
+                        self.restingHR.removeAll()
+                        //Calculating resting HR
+                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                            if let restHRquantity = statistics.averageQuantity() {
+                                let hrdate = statistics.startDate
+                                
+                                //HR Units
+                                let hrUnit = HKUnit(from: "count/min")
+                                let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
+                                let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
                         self.restingHR.append(restHR)
                     }
                 }
@@ -417,14 +422,16 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             
-            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                if let hrvQuantity = statistics.mostRecentQuantity() {
-                    let hrvdate = statistics.startDate
-                    
-                    let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
-                    let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
+          
                     
                     DispatchQueue.main.async {
+                        self.hrvHR.removeAll()
+                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                            if let hrvQuantity = statistics.mostRecentQuantity() {
+                                let hrvdate = statistics.startDate
+                                
+                                let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
+                                let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
                         self.hrvHR.append(hrvHR)
                     }
                 }
@@ -479,6 +486,8 @@ class HealthStoreViewModel: ObservableObject {
                         self.kcalBurned.append(kcals)
                         
                     }
+                    
+                    
                 }
             }
         }
@@ -501,13 +510,16 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                if let kcalquantity = statistics.sumQuantity() {
-                    let kcaldate = statistics.startDate
-                    let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
-                    let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
-                    
+         
                     DispatchQueue.main.async {
+                        
+                        self.kcalBurned.removeAll()
+                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                            if let kcalquantity = statistics.sumQuantity() {
+                                let kcaldate = statistics.startDate
+                                let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
+                                let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
+                                
                         self.kcalBurned.append(kcals)
                     }
                 }
@@ -520,9 +532,11 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     
+    
+    
     //MARK: One Week Exercise Time
     func calculateSevenDaysExerciseTime() {
-        let predicate = HKQuery.predicateForSamples(withStart: strengthActivityWeek, end: nil, options: .strictStartDate)
+        let predicate = HKQuery.predicateForSamples(withStart: Constants.strengthActivityWeek, end: nil, options: .strictStartDate)
         
         exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
                                                          quantitySamplePredicate: predicate,
@@ -548,7 +562,7 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: self.strengthActivityWeek, to: self.date) { statistics, stop in
+            statisticsCollection.enumerateStatistics(from: Constants.strengthActivityWeek, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
                     let exerciseTimedate = statistics.startDate
                     
@@ -582,15 +596,17 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: self.strengthActivityWeek, to: self.date) { statistics, stop in
-                if let exerciseTimequantity = statistics.sumQuantity() {
-                    let exerciseTimedate = statistics.startDate
-                    
-                    //Exercise Time
-                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+          
                     
                     DispatchQueue.main.async {
+                        self.exerciseTime.removeAll()
+                        statisticsCollection.enumerateStatistics(from: Constants.strengthActivityWeek, to: self.date) { statistics, stop in
+                            if let exerciseTimequantity = statistics.sumQuantity() {
+                                let exerciseTimedate = statistics.startDate
+                                
+                                //Exercise Time
+                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                         self.exerciseTime.append(exTime)
                     }
                 }
@@ -631,6 +647,7 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
+            
             //Calculating exercise time
             statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
                 if let exerciseTimequantity = statistics.sumQuantity() {
@@ -665,15 +682,18 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-            statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                if let exerciseTimequantity = statistics.sumQuantity() {
-                    let exerciseTimedate = statistics.startDate
-                    
-                    //Exercise Time
-                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+    
                     
                     DispatchQueue.main.async {
+                        
+                        self.exerciseTime7Days.removeAll()
+                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                            if let exerciseTimequantity = statistics.sumQuantity() {
+                                let exerciseTimedate = statistics.startDate
+                                
+                                //Exercise Time
+                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                         self.exerciseTime7Days.append(exTime)
                     }
                 }
@@ -755,16 +775,19 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-            //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
-                if let exerciseTimequantity = statistics.sumQuantity() {
-                    let exerciseTimedate = statistics.startDate
-                    
-                    //Exercise Time
-                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+       
                     
                     DispatchQueue.main.async {
+                        self.exerciseTimeMonth.removeAll()
+                        //Calculating exercise time
+                        statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
+                            if let exerciseTimequantity = statistics.sumQuantity() {
+                                let exerciseTimedate = statistics.startDate
+                                
+                                //Exercise Time
+                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                                
                         self.exerciseTimeMonth.append(exTime)
                     }
                 }
@@ -842,16 +865,19 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-            //Calculating exercise time
-            statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
-                if let exerciseTimequantity = statistics.sumQuantity() {
-                    let exerciseTimedate = statistics.startDate
-                    
-                    //Exercise Time
-                    let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                    let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+        
                     
                     DispatchQueue.main.async {
+                        self.exerciseTime3Months.removeAll()
+                        //Calculating exercise time
+                        statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
+                            if let exerciseTimequantity = statistics.sumQuantity() {
+                                let exerciseTimedate = statistics.startDate
+                                
+                                //Exercise Time
+                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                                
                         self.exerciseTime3Months.append(exTime)
                     }
                 }

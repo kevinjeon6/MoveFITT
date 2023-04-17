@@ -23,7 +23,7 @@ struct StrengthActivityWeekView: View {
                     Text("You have completed 0 muscle strengthening workouts this week")
                         .font(.title)
             } else {
-                ForEach(healthStoreVM.updateFilteredArray(strengthStartDate:  Calendar.current.dateInterval(of: .weekOfYear, for: Date())!.start, strengthEndDate: Date()), id: \.self) { strengthWorkout in
+                ForEach(healthStoreVM.updateFilteredArray(strengthStartDate:  Constants.strengthActivityWeek, strengthEndDate: Date()), id: \.self) { strengthWorkout in
                     
                     HStack {
                         strengthWorkout.workoutActivityType.fitnessIcon
