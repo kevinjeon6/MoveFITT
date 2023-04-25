@@ -78,6 +78,7 @@ struct OnboardingView: View {
         }
         .padding(.horizontal)
         .padding(.bottom)
+        .foregroundColor(.black)
         .background(
             LinearGradient(colors: [.tangBlue, .white], startPoint: .top, endPoint: .bottom)
         )
@@ -91,5 +92,7 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
             .environmentObject(HealthStoreViewModel())
+            .preferredColorScheme(.dark
+            )
     }
 }
