@@ -1,7 +1,7 @@
 # MoveFITT
 
 ## Description
-MoveFITT is a physical activity tracker to help you meet the Physical Activity Guidelines for Americans to improve your overall health. It provides the recommended goals for daily physical activity, weekly physical activity, step count, and muscle strengthening activity. oveFITT also tracks other health metrics such as active calories burned, resting heart rate, and heart rate variability. It also provides you your workout history.
+MoveFITT is a physical activity tracker to help you meet the Physical Activity Guidelines for Americans to improve your overall health. It provides the recommended goals for daily physical activity, weekly physical activity, step count, and muscle strengthening activity. MoveFITT also tracks other health metrics such as active calories burned, resting heart rate, and heart rate variability. It also provides you your workout history.
 
 
 MoveFITT integrates with the Health app and other fitness apps in order to display data collected by your Apple Watch and/or phone.
