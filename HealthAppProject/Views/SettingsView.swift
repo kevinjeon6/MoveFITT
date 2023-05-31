@@ -69,6 +69,8 @@ struct SettingsView: View {
                         InfoView()
                             .presentationDetents([.large])
                     }
+                    .accessibilityLabel("Info button")
+                    .accessibilityAddTraits(.isButton)
                 }
             }
         }

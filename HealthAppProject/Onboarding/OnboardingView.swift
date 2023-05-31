@@ -58,8 +58,10 @@ struct OnboardingView: View {
                             
                             Text("Next")
                                 .foregroundColor(.darkModeColor)
+                               
                         }
                     }
+                    .accessibilityAddTraits(.isButton)
             } else {
             
                     Button {
@@ -74,6 +76,7 @@ struct OnboardingView: View {
                                 .foregroundColor(.darkModeColor)
                         }
                 }
+                    .accessibilityAddTraits(.isButton)
             }
         }
         .padding(.horizontal)

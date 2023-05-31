@@ -55,23 +55,27 @@ struct QuickView: View {
                                         
                                 }
                                 .foregroundColor(.primary)
+                                .accessibilityAddTraits(.isLink)
              
                                 
                                 NavigationLink(value: 3) {
                                     HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
                                 }
                                 .foregroundColor(.primary)
+                                .accessibilityAddTraits(.isLink)
                       
                                 
                                 NavigationLink(value: 2) {
                                     HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthStoreVM.currentRestHR)
                                 }
                                 .foregroundColor(.primary)
+                                .accessibilityAddTraits(.isLink)
                                 
                                 NavigationLink(value: 4) {
                                     HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
                                 }
                                 .foregroundColor(.primary)
+                                .accessibilityAddTraits(.isLink)
                             }
                         }
                         .padding(.top, 30)
