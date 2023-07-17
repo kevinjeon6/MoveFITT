@@ -21,7 +21,7 @@ struct ThreeMonthExerciseChartView: View {
                     BarMark(x: .value("day", value.date, unit: .weekOfYear),
                              y: .value("ex time", value.exerValue)
                     )
-                    .foregroundStyle(.green.gradient)
+                    .foregroundStyle(.green)
                     .cornerRadius(3)
                 }
             }

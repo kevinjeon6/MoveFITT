@@ -21,14 +21,7 @@ class HealthStoreViewModel: ObservableObject {
     let caloriesBurnedType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
     let workoutType = HKWorkoutType.workoutType()
     
-    // MARK: Health Type Queries
-    var query: HKStatisticsCollectionQuery?
-    var restingHRquery: HKStatisticsCollectionQuery?
-    var hrvQuery: HKStatisticsCollectionQuery?
-    var exerciseTimeQuery: HKStatisticsCollectionQuery?
-    var caloriesBurnedQuery: HKStatisticsCollectionQuery?
-    var selectedWorkoutQuery: HKQuery?
-
+    
     
     // MARK: Health Type data
     @Published var steps: [Step] = [Step]()
@@ -41,9 +34,10 @@ class HealthStoreViewModel: ObservableObject {
     @Published var exerciseTime3Months: [ExerciseTime] = [ExerciseTime]()
     @Published var muscleStrength: [HKWorkout] = [HKWorkout]()
     
+    @Published var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
     
     
-   
+    
     func updateFilteredArray(strengthStartDate: Date, strengthEndDate: Date) -> [HKWorkout] {
         muscleStrength.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= strengthStartDate && $0.startDate <= strengthEndDate || $0.workoutActivityType.rawValue == 20  && $0.startDate >= strengthStartDate && $0.startDate <= strengthEndDate)
         }
@@ -61,7 +55,7 @@ class HealthStoreViewModel: ObservableObject {
     let oneWeekAgo = Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
     let startDate = Calendar.current.date(byAdding: DateComponents(day: -6), to: Date())!
     
-//    let strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+    //    let strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
     
     
     
@@ -190,14 +184,14 @@ class HealthStoreViewModel: ObservableObject {
         let stepCountpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
         // Query for Step Count
-        query = HKStatisticsCollectionQuery(quantityType: stepType,
-                                            quantitySamplePredicate: stepCountpredicate,
-                                            options: .cumulativeSum,
-                                            anchorDate: anchorDate,
-                                            intervalComponents: daily)
+        let query = HKStatisticsCollectionQuery(quantityType: stepType,
+                                                quantitySamplePredicate: stepCountpredicate,
+                                                options: .cumulativeSum,
+                                                anchorDate: anchorDate,
+                                                intervalComponents: daily)
         
         //Setting the results handler
-        query!.initialResultsHandler = {
+        query.initialResultsHandler = {
             query, statisticsCollection, error in
             
             //Handle errors here
@@ -232,7 +226,7 @@ class HealthStoreViewModel: ObservableObject {
         }
         
         //Gets called when there's any new data that's coming into the database
-        query!.statisticsUpdateHandler = {
+        query.statisticsUpdateHandler = {
             query, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -249,16 +243,16 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-       
-                    
-                    DispatchQueue.main.async {
-                        
-                        self.steps.removeAll()
-                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                            if let quantity = statistics.sumQuantity() {
-                                let date = statistics.startDate
-                                let value = quantity.doubleValue(for: .count())
-                                let step = Step(count: Int(value), date: date)
+            
+            
+            DispatchQueue.main.async {
+                
+                self.steps.removeAll()
+                statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                    if let quantity = statistics.sumQuantity() {
+                        let date = statistics.startDate
+                        let value = quantity.doubleValue(for: .count())
+                        let step = Step(count: Int(value), date: date)
                         self.steps.append(step)
                     }
                 }
@@ -266,7 +260,6 @@ class HealthStoreViewModel: ObservableObject {
         }
         
         //Execute our query.
-        guard let query = self.query else { return }
         self.healthStore?.execute(query)
     }
     
@@ -276,14 +269,14 @@ class HealthStoreViewModel: ObservableObject {
         let restingHRpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
         
-        restingHRquery =   HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
-                                                       quantitySamplePredicate: restingHRpredicate,
-                                                       options: .discreteAverage,
-                                                       anchorDate: anchorDate,
-                                                       intervalComponents: daily)
+        let restingHRquery = HKStatisticsCollectionQuery(quantityType: restingHeartRateType,
+                                                         quantitySamplePredicate: restingHRpredicate,
+                                                         options: .discreteAverage,
+                                                         anchorDate: anchorDate,
+                                                         intervalComponents: daily)
         
         
-        restingHRquery!.initialResultsHandler = {
+        restingHRquery.initialResultsHandler = {
             restingQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -317,7 +310,7 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
-        restingHRquery!.statisticsUpdateHandler = {
+        restingHRquery.statisticsUpdateHandler = {
             restingQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -334,27 +327,25 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-       
-                    
-                    DispatchQueue.main.async {
-                        self.restingHR.removeAll()
-                        //Calculating resting HR
-                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                            if let restHRquantity = statistics.averageQuantity() {
-                                let hrdate = statistics.startDate
-                                
-                                //HR Units
-                                let hrUnit = HKUnit(from: "count/min")
-                                let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
-                                let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
+            
+            
+            DispatchQueue.main.async {
+                self.restingHR.removeAll()
+                //Calculating resting HR
+                statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                    if let restHRquantity = statistics.averageQuantity() {
+                        let hrdate = statistics.startDate
+                        
+                        //HR Units
+                        let hrUnit = HKUnit(from: "count/min")
+                        let restHRvalue = restHRquantity.doubleValue(for: hrUnit)
+                        let restHR = RestingHeartRate(restingValue: Int(restHRvalue), date: hrdate)
                         self.restingHR.append(restHR)
                     }
                 }
             }
         }
         
-        
-        guard let restingHRquery = self.restingHRquery else { return }
         self.healthStore?.execute(restingHRquery)
     }
     
@@ -364,13 +355,13 @@ class HealthStoreViewModel: ObservableObject {
         
         let hrvPredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
-        hrvQuery = HKStatisticsCollectionQuery(quantityType: hrvType,
-                                               quantitySamplePredicate: hrvPredicate,
-                                               options: .mostRecent,
-                                               anchorDate: anchorDate,
-                                               intervalComponents: daily)
+        let hrvQuery = HKStatisticsCollectionQuery(quantityType: hrvType,
+                                                   quantitySamplePredicate: hrvPredicate,
+                                                   options: .mostRecent,
+                                                   anchorDate: anchorDate,
+                                                   intervalComponents: daily)
         
-        hrvQuery!.initialResultsHandler = {
+        hrvQuery.initialResultsHandler = {
             hrvQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -404,7 +395,7 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
-        hrvQuery!.statisticsUpdateHandler = {
+        hrvQuery.statisticsUpdateHandler = {
             hrvQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -422,24 +413,22 @@ class HealthStoreViewModel: ObservableObject {
             guard let statisticsCollection = statisticsCollection else { return}
             
             
-          
-                    
-                    DispatchQueue.main.async {
-                        self.hrvHR.removeAll()
-                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                            if let hrvQuantity = statistics.mostRecentQuantity() {
-                                let hrvdate = statistics.startDate
-                                
-                                let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
-                                let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
+            
+            
+            DispatchQueue.main.async {
+                self.hrvHR.removeAll()
+                statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                    if let hrvQuantity = statistics.mostRecentQuantity() {
+                        let hrvdate = statistics.startDate
+                        
+                        let hrvValue = hrvQuantity.doubleValue(for: .secondUnit(with: .milli))
+                        let hrvHR = HeartRateVariability(hrvValue: Int(hrvValue), date: hrvdate)
                         self.hrvHR.append(hrvHR)
                     }
                 }
             }
         }
         
-        
-        guard let hrvQuery = self.hrvQuery else { return }
         self.healthStore?.execute(hrvQuery)
     }
     
@@ -451,14 +440,14 @@ class HealthStoreViewModel: ObservableObject {
         //Define the predicate
         let kCalsBurnedPredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
-        caloriesBurnedQuery = HKStatisticsCollectionQuery(quantityType: caloriesBurnedType,
-                                                          quantitySamplePredicate: kCalsBurnedPredicate,
-                                                          options: .cumulativeSum,
-                                                          anchorDate: anchorDate,
-                                                          intervalComponents: daily)
+        let caloriesBurnedQuery = HKStatisticsCollectionQuery(quantityType: caloriesBurnedType,
+                                                              quantitySamplePredicate: kCalsBurnedPredicate,
+                                                              options: .cumulativeSum,
+                                                              anchorDate: anchorDate,
+                                                              intervalComponents: daily)
         
         //Setting the results handler
-        caloriesBurnedQuery!.initialResultsHandler = {
+        caloriesBurnedQuery.initialResultsHandler = {
             calorieBurnedQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -493,7 +482,7 @@ class HealthStoreViewModel: ObservableObject {
         }
         
         //Gets called when there's any new data that's coming into the database
-        caloriesBurnedQuery!.statisticsUpdateHandler = {
+        caloriesBurnedQuery.statisticsUpdateHandler = {
             calorieBurnedQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -510,24 +499,22 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-         
-                    DispatchQueue.main.async {
+            
+            DispatchQueue.main.async {
+                
+                self.kcalBurned.removeAll()
+                statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                    if let kcalquantity = statistics.sumQuantity() {
+                        let kcaldate = statistics.startDate
+                        let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
+                        let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
                         
-                        self.kcalBurned.removeAll()
-                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                            if let kcalquantity = statistics.sumQuantity() {
-                                let kcaldate = statistics.startDate
-                                let kcalValue = kcalquantity.doubleValue(for: .kilocalorie())
-                                let kcals = CaloriesBurned(kcal: Int(kcalValue), date: kcaldate)
-                                
                         self.kcalBurned.append(kcals)
                     }
                 }
             }
         }
         
-        //Execute our query.
-        guard let caloriesBurnedQuery = self.caloriesBurnedQuery else { return }
         self.healthStore?.execute(caloriesBurnedQuery)
     }
     
@@ -538,13 +525,13 @@ class HealthStoreViewModel: ObservableObject {
     func calculateSevenDaysExerciseTime() {
         let predicate = HKQuery.predicateForSamples(withStart: Constants.strengthActivityWeek, end: nil, options: .strictStartDate)
         
-        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                         quantitySamplePredicate: predicate,
-                                                         options: .cumulativeSum,
-                                                         anchorDate: anchorDate,
-                                                         intervalComponents: daily)
+        let exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                             quantitySamplePredicate: predicate,
+                                                             options: .cumulativeSum,
+                                                             anchorDate: anchorDate,
+                                                             intervalComponents: daily)
         
-        exerciseTimeQuery!.initialResultsHandler = {
+        exerciseTimeQuery.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -570,7 +557,7 @@ class HealthStoreViewModel: ObservableObject {
                     let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
                     let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                     
-       
+                    
                     DispatchQueue.main.async {
                         self.exerciseTime.append(exTime)
                     }
@@ -579,7 +566,7 @@ class HealthStoreViewModel: ObservableObject {
         }
         
         
-        exerciseTimeQuery!.statisticsUpdateHandler = {
+        exerciseTimeQuery.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -596,26 +583,23 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-          
-                    
-                    DispatchQueue.main.async {
-                        self.exerciseTime.removeAll()
-                        statisticsCollection.enumerateStatistics(from: Constants.strengthActivityWeek, to: self.date) { statistics, stop in
-                            if let exerciseTimequantity = statistics.sumQuantity() {
-                                let exerciseTimedate = statistics.startDate
-                                
-                                //Exercise Time
-                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+            
+            
+            DispatchQueue.main.async {
+                self.exerciseTime.removeAll()
+                statisticsCollection.enumerateStatistics(from: Constants.strengthActivityWeek, to: self.date) { statistics, stop in
+                    if let exerciseTimequantity = statistics.sumQuantity() {
+                        let exerciseTimedate = statistics.startDate
+                        
+                        //Exercise Time
+                        let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                        let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                         self.exerciseTime.append(exTime)
                     }
                 }
             }
         }
         
-        
-        
-        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }
     
@@ -624,13 +608,13 @@ class HealthStoreViewModel: ObservableObject {
         
         let sevenDayExerChartpredicate = HKQuery.predicateForSamples(withStart: oneWeekAgo, end: nil, options: .strictStartDate)
         
-        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                         quantitySamplePredicate: sevenDayExerChartpredicate,
-                                                         options: .cumulativeSum,
-                                                         anchorDate: anchorDate,
-                                                         intervalComponents: daily)
+        let exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                             quantitySamplePredicate: sevenDayExerChartpredicate,
+                                                             options: .cumulativeSum,
+                                                             anchorDate: anchorDate,
+                                                             intervalComponents: daily)
         
-        exerciseTimeQuery!.initialResultsHandler = {
+        exerciseTimeQuery.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -665,7 +649,7 @@ class HealthStoreViewModel: ObservableObject {
         }
         
         
-        exerciseTimeQuery!.statisticsUpdateHandler = {
+        exerciseTimeQuery.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -682,25 +666,25 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return }
             
-    
-                    
-                    DispatchQueue.main.async {
+            
+            
+            DispatchQueue.main.async {
+                
+                self.exerciseTime7Days.removeAll()
+                statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
+                    if let exerciseTimequantity = statistics.sumQuantity() {
+                        let exerciseTimedate = statistics.startDate
                         
-                        self.exerciseTime7Days.removeAll()
-                        statisticsCollection.enumerateStatistics(from: self.startDate, to: self.date) { statistics, stop in
-                            if let exerciseTimequantity = statistics.sumQuantity() {
-                                let exerciseTimedate = statistics.startDate
-                                
-                                //Exercise Time
-                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                        //Exercise Time
+                        let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                        let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
                         self.exerciseTime7Days.append(exTime)
                     }
                 }
             }
         }
         
-        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
+        
         self.healthStore?.execute(exerciseTimeQuery)
     }
     
@@ -719,13 +703,13 @@ class HealthStoreViewModel: ObservableObject {
         
         let oneMonthExTimepredicate = HKQuery.predicateForSamples(withStart: oneMonthAgo, end: nil, options: .strictStartDate)
         
-        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                         quantitySamplePredicate: oneMonthExTimepredicate,
-                                                         options: .cumulativeSum,
-                                                         anchorDate: anchorDate,
-                                                         intervalComponents: daily)
+        let exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                             quantitySamplePredicate: oneMonthExTimepredicate,
+                                                             options: .cumulativeSum,
+                                                             anchorDate: anchorDate,
+                                                             intervalComponents: daily)
         
-        exerciseTimeQuery!.initialResultsHandler = {
+        exerciseTimeQuery.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -758,7 +742,7 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
-        exerciseTimeQuery!.statisticsUpdateHandler = {
+        exerciseTimeQuery.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -775,26 +759,25 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-       
-                    
-                    DispatchQueue.main.async {
-                        self.exerciseTimeMonth.removeAll()
-                        //Calculating exercise time
-                        statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
-                            if let exerciseTimequantity = statistics.sumQuantity() {
-                                let exerciseTimedate = statistics.startDate
-                                
-                                //Exercise Time
-                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
-                                
+            
+            
+            DispatchQueue.main.async {
+                self.exerciseTimeMonth.removeAll()
+                //Calculating exercise time
+                statisticsCollection.enumerateStatistics(from: oneMonthStartDate, to: self.date) { statistics, stop in
+                    if let exerciseTimequantity = statistics.sumQuantity() {
+                        let exerciseTimedate = statistics.startDate
+                        
+                        //Exercise Time
+                        let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                        let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                        
                         self.exerciseTimeMonth.append(exTime)
                     }
                 }
             }
         }
         
-        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
     }
     
@@ -809,13 +792,13 @@ class HealthStoreViewModel: ObservableObject {
         
         let threeMonthExTimePredicate = HKQuery.predicateForSamples(withStart: threeMonthsAgo, end: nil, options: .strictStartDate)
         
-        exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
-                                                         quantitySamplePredicate: threeMonthExTimePredicate,
-                                                         options: .cumulativeSum,
-                                                         anchorDate: anchorDate,
-                                                         intervalComponents: daily)
+        let exerciseTimeQuery =  HKStatisticsCollectionQuery(quantityType: exerciseTimeType,
+                                                             quantitySamplePredicate: threeMonthExTimePredicate,
+                                                             options: .cumulativeSum,
+                                                             anchorDate: anchorDate,
+                                                             intervalComponents: daily)
         
-        exerciseTimeQuery!.initialResultsHandler = {
+        exerciseTimeQuery.initialResultsHandler = {
             exerciseTimeQuery, statisticsCollection, error in
             
             //Handle errors here
@@ -848,7 +831,7 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
-        exerciseTimeQuery!.statisticsUpdateHandler = {
+        exerciseTimeQuery.statisticsUpdateHandler = {
             exerciseTimeQuery, statistics, statisticsCollection, error in
             
             //Handle errors here
@@ -865,25 +848,24 @@ class HealthStoreViewModel: ObservableObject {
             
             guard let statisticsCollection = statisticsCollection else { return}
             
-        
-                    
-                    DispatchQueue.main.async {
-                        self.exerciseTime3Months.removeAll()
-                        //Calculating exercise time
-                        statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
-                            if let exerciseTimequantity = statistics.sumQuantity() {
-                                let exerciseTimedate = statistics.startDate
-                                
-                                //Exercise Time
-                                let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
-                                let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
-                                
+            
+            
+            DispatchQueue.main.async {
+                self.exerciseTime3Months.removeAll()
+                //Calculating exercise time
+                statisticsCollection.enumerateStatistics(from: threeMonthStartDate, to: self.date) { statistics, stop in
+                    if let exerciseTimequantity = statistics.sumQuantity() {
+                        let exerciseTimedate = statistics.startDate
+                        
+                        //Exercise Time
+                        let exerciseTimevalue = exerciseTimequantity.doubleValue(for: .minute())
+                        let exTime = ExerciseTime(exerValue: Int(exerciseTimevalue), date: exerciseTimedate)
+                        
                         self.exerciseTime3Months.append(exTime)
                     }
                 }
             }
         }
-        
         
         guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
@@ -891,8 +873,9 @@ class HealthStoreViewModel: ObservableObject {
     }
     
     
+    // MARK: - Workout Data
     func getWorkoutData()  {
-    
+        
         let allWorkoutsPredicate = HKQuery.predicateForWorkouts(with: .greaterThanOrEqualTo, duration: 1)
         
         let allPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [allWorkoutsPredicate])
@@ -923,8 +906,14 @@ class HealthStoreViewModel: ObservableObject {
                 guard let workouts = samples as? [HKWorkout] else { return }
                 
                 DispatchQueue.main.async {
+                    for workout in workouts {
+                        let yearMonth = YearAndMonth(date: workout.startDate)
+                        var yearAndMonthWorkouts = self.muscleYearAndMonth[yearMonth, default: [HKWorkout]()]
+                        yearAndMonthWorkouts.append(workout)
+                        self.muscleYearAndMonth[yearMonth] = yearAndMonthWorkouts
+                    }
+                    
                     self.muscleStrength.append(contentsOf: workouts)
-                    print(workouts)
                 }
             }
         

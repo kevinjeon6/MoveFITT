@@ -15,20 +15,29 @@ struct MuscleView: View {
     var body: some View {
 
         NavigationStack {
-            List(healthStoreVM.muscleStrength, id: \.self) {
-                workout in
+            List(healthStoreVM.muscleYearAndMonth.keys.sorted(), id: \.self) { yearMonth in
+                Section {
+                    ForEach(healthStoreVM.muscleYearAndMonth[yearMonth] ?? [], id: \.self) { workout in
+                        HStack(spacing: 15) {
 
-                HStack(spacing: 30) {
-                    workout.workoutActivityType.fitnessIcon
-                        .modifier(FitnessIconModifier())
-                    VStack(alignment: .leading) {
-                        Text("\(workout.workoutActivityType.name)")
-                        Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
-                            .font(.subheadline)
-                        Text("\(workout.startDate.formatted(.dateTime.weekday() .month().day()))")
-                        Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
+                            workout.workoutActivityType.fitnessIcon
+                                .modifier(FitnessIconModifier())
+                                .frame(width: 50, height: 50)
+                            VStack(alignment: .leading) {
+                                Text("\(workout.workoutActivityType.name)")
+                                Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
+                                Text("\(workout.startDate.formatted(.dateTime.weekday() .month().day()))")
+                                Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
+                            }
+                        }
                     }
+                } header: {
+                    Text("\(yearMonth.monthName()) \(String(yearMonth.year))")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.primary)
                 }
+
             }
             .navigationTitle("Workout History")
         }
