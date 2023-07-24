@@ -9,16 +9,17 @@ import SwiftUI
 
 struct SettingsView: View {
     
-
+    // MARK: - Properties
     @Binding var stepGoal: Int
     @Binding var exerciseDayGoal: Int
     @Binding var exerciseWeeklyGoal: Int
     @Binding var muscleWeeklyGoal: Int
     @State private var isShowingInfoSheet = false
     @EnvironmentObject var healthStoreVM: HealthStoreViewModel
-    @StateObject var notificationManager = NotificationManager()
     
     
+    
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             Form {
@@ -43,42 +44,20 @@ struct SettingsView: View {
                     
                     
                 } header: {
-                        Text("Set your Exercise Goals Here")
+                    Text("Set your Exercise Goals Here")
                 }
-              
                 
+                InfoView()
                 
-                Section {
-                    Toggle("Notifications", isOn: notificationManager.$isNotificationOn)
-                        .tint(.purple)
-                }
-            }
-            .onChange(of: notificationManager.isNotificationOn) { _ in
-                notificationManager.requestUserAuthorization()
             }
             .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    
-                    Button {
-                     isShowingInfoSheet = true
-                    } label: {
-                        Image(systemName: "info.circle")
-                    }
-                    .sheet(isPresented: $isShowingInfoSheet) {
-                        InfoView()
-                            .presentationDetents([.large])
-                    }
-                    .accessibilityLabel("Info button")
-                    .accessibilityAddTraits(.isButton)
-                }
-            }
         }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2), notificationManager: NotificationManager())
+        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2))
+            .environmentObject(HealthStoreViewModel())
     }
 }

@@ -9,14 +9,11 @@ import SwiftUI
 
 struct InfoView: View {
     
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 10) {
                 
-                InfoHeaderComponent()
-                    .frame(maxWidth: .infinity)
                 
                 Group {
                     Text("Step Goal")
@@ -51,8 +48,7 @@ struct InfoView: View {
                 }
                 
             }
-            .padding(.top, 25)
-            .padding()
+            .padding(.vertical, 10)
         }
     }
 }

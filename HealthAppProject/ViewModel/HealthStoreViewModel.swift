@@ -867,7 +867,6 @@ class HealthStoreViewModel: ObservableObject {
             }
         }
         
-        guard let exerciseTimeQuery = self.exerciseTimeQuery else { return }
         self.healthStore?.execute(exerciseTimeQuery)
         
     }

@@ -48,5 +48,26 @@ struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
         MuscleView()
             .environmentObject(HealthStoreViewModel())
+        
+        HStack(spacing: 15) {
+            Image(systemName: "figure.strengthtraining.traditional")
+            .imageScale(.large)
+            .foregroundColor(.green)
+            .background(
+                Circle()
+                    .fill(.green.opacity(0.3))
+                    .frame(width: 50, height: 50)
+                )
+            .frame(width: 80, height: 80)
+            .border(.red)
+            
+            
+            VStack(alignment: .leading) {
+                Text("Traditional Strength Training")
+                Text("256 kcals")
+                Text("Mon, Jul 10")
+                Text("16: 23 - 17:03")
+            }
+        }
     }
 }
