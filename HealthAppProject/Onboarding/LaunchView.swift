@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct LaunchView: View {
-
-    @StateObject var healthStoreVM = HealthStoreViewModel()
+    
+    @State private var healthKitVM = HealthKitViewModel()
     @AppStorage("onboarding") var isOnboardingViewShowing: Bool = true
  
     
     var body: some View {
         if isOnboardingViewShowing {
             OnboardingView()
-                .environmentObject(healthStoreVM)
+                .environment(healthKitVM)
         } else {
             MainScreenView()
-                .environmentObject(healthStoreVM)
+                .environment(healthKitVM)
         }
     }
 }

@@ -5,20 +5,21 @@
 //  Created by Kevin Mattocks on 3/16/23.
 //
 
+import HealthKitUI
 import SwiftUI
 
 struct OnboardingView: View {
     
     //The true value will only be added to the property when the app does not find the onboarding key previously set in the device's permanent storage
     @AppStorage("onboarding") var isOnboardingViewShowing: Bool = true
-    @EnvironmentObject var vm: HealthStoreViewModel
-  
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @Environment(\.dismiss) private var dismiss
+    @State private var trigger = false
     @State private var onBoardingTabSelection = 0
    
     
     var body: some View {
         VStack{
-            
                 TabView(selection: $onBoardingTabSelection) {
                     WelcomeView()
                         .tag(0)
@@ -42,9 +43,7 @@ struct OnboardingView: View {
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
                 .transition(.slide)
                 .animation(.default, value: onBoardingTabSelection)
-   
-         
-            
+
             // MARK: Button
             
             if onBoardingTabSelection != 5 {
@@ -57,31 +56,48 @@ struct OnboardingView: View {
                                 .frame(height: 48)
                             
                             Text("Next")
-                                .foregroundColor(.darkModeColor)
-                               
+                                .font(.title2.bold())
+                                .foregroundStyle(Color.darkModeColor) 
                         }
                     }
                     .accessibilityAddTraits(.isButton)
             } else {
-            
-                    Button {
-                        vm.requestUserAuthorization()
-                        isOnboardingViewShowing = false
-                    } label: {
-                        ZStack {
-                            Capsule()
-                                .fill(Color.tangBlue)
-                                .frame(height: 48)
-                            Text("Connect")
-                                .foregroundColor(.darkModeColor)
-                        }
+                Button {
+                    ///Check that Health data is available on the user's device
+                    if HKHealthStore.isHealthDataAvailable() {
+                        trigger = true
+                    }
+                    isOnboardingViewShowing = false
+                } label: {
+                    ZStack {
+                        Capsule()
+                            .fill(Color.tangBlue)
+                            .frame(height: 48)
+                        Text("Connect")
+                            .font(.title2.bold())
+                            .foregroundStyle(Color.darkModeColor)
+                    }
                 }
-                    .accessibilityAddTraits(.isButton)
+                .accessibilityAddTraits(.isButton)
+                .healthDataAccessRequest(
+                    store: healthKitVM.healthStore,
+                    readTypes: healthKitVM.allTypes,
+                    trigger: trigger) { result in
+                    switch result {
+                        
+                    case .success(_):
+                        print("Access to HealthKit is successful")
+                        dismiss()
+                    case .failure(_):
+                        print("Cannot access to HealthKit")
+                        dismiss()
+                    }
+                }
             }
         }
         .padding(.horizontal)
         .padding(.bottom)
-        .foregroundColor(.black)
+        .foregroundStyle(.black)
         .background(
             LinearGradient(colors: [.tangBlue, .white], startPoint: .top, endPoint: .bottom)
         )
@@ -94,7 +110,7 @@ struct OnboardingView: View {
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
-            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
             .preferredColorScheme(.dark
             )
     }
