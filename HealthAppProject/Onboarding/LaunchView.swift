@@ -10,6 +10,7 @@ import SwiftUI
 struct LaunchView: View {
     
     @State private var healthKitVM = HealthKitViewModel()
+    @StateObject private var settingsVM = SettingsViewModel()
     @AppStorage("onboarding") var isOnboardingViewShowing: Bool = true
  
     
@@ -20,6 +21,7 @@ struct LaunchView: View {
         } else {
             MainScreenView()
                 .environment(healthKitVM)
+                .environmentObject(settingsVM)
         }
     }
 }
