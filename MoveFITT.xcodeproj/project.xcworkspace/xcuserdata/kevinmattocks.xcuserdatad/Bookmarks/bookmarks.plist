@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>top-level-items</key>
+	<array>
+		<dict>
+			<key>destination</key>
+			<dict>
+				<key>location-parameters</key>
+				<dict>
+					<key>EndingColumnNumber</key>
+					<string>0</string>
+					<key>EndingLineNumber</key>
+					<string>198</string>
+					<key>StartingColumnNumber</key>
+					<string>0</string>
+					<key>StartingLineNumber</key>
+					<string>197</string>
+					<key>Timestamp</key>
+					<string>737907968.154528</string>
+				</dict>
+				<key>rebasable-url</key>
+				<dict>
+					<key>base</key>
+					<string>workspace</string>
+					<key>payload</key>
+					<dict>
+						<key>relative-path</key>
+						<string>HealthAppProject/ViewModel/HealthKitViewModel.swift</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>text-context</key>
+			<dict>
+				<key>focused</key>
+				<string>        //TODO: Figure out Date to get the sum of the start of a new week. Sunday - Saturday
+</string>
+				<key>leading</key>
+				<string>    
+    func getExerciseTime() async throws {
+</string>
+				<key>trailing</key>
+				<string>        //When you get to a new day of the week (i.e. Sunday) you still get the current exercise time value
+        //But the weekly total is collecting the past 7 days.
+        //On a new day of the week (i.e. Sunday) the daily total and weekly total should match
+</string>
+			</dict>
+			<key>type</key>
+			<string>bookmark</string>
+		</dict>
+	</array>
+</dict>
+</plist>
