@@ -10,21 +10,23 @@ import SwiftUI
 
 struct OneWeekExerciseTimeChartView: View {
     
-    @ObservedObject var healthStoreVM: HealthStoreViewModel
+//    @ObservedObject var healthStoreVM: HealthStoreViewModel
+//    @Environment(HealthKitViewModel.self) var healthKitVM
+    var healthKitVM: HealthKitViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             
             
-            Text("Exercise Time Average: \(healthStoreVM.chartAverageExTime) mins")
+//            Text("Exercise Time Average: \(healthStoreVM.chartAverageExTime) mins")
 
             
             Chart {
-                ForEach(healthStoreVM.exerciseTime7Days, id: \.date) {
+                ForEach(healthKitVM.exerciseTimeData, id: \.date) {
                     time in
                     
                     BarMark(x: .value("day", time.date, unit: .day),
-                             y: .value("ex time", time.exerValue)
+                             y: .value("ex time", time.value)
                     )
                     .foregroundStyle(.green.gradient)
                     .cornerRadius(5)
@@ -42,11 +44,11 @@ struct OneWeekExerciseTimeChartView: View {
         .padding(.horizontal)
         
         List{
-            ForEach(healthStoreVM.exerciseTime7Days.reversed(), id: \.date) { exTime in
+            ForEach(healthKitVM.exerciseTimeData.reversed(), id: \.date) { exTime in
                 
                 DataListView(imageText: "figure.mixed.cardio",
                              imageColor: .green,
-                             valueText: "\(exTime.exerValue) min",
+                             valueText: "\(exTime.value) min",
                              date: exTime.date)
                 
             }
@@ -59,6 +61,7 @@ struct OneWeekExerciseTimeChartView: View {
 
 struct OneWeekExerciseTimeChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekExerciseTimeChartView(healthStoreVM: HealthStoreViewModel())
+//        OneWeekExerciseTimeChartView(healthStoreVM: HealthStoreViewModel())
+       OneWeekExerciseTimeChartView(healthKitVM: HealthKitViewModel())
     }
 }

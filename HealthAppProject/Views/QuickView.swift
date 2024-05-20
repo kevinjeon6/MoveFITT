@@ -10,7 +10,8 @@ import SwiftUI
 
 struct QuickView: View {
   
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @EnvironmentObject var settingsVM: SettingsViewModel
 
     let columns = [
         GridItem(.flexible(), spacing: 10),
@@ -26,32 +27,44 @@ struct QuickView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         VStack (spacing: 10) {
                             HStack(spacing: 50) {
-                                ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today", dateText: Constants.todayDateString)
+                                ExerciseGaugeView(
+                                    progress: healthKitVM.mostRecentExerciseTime,
+                                    minValue: 0.0,
+                                    maxValue: Double(settingsVM.exerciseDayGoal),
+                                    title: "Today",
+                                    dateText: Constants.todayDateString
+                                )
                                 
       
-                                ExerciseGaugeView(progress: Double(healthStoreVM.weeklyExTime),
+                                ExerciseGaugeView(
+                                    progress:
+                                        healthKitVM.weeklyExTime,
                                     minValue: 0.0,
-                                    maxValue: Double(healthStoreVM.exerciseWeeklyGoal),
-                                                  title: "Weekly Total", dateText: Constants.currentWeekDatesString)
+                                    maxValue: Double(
+                                        settingsVM.exerciseWeeklyGoal
+                                    ),
+                                    title: "Weekly Total",
+                                    dateText: Constants.currentWeekDatesString
+                                )
                             }
                             .padding(.bottom, 20)
                             
                          
                             StrengthTrainingGoalView(
-                                progress: Double(healthStoreVM.strengthActivityWeekCount.count),
+                                progress: Double(healthKitVM.strengthActivityWeekCount.count),
                                 minValue: 0.0,
-                                maxValue: Double(healthStoreVM.muscleWeeklyGoal),
-                                title: healthStoreVM.strengthActivityWeekCount.count,
-                                goalText: healthStoreVM.muscleWeeklyGoal,
+                                maxValue: Double(settingsVM.muscleWeeklyGoal),
+                                title: healthKitVM.strengthActivityWeekCount.count,
+                                goalText: settingsVM.muscleWeeklyGoal,
                                 color: .green
                             )
                             
-                            StrengthActivityWeekView(healthStoreVM: healthStoreVM)
+                            StrengthActivityWeekView(healthKitVM: healthKitVM)
 
             
                             LazyVGrid(columns: columns, spacing: 10) {
                                 NavigationLink(value: 1) {
-                                    StepCountTileView(currentValue: healthStoreVM.currentStepCount, goalText: healthStoreVM.stepGoal, stepPercent: healthStoreVM.stepCountPercent)
+                                    StepCountTileView(currentValue: Int(healthKitVM.currentStepCount), goalText: settingsVM.stepGoal, stepPercent: (Int(healthKitVM.currentStepCount) * 100) / settingsVM.stepGoal)
                                         
                                 }
                                 .foregroundColor(.primary)
@@ -59,20 +72,20 @@ struct QuickView: View {
              
                                 
                                 NavigationLink(value: 3) {
-                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
+                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: Int(healthKitVM.currentKcalsBurned))
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                       
                                 
                                 NavigationLink(value: 2) {
-                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthStoreVM.currentRestHR)
+                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: Int(healthKitVM.currentRestHR))
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                                 
                                 NavigationLink(value: 4) {
-                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
+                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: Int(healthKitVM.currentHRV))
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
@@ -104,6 +117,7 @@ struct QuickView: View {
 struct QuickView_Previews: PreviewProvider {
     static var previews: some View {
         QuickView()
-            .environmentObject(HealthStoreViewModel())
+//            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
     }
 }

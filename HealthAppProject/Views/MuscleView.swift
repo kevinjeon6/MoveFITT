@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MuscleView: View {
     
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+//    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) private var healthKitVM
     
    
     var body: some View {
 
         NavigationStack {
-            List(healthStoreVM.muscleYearAndMonth.keys.sorted(), id: \.self) { yearMonth in
+            List(healthKitVM.muscleYearAndMonth.keys.sorted(), id: \.self) { yearMonth in
                 Section {
-                    ForEach(healthStoreVM.muscleYearAndMonth[yearMonth] ?? [], id: \.self) { workout in
+                    ForEach(healthKitVM.muscleYearAndMonth[yearMonth] ?? [], id: \.self) { workout in
                         HStack(spacing: 15) {
 
                             workout.workoutActivityType.fitnessIcon
@@ -47,7 +48,8 @@ struct MuscleView: View {
 struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
         MuscleView()
-            .environmentObject(HealthStoreViewModel())
+//            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
         
         HStack(spacing: 15) {
             Image(systemName: "figure.strengthtraining.traditional")

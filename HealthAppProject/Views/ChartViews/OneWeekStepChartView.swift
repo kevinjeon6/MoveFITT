@@ -9,22 +9,23 @@ import Charts
 import SwiftUI
 
 struct OneWeekStepChartView: View {
-  @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+//  @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
 
     
     var body: some View {
 
             VStack(alignment: .leading, spacing: 10) {
                 //reduce adds up the total count
-                Text("Average: \(healthStoreVM.averageStepCount) steps")
-                    .font(.headline)
+//                Text("Average: \(healthStoreVM.averageStepCount) steps")
+//                    .font(.headline)
 
                 Chart {
-                    ForEach(healthStoreVM.steps, id: \.date) {
-                        stepData in
+                    ForEach(healthKitVM.stepData, id: \.date) {
+                        step in
 
-                        BarMark(x: .value("day", stepData.date, unit: .day),
-                                 y: .value("steps", stepData.count)
+                        BarMark(x: .value("day", step.date, unit: .day),
+                                y: .value("steps", step.value)
                         )
                         .foregroundStyle(.cyan.gradient)
                         .cornerRadius(5)
@@ -43,12 +44,12 @@ struct OneWeekStepChartView: View {
             .navigationTitle("Steps")
             
         List{
-            ForEach(healthStoreVM.steps.reversed(), id: \.date) {
+            ForEach(healthKitVM.stepData.reversed(), id: \.date) {
                 step in
                 
                 DataListView(imageText: "figure.walk",
                              imageColor: .cyan,
-                             valueText: "\(step.count) steps",
+                             valueText: "\(step.value) steps",
                              date: step.date)
             }
         }
@@ -60,6 +61,7 @@ struct OneWeekStepChartView: View {
 struct OneWeekChartView_Previews: PreviewProvider {
     static var previews: some View {
         OneWeekStepChartView()
-            .environmentObject(HealthStoreViewModel())
+//            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
     }
 }

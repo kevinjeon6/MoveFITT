@@ -15,7 +15,6 @@ struct SettingsView: View {
     @Binding var exerciseWeeklyGoal: Int
     @Binding var muscleWeeklyGoal: Int
     @State private var isShowingInfoSheet = false
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
     @EnvironmentObject var settingsVM: SettingsViewModel
     
     
@@ -34,13 +33,13 @@ struct SettingsView: View {
                 
                 //MARK: Exercise Daily Goal
                 Section {
-                    Stepper("Daily Goal: \(exerciseDayGoal)", value: $healthStoreVM.exerciseDayGoal, in: 5...75, step: 5)
+                    Stepper("Daily Goal: \(exerciseDayGoal)", value: $settingsVM.exerciseDayGoal, in: 5...75, step: 5)
                         .foregroundColor(.blue)
                     
-                    Stepper("Weekly Goal: \(exerciseWeeklyGoal)", value: $healthStoreVM.exerciseWeeklyGoal, in: 75...450, step: 15)
+                    Stepper("Weekly Goal: \(exerciseWeeklyGoal)", value: $settingsVM.exerciseWeeklyGoal, in: 75...450, step: 15)
                         .foregroundColor(.blue)
                     
-                    Stepper("Strength Goal: \(muscleWeeklyGoal)", value: $healthStoreVM.muscleWeeklyGoal, in: 2...7, step: 1)
+                    Stepper("Strength Goal: \(muscleWeeklyGoal)", value: $settingsVM.muscleWeeklyGoal, in: 2...7, step: 1)
                         .foregroundColor(.blue)
                     
                     
@@ -59,6 +58,5 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2))
-            .environmentObject(HealthStoreViewModel())
     }
 }

@@ -10,14 +10,14 @@ import SwiftUI
 
 struct StatsView: View {
     
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
-    
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @State private var timePeriodSelected = "week"
     
     var body: some View {
         
         NavigationStack {
                 VStack(spacing: 20){
-                    Picker("Choose data", selection: $healthStoreVM.timePeriodSelected.animation(.easeInOut)) {
+                    Picker("Choose data", selection: $timePeriodSelected.animation(.easeInOut)) {
                             Text("Week").tag("week")
                             Text("Month").tag("month")
                             Text("3 Months").tag("3 months")
@@ -27,12 +27,14 @@ struct StatsView: View {
                     .padding(.horizontal)
        
             
-                    if healthStoreVM.timePeriodSelected == "week" {
-                        OneWeekExerciseTimeChartView(healthStoreVM: healthStoreVM)
-                    } else if healthStoreVM.timePeriodSelected == "month" {
-                        OneMonthExerciseChartView(healthStoreVM: healthStoreVM)
+                    if timePeriodSelected == "week" {
+                        OneWeekExerciseTimeChartView(healthKitVM: healthKitVM)
+                       
+                    } else if timePeriodSelected == "month" {
+                        OneMonthExerciseChartView(healthKitVM: healthKitVM)
+                        
                     } else {
-                        ThreeMonthExerciseChartView(healthStoreVM: healthStoreVM)
+                        ThreeMonthExerciseChartView(healthKitVM: healthKitVM)
                     }
                   
                 }
@@ -46,6 +48,6 @@ struct StatsView: View {
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
         StatsView()
-            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
     }
 }

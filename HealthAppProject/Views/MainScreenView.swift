@@ -7,12 +7,10 @@
 
 import SwiftUI
 
+///The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
 struct MainScreenView: View {
     
-    //@StateObject -> Use this on creation/ init
-    //@ObservedObject -> Use this for subviews
-//    @StateObject var healthStore = HealthStoreViewModel()
-//    @EnvironmentObject var healthStore: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) private var healthKitVM
     @EnvironmentObject var settingsVM: SettingsViewModel
 
     var body: some View {
@@ -30,7 +28,7 @@ struct MainScreenView: View {
                 }
                 .tag(2)
             
-            //The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
+            
             SettingsView(
                 stepGoal: $settingsVM.stepGoal,
                 exerciseDayGoal: $settingsVM.exerciseDayGoal,
@@ -55,12 +53,16 @@ struct MainScreenView: View {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
+        .task {
+           try? await healthKitVM.displayData()
+        }
     }
 }
 
 struct MainScreenView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
+            .environment(HealthKitViewModel())
             .environmentObject(SettingsViewModel())
     }
 }
