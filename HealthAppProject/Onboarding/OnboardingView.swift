@@ -87,7 +87,10 @@ struct OnboardingView: View {
                         
                     case .success(_):
                         print("Access to HealthKit is successful")
-                        dismiss()
+                        Task {
+                           try? await healthKitVM.displayData()
+                        }
+//                        dismiss()
                     case .failure(_):
                         print("Cannot access to HealthKit")
                         dismiss()
@@ -111,7 +114,6 @@ struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingView()
             .environment(HealthKitViewModel())
-            .preferredColorScheme(.dark
-            )
+            .preferredColorScheme(.dark)
     }
 }

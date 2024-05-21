@@ -10,7 +10,7 @@ import SwiftUI
 struct StrengthActivityWeekView: View {
     
 //    @ObservedObject var healthStoreVM: HealthStoreViewModel
-    var healthKitVM: HealthKitViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
     
     
     var body: some View {
@@ -54,6 +54,7 @@ struct StrengthActivityWeekView: View {
 struct StrengthActivityWeekView_Previews: PreviewProvider {
     static var previews: some View {
 //        StrengthActivityWeekView(healthStoreVM: HealthStoreViewModel())
-        StrengthActivityWeekView(healthKitVM: HealthKitViewModel())
+        StrengthActivityWeekView()
+            .environment(HealthKitViewModel())
     }
 }

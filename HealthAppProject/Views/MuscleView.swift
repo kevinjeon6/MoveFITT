@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MuscleView: View {
     
-//    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
     @Environment(HealthKitViewModel.self) private var healthKitVM
     
    
@@ -48,7 +47,6 @@ struct MuscleView: View {
 struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
         MuscleView()
-//            .environmentObject(HealthStoreViewModel())
             .environment(HealthKitViewModel())
         
         HStack(spacing: 15) {

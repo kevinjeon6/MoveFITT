@@ -59,7 +59,7 @@ struct QuickView: View {
                                 color: .green
                             )
                             
-                            StrengthActivityWeekView(healthKitVM: healthKitVM)
+                            StrengthActivityWeekView()
 
             
                             LazyVGrid(columns: columns, spacing: 10) {
@@ -109,6 +109,9 @@ struct QuickView: View {
                    
                 }
                 .navigationTitle("Activity Overview")
+                .task {
+                   try? await healthKitVM.displayData()
+                }
             }
         }
     }
@@ -117,7 +120,6 @@ struct QuickView: View {
 struct QuickView_Previews: PreviewProvider {
     static var previews: some View {
         QuickView()
-//            .environmentObject(HealthStoreViewModel())
             .environment(HealthKitViewModel())
     }
 }

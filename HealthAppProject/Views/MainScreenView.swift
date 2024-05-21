@@ -53,9 +53,6 @@ struct MainScreenView: View {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
-        .task {
-           try? await healthKitVM.displayData()
-        }
     }
 }
 

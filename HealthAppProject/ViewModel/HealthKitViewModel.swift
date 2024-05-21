@@ -64,17 +64,33 @@ class HealthKitViewModel {
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
     
     
-
     
-    func displayData() async throws {
-       async let s = getStepCount()
-       async let e = getExerciseTime()
-       async let hr = getRestingHR()
-       async let hrv = getHRV()
-       async let k = getKcalsBurned()
-       async let w = getWorkoutHistory()
+  
+    func displayData() async throws  {
+        await withThrowingTaskGroup(of: Void.self) { taskGroup in
+            taskGroup.addTask {try? await self.getStepCount() }
+            taskGroup.addTask {try? await self.getRestingHR() }
+            taskGroup.addTask {try? await self.getHRV() }
+            taskGroup.addTask {try? await self.getKcalsBurned() }
+            taskGroup.addTask {try? await self.getExerciseTime() }
+            taskGroup.addTask {try? await self.getWorkoutHistory() }
+            
+            try? await taskGroup.waitForAll()
+            print(Thread.current)
+        }
     }
     
+    
+//    @MainActor
+//    func displayInfo() async throws {
+//        try? await self.getStepCount()
+//        try? await self.getRestingHR()
+//        try? await self.getHRV()
+//        try? await self.getKcalsBurned()
+//        try? await self.getExerciseTime()
+//        try? await self.getWorkoutHistory()
+//        print(Thread.current)
+//}
     
     // MARK: - Daily Step Count
     func getStepCount() async throws {
