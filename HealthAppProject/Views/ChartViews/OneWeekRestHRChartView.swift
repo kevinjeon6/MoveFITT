@@ -8,8 +8,14 @@ import Charts
 import SwiftUI
 
 struct OneWeekRestHRChartView: View {
-//    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+
     @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    private var restingHR: [HealthMetricValue] {
+        healthKitVM.restingHRData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
     
     var body: some View {
         
@@ -19,7 +25,7 @@ struct OneWeekRestHRChartView: View {
 //                .font(.headline)
             
             Chart {
-                ForEach(healthKitVM.restingHRData.reversed(), id: \.date) {
+                ForEach(restingHR, id: \.date) {
                     restHrData in
                     
                     LineMark(x: .value("day", restHrData.date, unit: .day),
@@ -49,12 +55,13 @@ struct OneWeekRestHRChartView: View {
 
         
         List{
-            ForEach(healthKitVM.restingHRData.reversed(), id: \.date) {
+            ForEach(restingHR, id: \.date) {
                 restHR in
                 
                 DataListView(imageText: "heart.fill",
                              imageColor: .red,
-                             valueText: "\(restHR.value) bpm",
+                             valueText: restHR.value,
+                             unitText: "bpm",
                              date: restHR.date)
             }
         }
@@ -65,7 +72,6 @@ struct OneWeekRestHRChartView: View {
 struct OneWeekRestHRChartView_Previews: PreviewProvider {
     static var previews: some View {
         OneWeekRestHRChartView()
-//            .environmentObject(HealthStoreViewModel())
             .environment(HealthKitViewModel())
     }
 }

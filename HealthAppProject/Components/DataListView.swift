@@ -11,7 +11,8 @@ struct DataListView: View {
     
     var imageText: String
     var imageColor: Color
-    var valueText: String
+    var valueText: Double
+    var unitText: String
     var date: Date
 
     
@@ -21,9 +22,8 @@ struct DataListView: View {
             HStack {
                 Image(systemName: imageText)
                     .foregroundColor(imageColor)
-                Text(valueText)
-                    .font(.title2)
-                    .bold()
+                Text("\(valueText, format: .number.precision(.fractionLength(0))) \(unitText)")
+                    .font(.title2.bold())
             }
             Text(date, style: .date)
                 .opacity(0.5)
@@ -33,6 +33,6 @@ struct DataListView: View {
 
 struct DataListView_Previews: PreviewProvider {
     static var previews: some View {
-        DataListView(imageText: "figure.walk", imageColor: .cyan, valueText: "6000", date: Date.now)
+        DataListView(imageText: "figure.walk", imageColor: .cyan, valueText: 6000, unitText: "steps", date: Date.now)
     }
 }

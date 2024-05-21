@@ -9,8 +9,13 @@ import SwiftUI
 
 struct CaloriesBurnedChartView: View {
     
-//    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
     @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    private var kcalsBurned: [HealthMetricValue] {
+        healthKitVM.kcalBurnedData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
     
     var body: some View {
         
@@ -19,7 +24,7 @@ struct CaloriesBurnedChartView: View {
 //                .font(.headline)
 
             Chart {
-                ForEach(healthKitVM.kcalBurnedData, id: \.date) {
+                ForEach(kcalsBurned, id: \.date) {
                     kcal in
 
                     BarMark(x: .value("day", kcal.date, unit: .day),
@@ -44,12 +49,13 @@ struct CaloriesBurnedChartView: View {
         
         
         List {
-            ForEach(healthKitVM.kcalBurnedData.reversed(), id: \.date) {
+            ForEach(kcalsBurned, id: \.date) {
                 burn in
                 
                 DataListView(imageText: "flame.fill",
                              imageColor: .orange,
-                             valueText: "\(burn.value) kcal",
+                             valueText: burn.value,
+                             unitText: "kcal",
                              date: burn.date)
             }
         }
@@ -60,7 +66,6 @@ struct CaloriesBurnedChartView: View {
 struct CaloriesBurnedChartView_Previews: PreviewProvider {
     static var previews: some View {
         CaloriesBurnedChartView()
-//            .environmentObject(HealthStoreViewModel())
             .environment(HealthKitViewModel())
     }
 }
