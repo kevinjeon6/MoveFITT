@@ -66,34 +66,23 @@ class HealthKitViewModel {
     
     
   
-    func displayData() async throws  {
-        await withThrowingTaskGroup(of: Void.self) { taskGroup in
-            taskGroup.addTask {try? await self.getStepCount() }
-            taskGroup.addTask {try? await self.getRestingHR() }
-            taskGroup.addTask {try? await self.getHRV() }
-            taskGroup.addTask {try? await self.getKcalsBurned() }
-            taskGroup.addTask {try? await self.getExerciseTime() }
-            taskGroup.addTask {try? await self.getWorkoutHistory() }
-            
-            try? await taskGroup.waitForAll()
-            print(Thread.current)
-        }
+
+    func displayData() async {
+        async let stepCount = getStepCount()
+        async let restingHR = getRestingHR()
+        async let hrv = getHRV()
+        async let minutes = getExerciseTime()
+        async let kcals = getKcalsBurned()
+        
+        let data = try? await [stepCount, restingHR, hrv, minutes, kcals]
+        
+//        async let getWorkoutHistory = getWorkoutHistory()
+//        let d = try? await [getWorkoutHistory]
     }
     
     
-//    @MainActor
-//    func displayInfo() async throws {
-//        try? await self.getStepCount()
-//        try? await self.getRestingHR()
-//        try? await self.getHRV()
-//        try? await self.getKcalsBurned()
-//        try? await self.getExerciseTime()
-//        try? await self.getWorkoutHistory()
-//        print(Thread.current)
-//}
-    
     // MARK: - Daily Step Count
-    func getStepCount() async throws {
+    func getStepCount() async throws -> [HealthMetricValue]  {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
@@ -121,12 +110,13 @@ class HealthKitViewModel {
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
             }
         }
-
+        
+        return stepData
     }
     
     
     // MARK: - Resting Heart Rate
-    func getRestingHR() async throws {
+    func getRestingHR() async throws -> [HealthMetricValue]  {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
@@ -150,10 +140,11 @@ class HealthKitViewModel {
             }
         }
         
+       return restingHRData
     }
     
     // MARK: - HRV
-    func getHRV() async throws {
+    func getHRV() async throws -> [HealthMetricValue]  {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
@@ -177,12 +168,14 @@ class HealthKitViewModel {
                 HealthMetricValue(date: $0.startDate, value: $0.mostRecentQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
             }
         }
+        
+     return hrvHRData
     }
     
     
     // MARK: - Kcals Burned
     
-    func getKcalsBurned() async throws {
+    func getKcalsBurned() async throws -> [HealthMetricValue] {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
@@ -205,12 +198,14 @@ class HealthKitViewModel {
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .kilocalorie()) ?? 0)
             }
         }
+        
+        return kcalBurnedData
     }
     
     
     // MARK: - Exercise Time
     
-    func getExerciseTime() async throws {
+    func getExerciseTime() async throws -> [HealthMetricValue]  {
         //TODO: Figure out Date to get the sum of the start of a new week. Sunday - Saturday
         //When you get to a new day of the week (i.e. Sunday) you still get the current exercise time value
         //But the weekly total is collecting the past 7 days.
@@ -237,6 +232,8 @@ class HealthKitViewModel {
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
+        
+      return exerciseTimeData
     }
     
     
@@ -298,7 +295,7 @@ class HealthKitViewModel {
     // MARK: - Getting Workout History
     
     
-    func getWorkoutHistory() async throws {
+    func getWorkoutHistory() async throws -> [HKWorkout]  {
         let allWorkoutsPredicate = HKQuery.predicateForWorkouts(with: .greaterThanOrEqualTo, duration: 1)
         
         let descriptor = HKSampleQueryDescriptor(
@@ -313,8 +310,11 @@ class HealthKitViewModel {
             var yearAndMonthWorkouts = self.muscleYearAndMonth[yearMonth, default: [HKWorkout]()]
             yearAndMonthWorkouts.append(result)
             self.muscleYearAndMonth[yearMonth] = yearAndMonthWorkouts
-            self.muscleStrengthData.append(contentsOf: results)
         }
+        self.muscleStrengthData.append(contentsOf: results)
+        
+        return muscleStrengthData
+      
     }
    
     

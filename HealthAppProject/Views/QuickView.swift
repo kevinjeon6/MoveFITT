@@ -110,7 +110,7 @@ struct QuickView: View {
                 }
                 .navigationTitle("Activity Overview")
                 .task {
-                   try? await healthKitVM.displayData()
+                   await healthKitVM.displayData()
                 }
             }
         }

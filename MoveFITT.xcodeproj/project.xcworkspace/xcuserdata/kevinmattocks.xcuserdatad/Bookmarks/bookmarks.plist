@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>214</string>
+					<string>209</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>213</string>
+					<string>208</string>
 					<key>Timestamp</key>
-					<string>737919016.7594891</string>
+					<string>738010407.0228781</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -38,7 +38,7 @@
 </string>
 				<key>leading</key>
 				<string>    
-    func getExerciseTime() async throws {
+    func getExerciseTime() async throws -&gt; [HealthMetricValue]  {
 </string>
 				<key>trailing</key>
 				<string>        //When you get to a new day of the week (i.e. Sunday) you still get the current exercise time value
