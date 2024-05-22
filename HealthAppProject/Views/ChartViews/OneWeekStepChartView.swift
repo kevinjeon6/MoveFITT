@@ -23,9 +23,9 @@ struct OneWeekStepChartView: View {
     var body: some View {
 
             VStack(alignment: .leading, spacing: 10) {
-                //reduce adds up the total count
-//                Text("Average: \(healthStoreVM.averageStepCount) steps")
-//                    .font(.headline)
+                
+                Text("Average: \(Int(healthKitVM.averageStepCount)) steps")
+                    .font(.headline)
 
                 Chart {
                     ForEach(healthKitVM.stepData, id: \.date) {

@@ -45,6 +45,8 @@ class HealthKitViewModel {
     
     var weeklyExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value} }
     
+    var chartAverageExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value / 7} }
+    
     var strengthActivityWeekCount: [HKWorkout] {
         muscleStrengthData.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date() || $0.workoutActivityType.rawValue == 20  && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date())
         }
@@ -57,11 +59,17 @@ class HealthKitViewModel {
     
     var currentStepCount: Double { stepData.last?.value ?? 0 }
     
+    var averageStepCount: Double { stepData.reduce(0) { $0 + $1.value / 7 }}
+    
     var currentRestHR: Double { restingHRData.last?.value ?? 0 }
+    
+    var averageRestHR: Double { restingHRData.reduce(0) {$0 + $1.value / 7 }}
     
     var currentHRV: Double { hrvHRData.last?.value ?? 0 }
     
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
+    
+    var averageKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value / 7 }}
     
     
     

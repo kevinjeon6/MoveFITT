@@ -21,8 +21,8 @@ struct OneWeekRestHRChartView: View {
         
         VStack(alignment: .leading, spacing: 10) {
       
-//            Text("Average: \(healthStoreVM.averageRestHR) bpm")
-//                .font(.headline)
+            Text("Average: \(Int(healthKitVM.averageRestHR)) bpm")
+                .font(.headline)
             
             Chart {
                 ForEach(restingHR, id: \.date) {

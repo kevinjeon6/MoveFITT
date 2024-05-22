@@ -20,8 +20,8 @@ struct CaloriesBurnedChartView: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
-//            Text("Average: \(healthStoreVM.averageKcalsBurned) kcal")
-//                .font(.headline)
+            Text("Average: \(Int(healthKitVM.averageKcalBurned)) kcal")
+                .font(.headline)
 
             Chart {
                 ForEach(kcalsBurned, id: \.date) {
