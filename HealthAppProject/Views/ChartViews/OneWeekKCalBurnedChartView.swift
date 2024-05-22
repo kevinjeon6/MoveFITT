@@ -1,36 +1,37 @@
 //
-//  OneWeekHRVChartView.swift
+//  OneWeekKCalBurnedChartView.swift
 //  HealthAppProject
 //
-//  Created by Kevin Mattocks on 3/3/23.
+//  Created by Kevin Mattocks on 1/30/23.
 //
-
 import Charts
 import SwiftUI
 
-struct OneWeekHRVChartView: View {
+struct OneWeekKCalBurnedChartView: View {
     
     @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var rawSelectedDate: Date?
     
-    private var hrv: [HealthMetricValue] {
-        healthKitVM.hrvHRData.sorted { lhs, rhs in
+    private var kcalsBurned: [HealthMetricValue] {
+        healthKitVM.kcalBurnedData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
     var selectedHealthValue: HealthMetricValue? {
         guard let rawSelectedDate else { return nil }
-        return healthKitVM.hrvHRData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+        return healthKitVM.stepData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
+
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
+            
             Text(Constants.past7DaysRange)
-                .padding(.bottom, 30)
-                .font(.headline)
                 .foregroundStyle(.secondary)
-    
+            Text("Total: \(Int(healthKitVM.total7DayKcalBurned)) kcal")
+            Text("Average: \(Int(healthKitVM.averageKcalBurned)) kcal")
+             
             Chart {
                 if let selectedHealthValue {
                     RuleMark(x: .value("Selected Metric", selectedHealthValue.date, unit: .day))
@@ -49,19 +50,14 @@ struct OneWeekHRVChartView: View {
                         }
                 }
                 
-                ForEach(hrv, id: \.date) {
-                    hrvData in
-                    
-                    LineMark(x: .value("day", hrvData.date, unit: .day),
-                             y: .value("HRV", hrvData.value)
+                ForEach(kcalsBurned, id: \.date) {
+                    kcal in
+
+                    BarMark(x: .value("day", kcal.date, unit: .day),
+                            y: .value("kcal", kcal.value)
                     )
-                    .interpolationMethod(.catmullRom)
-                    .foregroundStyle(.red)
-                    .symbol() {
-                        Circle()
-                            .fill(.red)
-                            .frame(width: 15)
-                    }
+                    .foregroundStyle(.orange.gradient)
+                    .cornerRadius(5)
                 }
             }
             .frame(height: 200)
@@ -74,34 +70,35 @@ struct OneWeekHRVChartView: View {
             }
         }
         .padding(.horizontal)
-        .navigationTitle("Heart Rate Variability")
+        .font(.headline)
+        .navigationTitle("Kcals Burned")
         .navigationBarTitleDisplayMode(.inline)
 
-        List{
-            ForEach(hrv, id: \.date) {
-                hrvHR in
+        List {
+            ForEach(kcalsBurned, id: \.date) {
+                burn in
                 
-                DataListView(imageText: "waveform.path.ecg",
-                             imageColor: .red,
-                             valueText: hrvHR.value,
-                             unitText: "ms",
-                             date: hrvHR.date)
+                DataListView(imageText: "flame.fill",
+                             imageColor: .orange,
+                             valueText: burn.value,
+                             unitText: "kcal",
+                             date: burn.date)
             }
         }
         .listStyle(.inset)
     }
     
     // MARK: - Annotation View
-    
+
     var annotationView: some View {
         VStack(alignment: .leading) {
             Text(selectedHealthValue?.date ?? .now, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
                 .font(.footnote.bold())
                 .foregroundStyle(.secondary)
             
-            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) ms")
+            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) kcal")
                 .fontWeight(.semibold)
-                .foregroundStyle(.red)
+                .foregroundStyle(.orange)
         }
         .padding(12)
         .background(
@@ -112,9 +109,9 @@ struct OneWeekHRVChartView: View {
     }
 }
 
-struct OneWeekHRVChartView_Previews: PreviewProvider {
+struct CaloriesBurnedChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekHRVChartView()
+        OneWeekKCalBurnedChartView()
             .environment(HealthKitViewModel())
     }
 }

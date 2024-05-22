@@ -61,6 +61,8 @@ class HealthKitViewModel {
     
     var averageStepCount: Double { stepData.reduce(0) { $0 + $1.value / 7 }}
     
+    var total7DayStepCount: Double { stepData.reduce(0) { $0 + $1.value }}
+    
     var currentRestHR: Double { restingHRData.last?.value ?? 0 }
     
     var averageRestHR: Double { restingHRData.reduce(0) {$0 + $1.value / 7 }}
@@ -70,6 +72,8 @@ class HealthKitViewModel {
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
     
     var averageKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value / 7 }}
+    
+    var total7DayKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value }}
     
     
     

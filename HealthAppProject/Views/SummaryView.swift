@@ -99,7 +99,7 @@ struct SummaryView: View {
                         } else if chart == 2 {
                             OneWeekRestHRChartView()
                         } else if chart == 3 {
-                            CaloriesBurnedChartView()
+                            OneWeekKCalBurnedChartView()
                         } else {
                             OneWeekHRVChartView()
                         }
@@ -108,7 +108,7 @@ struct SummaryView: View {
                     .padding(.horizontal)
                    
                 }
-                .navigationTitle("Activity Overview")
+                .navigationTitle("Summary")
                 .task {
                    await healthKitVM.displayData()
                 }
