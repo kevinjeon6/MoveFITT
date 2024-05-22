@@ -16,7 +16,7 @@ struct MainScreenView: View {
     var body: some View {
         TabView(selection: $settingsVM.selectedTab) {
             
-            QuickView()
+            SummaryView()
                 .tabItem {
                     Label("Summary", systemImage: "list.bullet.clipboard")
                 }

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SummaryView.swift
 //  HealthAppProject
 //
 //  Created by Kevin Mattocks on 12/27/22.
@@ -8,7 +8,7 @@
 import HealthKit
 import SwiftUI
 
-struct QuickView: View {
+struct SummaryView: View {
   
     @Environment(HealthKitViewModel.self) var healthKitVM
     @EnvironmentObject var settingsVM: SettingsViewModel
@@ -72,20 +72,20 @@ struct QuickView: View {
              
                                 
                                 NavigationLink(value: 3) {
-                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: Int(healthKitVM.currentKcalsBurned))
+                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthKitVM.currentKcalsBurned)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                       
                                 
                                 NavigationLink(value: 2) {
-                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: Int(healthKitVM.currentRestHR))
+                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthKitVM.currentRestHR)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                                 
                                 NavigationLink(value: 4) {
-                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: Int(healthKitVM.currentHRV))
+                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthKitVM.currentHRV)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
@@ -119,7 +119,8 @@ struct QuickView: View {
 
 struct QuickView_Previews: PreviewProvider {
     static var previews: some View {
-        QuickView()
+        SummaryView()
             .environment(HealthKitViewModel())
+            .environmentObject(SettingsViewModel())
     }
 }

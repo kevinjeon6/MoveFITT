@@ -73,11 +73,9 @@ class HealthKitViewModel {
         async let hrv = getHRV()
         async let minutes = getExerciseTime()
         async let kcals = getKcalsBurned()
+        async let workout = getWorkoutHistory()
         
-        let data = try? await [stepCount, restingHR, hrv, minutes, kcals]
-        
-//        async let getWorkoutHistory = getWorkoutHistory()
-//        let d = try? await [getWorkoutHistory]
+        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout]
     }
     
     
@@ -305,13 +303,18 @@ class HealthKitViewModel {
         
         let results = try await descriptor.result(for: healthStore)
         
+        var newResults: [HKWorkout] = []
         for result in results {
+            
+            if !self.muscleStrengthData.contains(where: { $0.uuid == result.uuid }) {
+                       newResults.append(result)
+                   }
             let yearMonth = YearAndMonth(date: result.startDate)
             var yearAndMonthWorkouts = self.muscleYearAndMonth[yearMonth, default: [HKWorkout]()]
             yearAndMonthWorkouts.append(result)
             self.muscleYearAndMonth[yearMonth] = yearAndMonthWorkouts
         }
-        self.muscleStrengthData.append(contentsOf: results)
+        self.muscleStrengthData.append(contentsOf: newResults)
         
         return muscleStrengthData
       
