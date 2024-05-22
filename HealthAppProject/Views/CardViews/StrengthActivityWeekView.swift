@@ -9,7 +9,9 @@ import SwiftUI
 
 struct StrengthActivityWeekView: View {
     
-    @ObservedObject var healthStoreVM: HealthStoreViewModel
+//    @ObservedObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    
     
     var body: some View {
         
@@ -19,11 +21,11 @@ struct StrengthActivityWeekView: View {
                 .bold()
                 .foregroundColor(.primary)
                 .padding(.bottom, 5)
-            if healthStoreVM.strengthActivityWeekCount.count == 0 {
+            if healthKitVM.strengthActivityWeekCount.count == 0 {
                     Text("You have completed 0 muscle strengthening workouts this week")
                         .font(.title)
             } else {
-                ForEach(healthStoreVM.updateFilteredArray(strengthStartDate:  Constants.strengthActivityWeek, strengthEndDate: Date()), id: \.self) { strengthWorkout in
+                ForEach(healthKitVM.updateFilteredArray(strengthStartDate:  Constants.strengthActivityWeek, strengthEndDate: Date()), id: \.self) { strengthWorkout in
                     
                     HStack {
                         strengthWorkout.workoutActivityType.fitnessIcon
@@ -51,6 +53,8 @@ struct StrengthActivityWeekView: View {
 
 struct StrengthActivityWeekView_Previews: PreviewProvider {
     static var previews: some View {
-        StrengthActivityWeekView(healthStoreVM: HealthStoreViewModel())
+//        StrengthActivityWeekView(healthStoreVM: HealthStoreViewModel())
+        StrengthActivityWeekView()
+            .environment(HealthKitViewModel())
     }
 }

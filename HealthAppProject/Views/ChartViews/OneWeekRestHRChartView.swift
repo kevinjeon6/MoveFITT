@@ -8,21 +8,28 @@ import Charts
 import SwiftUI
 
 struct OneWeekRestHRChartView: View {
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    private var restingHR: [HealthMetricValue] {
+        healthKitVM.restingHRData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
       
-            Text("Average: \(healthStoreVM.averageRestHR) bpm")
-                .font(.headline)
+//            Text("Average: \(healthStoreVM.averageRestHR) bpm")
+//                .font(.headline)
             
             Chart {
-                ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
+                ForEach(restingHR, id: \.date) {
                     restHrData in
                     
                     LineMark(x: .value("day", restHrData.date, unit: .day),
-                             y: .value("RHR", restHrData.restingValue)
+                             y: .value("RHR", restHrData.value)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.red)
@@ -48,12 +55,13 @@ struct OneWeekRestHRChartView: View {
 
         
         List{
-            ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
+            ForEach(restingHR, id: \.date) {
                 restHR in
                 
                 DataListView(imageText: "heart.fill",
                              imageColor: .red,
-                             valueText: "\(restHR.restingValue) bpm",
+                             valueText: restHR.value,
+                             unitText: "bpm",
                              date: restHR.date)
             }
         }
@@ -64,6 +72,6 @@ struct OneWeekRestHRChartView: View {
 struct OneWeekRestHRChartView_Previews: PreviewProvider {
     static var previews: some View {
         OneWeekRestHRChartView()
-            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
     }
 }

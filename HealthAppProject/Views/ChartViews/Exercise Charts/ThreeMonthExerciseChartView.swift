@@ -9,17 +9,18 @@ import Charts
 import SwiftUI
 
 struct ThreeMonthExerciseChartView: View {
-    @ObservedObject var healthStoreVM: HealthStoreViewModel
+//    @ObservedObject var healthStoreVM: HealthStoreViewModel
+    var healthKitVM: HealthKitViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             
             Chart {
-                ForEach(healthStoreVM.exerciseTime3Months, id: \.date) {
+                ForEach(healthKitVM.exerciseTime3Month, id: \.date) {
                     value in
                     
                     BarMark(x: .value("day", value.date, unit: .weekOfYear),
-                             y: .value("ex time", value.exerValue)
+                             y: .value("ex time", value.value)
                     )
                     .foregroundStyle(.green)
                     .cornerRadius(3)
@@ -36,11 +37,12 @@ struct ThreeMonthExerciseChartView: View {
         .padding(.horizontal)
         
         List {
-            ForEach(healthStoreVM.exerciseTime3Months.reversed(), id: \.date) { exTime in
+            ForEach(healthKitVM.exerciseTime3Month.reversed(), id: \.date) { exTime in
                 
                 DataListView(imageText: "figure.mixed.cardio",
                              imageColor: .green,
-                             valueText: "\(exTime.exerValue) min",
+                             valueText: exTime.value,
+                             unitText: "min",
                              date: exTime.date)
     
             }
@@ -51,6 +53,7 @@ struct ThreeMonthExerciseChartView: View {
 
 struct ThreeMonthExerciseChartView_Previews: PreviewProvider {
     static var previews: some View {
-        ThreeMonthExerciseChartView(healthStoreVM: HealthStoreViewModel())
+//        ThreeMonthExerciseChartView(healthStoreVM: HealthStoreViewModel())
+        ThreeMonthExerciseChartView(healthKitVM: HealthKitViewModel())
     }
 }

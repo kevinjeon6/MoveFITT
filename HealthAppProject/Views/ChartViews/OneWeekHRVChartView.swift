@@ -10,18 +10,24 @@ import SwiftUI
 
 struct OneWeekHRVChartView: View {
     
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    private var hrv: [HealthMetricValue] {
+        healthKitVM.hrvHRData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
     
             
             Chart {
-                ForEach(healthStoreVM.hrvHR.reversed(), id: \.date) {
+                ForEach(hrv, id: \.date) {
                     hrvData in
                     
                     LineMark(x: .value("day", hrvData.date, unit: .day),
-                             y: .value("HRV", hrvData.hrvValue)
+                             y: .value("HRV", hrvData.value)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.red)
@@ -46,12 +52,13 @@ struct OneWeekHRVChartView: View {
 
         
         List{
-            ForEach(healthStoreVM.restingHR.reversed(), id: \.date) {
+            ForEach(hrv, id: \.date) {
                 hrvHR in
                 
                 DataListView(imageText: "waveform.path.ecg",
                              imageColor: .red,
-                             valueText: "\(hrvHR.restingValue) ms",
+                             valueText: hrvHR.value,
+                             unitText: "ms",
                              date: hrvHR.date)
             }
         }

@@ -9,20 +9,26 @@ import SwiftUI
 
 struct CaloriesBurnedChartView: View {
     
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    private var kcalsBurned: [HealthMetricValue] {
+        healthKitVM.kcalBurnedData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
-            Text("Average: \(healthStoreVM.averageKcalsBurned) kcal")
-                .font(.headline)
+//            Text("Average: \(healthStoreVM.averageKcalsBurned) kcal")
+//                .font(.headline)
 
             Chart {
-                ForEach(healthStoreVM.kcalBurned, id: \.date) {
-                    kcalData in
+                ForEach(kcalsBurned, id: \.date) {
+                    kcal in
 
-                    BarMark(x: .value("day", kcalData.date, unit: .day),
-                            y: .value("kcal", kcalData.kcal)
+                    BarMark(x: .value("day", kcal.date, unit: .day),
+                            y: .value("kcal", kcal.value)
                     )
                     .foregroundStyle(.orange.gradient)
                     .cornerRadius(5)
@@ -43,12 +49,13 @@ struct CaloriesBurnedChartView: View {
         
         
         List {
-            ForEach(healthStoreVM.kcalBurned.reversed(), id: \.date) {
+            ForEach(kcalsBurned, id: \.date) {
                 burn in
                 
                 DataListView(imageText: "flame.fill",
                              imageColor: .orange,
-                             valueText: "\(burn.kcal) kcal",
+                             valueText: burn.value,
+                             unitText: "kcal",
                              date: burn.date)
             }
         }
@@ -59,6 +66,6 @@ struct CaloriesBurnedChartView: View {
 struct CaloriesBurnedChartView_Previews: PreviewProvider {
     static var previews: some View {
         CaloriesBurnedChartView()
-            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
     }
 }
