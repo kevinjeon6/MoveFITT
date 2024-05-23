@@ -14,7 +14,7 @@
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		7429988429C414E20044E890 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429988329C414E20044E890 /* OnboardingView.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
-		74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* StatsView.swift */; };
+		74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */; };
 		743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E2295DFC8200FE4613 /* DateExtension.swift */; };
 		7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */; };
 		7438E69E2987457D00F571C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69D2987457D00F571C7 /* Constants.swift */; };
@@ -61,7 +61,7 @@
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		7429988329C414E20044E890 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
-		74338BC32974D03800EEC9B9 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatsView.swift; sourceTree = "<group>"; };
 		743818E2295DFC8200FE4613 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekRestHRChartView.swift; sourceTree = "<group>"; };
 		7438E69D2987457D00F571C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 				74F81BEC29DC700100D13B4C /* Modifiers */,
 				7438E69A29873D4C00F571C7 /* Helpers */,
 				74D30638296E1E71004D153B /* Components */,
-				743818E4295E0BAD00FE4613 /* Model */,
 				743818E1295DFC7200FE4613 /* Extensions */,
+				743818E4295E0BAD00FE4613 /* Model */,
 				74DF6708295B84090046F521 /* ViewModel */,
 				7429988229C414950044E890 /* Onboarding */,
 				74DF6707295B83FF0046F521 /* Views */,
@@ -251,7 +251,7 @@
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* SummaryView.swift */,
-				74338BC32974D03800EEC9B9 /* StatsView.swift */,
+				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
 				740D0E002999D3F500776E3D /* MuscleView.swift */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
@@ -383,7 +383,7 @@
 				74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */,
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
 				7461398F2A5C471C00F44828 /* YearAndMonth.swift in Sources */,
-				74338BC42974D03800EEC9B9 /* StatsView.swift in Sources */,
+				74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */,
 				74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,
 				74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */,

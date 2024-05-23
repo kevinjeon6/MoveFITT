@@ -1,5 +1,5 @@
 //
-//  StatsView.swift
+//  ExerciseStatsView.swift
 //  HealthAppProject
 //
 //  Created by Kevin Mattocks on 1/15/23.
@@ -8,35 +8,53 @@
 import Charts
 import SwiftUI
 
-struct StatsView: View {
+enum TimeSelected: CaseIterable, Identifiable {
+    
+    var id: Self { self }
+    
+    case sevenDays
+    case thirtyDays
+    case sixtyDays
+    
+    var title: String {
+        switch self {
+        case .sevenDays:
+            "7 days"
+        case .thirtyDays:
+            "30 days"
+        case .sixtyDays:
+            "60 days"
+        }
+    }
+    
+}
+
+struct ExerciseStatsView: View {
     
     @Environment(HealthKitViewModel.self) var healthKitVM
-    @State private var timePeriodSelected = "week"
+    @State private var timePeriodSelected: TimeSelected = .sevenDays
     
     var body: some View {
         
         NavigationStack {
                 VStack(spacing: 20){
                     Picker("Choose data", selection: $timePeriodSelected.animation(.easeInOut)) {
-                            Text("Week").tag("week")
-                            Text("Month").tag("month")
-                            Text("3 Months").tag("3 months")
+                        ForEach(TimeSelected.allCases) {
+                            Text($0.title)
+                        }
                     }
                     .pickerStyle(.segmented)
                     .cornerRadius(8)
                     .padding(.horizontal)
        
-            
-                    if timePeriodSelected == "week" {
+                    switch timePeriodSelected {
+                    case .sevenDays:
                         OneWeekExerciseTimeChartView(healthKitVM: healthKitVM)
-                       
-                    } else if timePeriodSelected == "month" {
+                    case .thirtyDays:
                         OneMonthExerciseChartView(healthKitVM: healthKitVM)
-                        
-                    } else {
+                    case .sixtyDays:
                         ThreeMonthExerciseChartView(healthKitVM: healthKitVM)
                     }
-                  
                 }
                 .padding(.horizontal)
                 .navigationTitle("Physical Activity")
@@ -47,7 +65,7 @@ struct StatsView: View {
 
 struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        StatsView()
+        ExerciseStatsView()
             .environment(HealthKitViewModel())
     }
 }

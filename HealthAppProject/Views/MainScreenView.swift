@@ -22,7 +22,7 @@ struct MainScreenView: View {
                 }
                 .tag(1)
             
-            StatsView()
+            ExerciseStatsView()
                 .tabItem {
                     Label("Physical Activity", systemImage: "chart.xyaxis.line")
                 }

@@ -32,9 +32,8 @@ class HealthKitViewModel {
     var hrvHRData: [HealthMetricValue] = []
     var kcalBurnedData: [HealthMetricValue] = []
     var exerciseTimeData: [HealthMetricValue] = []
-    var exerciseTimeMonth: [HealthMetricValue] = []
-    var exerciseTime3Month: [HealthMetricValue] = []
-    var exerciseTime7Days: [HealthMetricValue] = []
+    var exerciseTime30Days: [HealthMetricValue] = []
+    var exerciseTime60Days: [HealthMetricValue] = []
     var muscleStrengthData: [HKWorkout] = []
     var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
     
@@ -46,6 +45,10 @@ class HealthKitViewModel {
     var weeklyExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value} }
     
     var chartAverageExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value / 7} }
+    
+    var chart30DayExTimeAvg: Double { exerciseTime30Days.reduce(0) {$0 + $1.value / 30 }}
+    
+    var chart60DayExTimeAvg: Double { exerciseTime60Days.reduce(0) {$0 + $1.value / 60 }}
     
     var strengthActivityWeekCount: [HKWorkout] {
         muscleStrengthData.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date() || $0.workoutActivityType.rawValue == 20  && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date())
@@ -69,6 +72,8 @@ class HealthKitViewModel {
     
     var currentHRV: Double { hrvHRData.last?.value ?? 0 }
     
+    var averageHRV: Double { hrvHRData.reduce(0)  { $0 + $1.value / 7 }}
+    
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
     
     var averageKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value / 7 }}
@@ -87,7 +92,10 @@ class HealthKitViewModel {
         async let kcals = getKcalsBurned()
         async let workout = getWorkoutHistory()
         
-        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout]
+        async let thirtyMins = get30DaysExerciseTime()
+        async let sixtyMins = get60DaysExerciseTime()
+        
+        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout, thirtyMins, sixtyMins]
     }
     
     
@@ -167,7 +175,7 @@ class HealthKitViewModel {
         
         let sumOfHrvQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: hrvOneWeek,
-            options: .mostRecent,
+            options: .discreteAverage,
             anchorDate: endDate,
             intervalComponents: daily
         )
@@ -175,7 +183,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfHrvQuery.results(for: healthStore) {
             hrvHRData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.mostRecentQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
+                HealthMetricValue(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
             }
         }
         
@@ -246,60 +254,114 @@ class HealthKitViewModel {
       return exerciseTimeData
     }
     
-    
-
-    
-    func getOneMonthExerciseTime() async throws {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let startDate = calendar.date(byAdding: .month, value: -1, to: Date())!
-        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
-        let daily = DateComponents(day: 1)
-        //        static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
-        let oneMonth = HKQuery.predicateForSamples(withStart: ss, end: Date())
-  
-        
-        let exerciseTimeOneMonth = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneMonth)
-        
-        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
-            predicate: exerciseTimeOneMonth,
-            options: .cumulativeSum,
-            anchorDate: today,
-            intervalComponents: daily
-        )
-        
-        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-            exerciseTimeMonth = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
-            }
-        }
-    }
-    
-    func get3MonthExerciseTime() async throws {
+    func get30DaysExerciseTime() async throws -> [HealthMetricValue]  {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
-        let startDate = calendar.date(byAdding: .month, value: -3, to: Date())!
-        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
+        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
+        let startDate = calendar.date(byAdding: .day, value: -30, to: Date())!
         let daily = DateComponents(day: 1)
-
         
-        let threeMonth = HKQuery.predicateForSamples(withStart: ss, end: today)
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
-        let exerciseTimeThreeMonths = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: threeMonth)
+        let exerciseTimeOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneWeek)
         
         let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
-            predicate: exerciseTimeThreeMonths,
+            predicate: exerciseTimeOneWeek,
             options: .cumulativeSum,
-            anchorDate: today,
+            anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-            exerciseTime3Month = result.statisticsCollection.statistics().map{
+            exerciseTime30Days = result.statisticsCollection.statistics().map{
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
+        
+      return exerciseTime30Days
     }
+    
+    func get60DaysExerciseTime() async throws -> [HealthMetricValue]  {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
+        let startDate = calendar.date(byAdding: .day, value: -60, to: Date())!
+        let daily = DateComponents(day: 1)
+        
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        let exerciseTimeOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneWeek)
+        
+        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
+            predicate: exerciseTimeOneWeek,
+            options: .cumulativeSum,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+        
+        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
+          exerciseTime60Days = result.statisticsCollection.statistics().map{
+                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+            }
+        }
+        
+      return exerciseTime60Days
+    }
+    
+    
+
+    
+//    func getOneMonthExerciseTime() async throws {
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        let startDate = calendar.date(byAdding: .month, value: -1, to: Date())!
+//        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
+//        let daily = DateComponents(day: 1)
+//        //        static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+//        let oneMonth = HKQuery.predicateForSamples(withStart: ss, end: Date())
+//  
+//        
+//        let exerciseTimeOneMonth = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneMonth)
+//        
+//        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
+//            predicate: exerciseTimeOneMonth,
+//            options: .cumulativeSum,
+//            anchorDate: today,
+//            intervalComponents: daily
+//        )
+//        
+//        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
+//            exerciseTimeMonth = result.statisticsCollection.statistics().map{
+//                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+//            }
+//        }
+//    }
+    
+//    func get3MonthExerciseTime() async throws {
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: .now)
+//        let startDate = calendar.date(byAdding: .month, value: -3, to: Date())!
+//        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
+//        let daily = DateComponents(day: 1)
+//
+//        
+//        let threeMonth = HKQuery.predicateForSamples(withStart: ss, end: today)
+//        
+//        let exerciseTimeThreeMonths = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: threeMonth)
+//        
+//        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
+//            predicate: exerciseTimeThreeMonths,
+//            options: .cumulativeSum,
+//            anchorDate: today,
+//            intervalComponents: daily
+//        )
+//        
+//        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
+//            exerciseTime3Month = result.statisticsCollection.statistics().map{
+//                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+//            }
+//        }
+//    }
 
 
     // MARK: - Getting Workout History

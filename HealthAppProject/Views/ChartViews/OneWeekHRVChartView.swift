@@ -25,11 +25,12 @@ struct OneWeekHRVChartView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(Constants.past7DaysRange)
-                .padding(.bottom, 30)
-                .font(.headline)
                 .foregroundStyle(.secondary)
+            
+            Text("Average: \(Int(healthKitVM.averageHRV)) bpm")
+                .padding(.bottom, 10)
     
             Chart {
                 if let selectedHealthValue {
@@ -74,6 +75,7 @@ struct OneWeekHRVChartView: View {
             }
         }
         .padding(.horizontal)
+        .font(.headline)
         .navigationTitle("Heart Rate Variability")
         .navigationBarTitleDisplayMode(.inline)
 

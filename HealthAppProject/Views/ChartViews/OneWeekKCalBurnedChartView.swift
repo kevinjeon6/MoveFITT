@@ -20,7 +20,7 @@ struct OneWeekKCalBurnedChartView: View {
     
     var selectedHealthValue: HealthMetricValue? {
         guard let rawSelectedDate else { return nil }
-        return healthKitVM.stepData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+        return healthKitVM.kcalBurnedData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
 
     
