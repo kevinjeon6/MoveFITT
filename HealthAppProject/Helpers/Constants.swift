@@ -37,4 +37,21 @@ struct Constants {
         return "\(startOfWeekString) - \(endOfWeekString)"
     }
     
+    
+    static var past7DaysRange: String {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: .now)
+        let startDate = calendar.date(byAdding: .day, value: -6, to: today)!
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        
+        let startOfWeekString = dateFormatter.string(from: startDate)
+        let endOfWeekString = dateFormatter.string(from: today)
+    
+        
+        return "\(startOfWeekString) - \(endOfWeekString)"
+        
+    }
+    
 }
