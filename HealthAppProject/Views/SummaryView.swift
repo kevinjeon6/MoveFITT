@@ -38,7 +38,7 @@ struct SummaryView: View {
       
                                 ExerciseGaugeView(
                                     progress:
-                                        healthKitVM.weeklyExTime,
+                                        healthKitVM.weekTotalTime,
                                     minValue: 0.0,
                                     maxValue: Double(
                                         settingsVM.exerciseWeeklyGoal
