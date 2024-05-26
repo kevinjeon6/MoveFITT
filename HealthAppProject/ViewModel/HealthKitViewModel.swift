@@ -37,8 +37,13 @@ class HealthKitViewModel {
     var muscleStrengthData: [HKWorkout] = []
     var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
     var weekExerciseTimeData: [HealthMetricValue] = []
-
     
+    // MARK: - Dates
+    let calendar: Calendar
+    let today: Date
+    let endDate: Date
+    let daily = DateComponents(day: 1)
+
     
     // MARK: - Computed Properties
     var mostRecentExerciseTime: Double { exerciseTime7DaysData.last?.value ?? 0.0 }
@@ -81,19 +86,25 @@ class HealthKitViewModel {
     
     var total7DayKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value }}
     
-    
+  
+    // MARK: - Initializer
+    init() {
+        self.calendar = Calendar.current
+        self.today = calendar.startOfDay(for: .now)
+        self.endDate = calendar.date(byAdding: .day, value: 1, to: today) ?? Date()
+    }
     
   
 
     func displayData() async {
-        async let stepCount = getStepCount()
-        async let restingHR = getRestingHR()
-        async let hrv = getHRV()
-        async let minutes = getExerciseTime()
-        async let kcals = getKcalsBurned()
+        async let stepCount = getStepCount(from: -7)
+        async let restingHR = getRestingHR(from: -7)
+        async let hrv = getHRV(from: -7)
+        async let kcals = getKcalsBurned(from: -7)
+        async let minutes = getExerciseTime(from: -7)
+        async let thirtyMins = get30DaysExerciseTime(from: -30)
+        async let sixtyMins = get60DaysExerciseTime(from: -60)
         async let workout = getWorkoutHistory()
-        async let thirtyMins = get30DaysExerciseTime()
-        async let sixtyMins = get60DaysExerciseTime()
         async let totalWeekTime = getWeekTotalExerciseTime()
         
         let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
@@ -101,12 +112,9 @@ class HealthKitViewModel {
     
     
     // MARK: - Daily Step Count
-    func getStepCount() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
-        let daily = DateComponents(day: 1)
+    func getStepCount(from value: Int) async throws -> [HealthMetricValue]  {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
         //Create the predicate
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
@@ -135,13 +143,10 @@ class HealthKitViewModel {
     
     
     // MARK: - Resting Heart Rate
-    func getRestingHR() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
-        let daily = DateComponents(day: 1)
+    func getRestingHR(from value: Int) async throws -> [HealthMetricValue]  {
         
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
         let restHrOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.restingHeartRate), predicate: oneWeek)
@@ -163,13 +168,10 @@ class HealthKitViewModel {
     }
     
     // MARK: - HRV
-    func getHRV() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
-        let daily = DateComponents(day: 1)
+    func getHRV(from value: Int) async throws -> [HealthMetricValue]  {
         
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+ 
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
         let hrvOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.heartRateVariabilitySDNN), predicate: oneWeek)
@@ -194,12 +196,9 @@ class HealthKitViewModel {
     
     // MARK: - Kcals Burned
     
-    func getKcalsBurned() async throws -> [HealthMetricValue] {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
-        let daily = DateComponents(day: 1)
+    func getKcalsBurned(from value: Int) async throws -> [HealthMetricValue] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
@@ -224,12 +223,9 @@ class HealthKitViewModel {
     
     // MARK: - Exercise Time
     
-    func getExerciseTime() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -7, to: Date())!
-        let daily = DateComponents(day: 1)
+    func getExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
+
+        let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
         
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
@@ -252,9 +248,7 @@ class HealthKitViewModel {
     }
     
     func getWeekTotalExerciseTime() async throws -> [HealthMetricValue] {
-        let calendar = Calendar.current
         let startNewWeek = calendar.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
-        let daily = DateComponents(day: 1)
         
         let strengthWeek = HKQuery.predicateForSamples(withStart: startNewWeek, end: Date(), options: .strictStartDate)
         
@@ -277,13 +271,10 @@ class HealthKitViewModel {
     }
     
     
-    func get30DaysExerciseTime() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -30, to: Date())!
-        let daily = DateComponents(day: 1)
+    func get30DaysExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
         
+        let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
+      
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
         let exerciseTimeOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneWeek)
@@ -304,13 +295,10 @@ class HealthKitViewModel {
       return exerciseTime30DaysData
     }
     
-    func get60DaysExerciseTime() async throws -> [HealthMetricValue]  {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: .now)
-        let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
-        let startDate = calendar.date(byAdding: .day, value: -60, to: Date())!
-        let daily = DateComponents(day: 1)
-        
+    func get60DaysExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
+
+        let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
+
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
         let exerciseTimeOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneWeek)
@@ -332,63 +320,7 @@ class HealthKitViewModel {
     }
     
     
-
-    
-//    func getOneMonthExerciseTime() async throws {
-//        let calendar = Calendar.current
-//        let today = calendar.startOfDay(for: Date())
-//        let startDate = calendar.date(byAdding: .month, value: -1, to: Date())!
-//        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
-//        let daily = DateComponents(day: 1)
-//        //        static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
-//        let oneMonth = HKQuery.predicateForSamples(withStart: ss, end: Date())
-//  
-//        
-//        let exerciseTimeOneMonth = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: oneMonth)
-//        
-//        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
-//            predicate: exerciseTimeOneMonth,
-//            options: .cumulativeSum,
-//            anchorDate: today,
-//            intervalComponents: daily
-//        )
-//        
-//        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-//            exerciseTimeMonth = result.statisticsCollection.statistics().map{
-//                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
-//            }
-//        }
-//    }
-    
-//    func get3MonthExerciseTime() async throws {
-//        let calendar = Calendar.current
-//        let today = calendar.startOfDay(for: .now)
-//        let startDate = calendar.date(byAdding: .month, value: -3, to: Date())!
-//        let ss = calendar.dateInterval(of: .day, for: startDate)?.start
-//        let daily = DateComponents(day: 1)
-//
-//        
-//        let threeMonth = HKQuery.predicateForSamples(withStart: ss, end: today)
-//        
-//        let exerciseTimeThreeMonths = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: threeMonth)
-//        
-//        let sumOfExerciseTimeQuery = HKStatisticsCollectionQueryDescriptor(
-//            predicate: exerciseTimeThreeMonths,
-//            options: .cumulativeSum,
-//            anchorDate: today,
-//            intervalComponents: daily
-//        )
-//        
-//        for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-//            exerciseTime3Month = result.statisticsCollection.statistics().map{
-//                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
-//            }
-//        }
-//    }
-
-
     // MARK: - Getting Workout History
-    
     
     func getWorkoutHistory() async throws -> [HKWorkout]  {
         let allWorkoutsPredicate = HKQuery.predicateForWorkouts(with: .greaterThanOrEqualTo, duration: 1)

@@ -25,7 +25,6 @@
 		7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */; };
 		7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */; };
 		746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746660312982B3FD00C17C8A /* ProgressGaugeView.swift */; };
-		7466603429843BCA00C17C8A /* StepCountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466603329843BCA00C17C8A /* StepCountCardView.swift */; };
 		7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */; };
 		74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */; };
 		746DD41D2BF3A4DB00EEA376 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746DD41C2BF3A4DB00EEA376 /* SettingsViewModel.swift */; };
@@ -73,7 +72,6 @@
 		7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthTrainingGoalView.swift; sourceTree = "<group>"; };
 		7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGaugeView.swift; sourceTree = "<group>"; };
 		746660312982B3FD00C17C8A /* ProgressGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressGaugeView.swift; sourceTree = "<group>"; };
-		7466603329843BCA00C17C8A /* StepCountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountCardView.swift; sourceTree = "<group>"; };
 		7466D62C2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekExerciseTimeChartView.swift; sourceTree = "<group>"; };
 		74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSummaryCardView.swift; sourceTree = "<group>"; };
 		746DD41C2BF3A4DB00EEA376 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				74675B14295FAD51008658B1 /* CurrentSummaryCardView.swift */,
 				7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */,
 				74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */,
-				7466603329843BCA00C17C8A /* StepCountCardView.swift */,
 				74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */,
 				74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */,
 			);
@@ -353,7 +350,6 @@
 				74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */,
 				74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */,
 				74DF66FB295B77A50046F521 /* SummaryView.swift in Sources */,
-				7466603429843BCA00C17C8A /* StepCountCardView.swift in Sources */,
 				746DD41F2BF3C6EA00EEA376 /* HealthMetricValue.swift in Sources */,
 				74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */,
 				7496021029D77B7E00B6B824 /* AuthorizationView.swift in Sources */,

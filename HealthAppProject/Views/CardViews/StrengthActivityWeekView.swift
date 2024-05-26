@@ -53,7 +53,6 @@ struct StrengthActivityWeekView: View {
 
 struct StrengthActivityWeekView_Previews: PreviewProvider {
     static var previews: some View {
-//        StrengthActivityWeekView(healthStoreVM: HealthStoreViewModel())
         StrengthActivityWeekView()
             .environment(HealthKitViewModel())
     }
