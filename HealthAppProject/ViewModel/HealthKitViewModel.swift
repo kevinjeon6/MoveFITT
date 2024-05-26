@@ -270,9 +270,7 @@ class HealthKitViewModel {
         for try await result in sumOfStrengthTime.results(for: healthStore) {
             weekExerciseTimeData = result.statisticsCollection.statistics().map {
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
-                
             }
-            print(weekExerciseTimeData)
         }
         
         return weekExerciseTimeData
