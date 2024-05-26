@@ -15,20 +15,20 @@ struct OneWeekExerciseTimeChartView: View {
     @State private var isShowingList = false
     
     private var chartTime: [HealthMetricValue] {
-        healthKitVM.exerciseTimeData.sorted { lhs, rhs in
+        healthKitVM.exerciseTime7DaysData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
     var selectedHealthValue: HealthMetricValue? {
         guard let rawSelectedDate else { return nil }
-        return healthKitVM.exerciseTimeData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+        return healthKitVM.exerciseTime7DaysData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             
-            Text("Average: \(Int(healthKitVM.chartAverageExTime)) min")
+            Text("Average: \(Int(healthKitVM.chart7DayExTimeAvg)) min")
                 .font(.headline)
                 .padding(.bottom, 10)
 

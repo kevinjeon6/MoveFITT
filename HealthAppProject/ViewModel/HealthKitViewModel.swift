@@ -31,24 +31,25 @@ class HealthKitViewModel {
     var restingHRData: [HealthMetricValue] = []
     var hrvHRData: [HealthMetricValue] = []
     var kcalBurnedData: [HealthMetricValue] = []
-    var exerciseTimeData: [HealthMetricValue] = []
-    var exerciseTime30Days: [HealthMetricValue] = []
-    var exerciseTime60Days: [HealthMetricValue] = []
+    var exerciseTime7DaysData: [HealthMetricValue] = []
+    var exerciseTime30DaysData: [HealthMetricValue] = []
+    var exerciseTime60DaysData: [HealthMetricValue] = []
     var muscleStrengthData: [HKWorkout] = []
     var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
-    
+    var weekExerciseTimeData: [HealthMetricValue] = []
+
     
     
     // MARK: - Computed Properties
-    var mostRecentExerciseTime: Double { exerciseTimeData.last?.value ?? 0.0 }
+    var mostRecentExerciseTime: Double { exerciseTime7DaysData.last?.value ?? 0.0 }
     
-    var weeklyExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value} }
+    var weekTotalTime: Double { weekExerciseTimeData.reduce(0) { $0 + $1.value }}
     
-    var chartAverageExTime: Double { exerciseTimeData.reduce(0) { $0 + $1.value / 7} }
+    var chart7DayExTimeAvg: Double { exerciseTime7DaysData.reduce(0) { $0 + $1.value / 7} }
     
-    var chart30DayExTimeAvg: Double { exerciseTime30Days.reduce(0) {$0 + $1.value / 30 }}
+    var chart30DayExTimeAvg: Double { exerciseTime30DaysData.reduce(0) {$0 + $1.value / 30 }}
     
-    var chart60DayExTimeAvg: Double { exerciseTime60Days.reduce(0) {$0 + $1.value / 60 }}
+    var chart60DayExTimeAvg: Double { exerciseTime60DaysData.reduce(0) {$0 + $1.value / 60 }}
     
     var strengthActivityWeekCount: [HKWorkout] {
         muscleStrengthData.filter { ($0.workoutActivityType.rawValue == 50 && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date() || $0.workoutActivityType.rawValue == 20  && $0.startDate >= Constants.strengthActivityWeek && $0.startDate <= Date())
@@ -91,11 +92,11 @@ class HealthKitViewModel {
         async let minutes = getExerciseTime()
         async let kcals = getKcalsBurned()
         async let workout = getWorkoutHistory()
-        
         async let thirtyMins = get30DaysExerciseTime()
         async let sixtyMins = get60DaysExerciseTime()
+        async let totalWeekTime = getWeekTotalExerciseTime()
         
-        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout, thirtyMins, sixtyMins]
+        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
     }
     
     
@@ -224,10 +225,6 @@ class HealthKitViewModel {
     // MARK: - Exercise Time
     
     func getExerciseTime() async throws -> [HealthMetricValue]  {
-        //TODO: Figure out Date to get the sum of the start of a new week. Sunday - Saturday
-        //When you get to a new day of the week (i.e. Sunday) you still get the current exercise time value
-        //But the weekly total is collecting the past 7 days.
-        //On a new day of the week (i.e. Sunday) the daily total and weekly total should match
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
         let endDate = calendar.date(byAdding: .day, value: 1, to: today)!
@@ -246,13 +243,39 @@ class HealthKitViewModel {
         )
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-            exerciseTimeData = result.statisticsCollection.statistics().map{
+            exerciseTime7DaysData = result.statisticsCollection.statistics().map{
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
-      return exerciseTimeData
+      return exerciseTime7DaysData
     }
+    
+    func getWeekTotalExerciseTime() async throws -> [HealthMetricValue] {
+        let calendar = Calendar.current
+        let startNewWeek = calendar.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+        let daily = DateComponents(day: 1)
+        
+        let strengthWeek = HKQuery.predicateForSamples(withStart: startNewWeek, end: Date(), options: .strictStartDate)
+        
+        let strengthWeekTime = HKSamplePredicate.quantitySample(type: HKQuantityType(.appleExerciseTime), predicate: strengthWeek)
+        
+        let sumOfStrengthTime = HKStatisticsCollectionQueryDescriptor(
+            predicate: strengthWeekTime,
+            options: .cumulativeSum,
+            anchorDate: Date(),
+            intervalComponents: daily
+        )
+        
+        for try await result in sumOfStrengthTime.results(for: healthStore) {
+            weekExerciseTimeData = result.statisticsCollection.statistics().map {
+                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+            }
+        }
+        
+        return weekExerciseTimeData
+    }
+    
     
     func get30DaysExerciseTime() async throws -> [HealthMetricValue]  {
         let calendar = Calendar.current
@@ -273,12 +296,12 @@ class HealthKitViewModel {
         )
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-            exerciseTime30Days = result.statisticsCollection.statistics().map{
+            exerciseTime30DaysData = result.statisticsCollection.statistics().map{
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
-      return exerciseTime30Days
+      return exerciseTime30DaysData
     }
     
     func get60DaysExerciseTime() async throws -> [HealthMetricValue]  {
@@ -300,12 +323,12 @@ class HealthKitViewModel {
         )
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
-          exerciseTime60Days = result.statisticsCollection.statistics().map{
+          exerciseTime60DaysData = result.statisticsCollection.statistics().map{
                 HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
-      return exerciseTime60Days
+      return exerciseTime60DaysData
     }
     
     
@@ -391,7 +414,6 @@ class HealthKitViewModel {
         self.muscleStrengthData.append(contentsOf: newResults)
         
         return muscleStrengthData
-      
     }
    
     
