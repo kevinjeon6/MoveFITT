@@ -29,7 +29,7 @@ struct OneWeekHRVChartView: View {
             Text(Constants.past7DaysRange)
                 .foregroundStyle(.secondary)
             
-            Text("Average: \(Int(healthKitVM.averageHRV)) bpm")
+            Text("Average: \(Int(healthKitVM.averageHRV)) ms")
                 .padding(.bottom, 10)
     
             Chart {
