@@ -33,6 +33,7 @@
 		7492BC9B2BED684B0095BE20 /* HealthKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7492BC9A2BED684B0095BE20 /* HealthKitViewModel.swift */; };
 		7496020C29D77B2500B6B824 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020B29D77B2500B6B824 /* WelcomeView.swift */; };
 		7496021029D77B7E00B6B824 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020F29D77B7E00B6B824 /* AuthorizationView.swift */; };
+		74CFCDA22C08CA4700BF1454 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
 		74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */; };
@@ -80,6 +81,7 @@
 		7492BC9A2BED684B0095BE20 /* HealthKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitViewModel.swift; sourceTree = "<group>"; };
 		7496020B29D77B2500B6B824 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		7496020F29D77B7E00B6B824 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
+		74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
 		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
 		74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessIconModifier.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				743AB91B295CE8B2004BD054 /* Info.plist */,
 				74DF6706295B80450046F521 /* HealthAppProject.entitlements */,
+				74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */,
 				74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */,
 				74F81BEC29DC700100D13B4C /* Modifiers */,
 				7438E69A29873D4C00F571C7 /* Helpers */,
@@ -334,6 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74CFCDA22C08CA4700BF1454 /* PrivacyInfo.xcprivacy in Resources */,
 				74DF6700295B77AC0046F521 /* Preview Assets.xcassets in Resources */,
 				74DF66FD295B77AC0046F521 /* Assets.xcassets in Resources */,
 			);
