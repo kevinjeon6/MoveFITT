@@ -1,37 +1,37 @@
 //
-//  ThreeMonthExerciseChartView.swift
+//  OneWeekKCalBurnedChartView.swift
 //  HealthAppProject
 //
-//  Created by Kevin Mattocks on 1/22/23.
+//  Created by Kevin Mattocks on 1/30/23.
 //
-
 import Charts
 import SwiftUI
 
-struct ThreeMonthExerciseChartView: View {
-
-    var healthKitVM: HealthKitViewModel
-    @State private var rawSelectedDate: Date?
-    @State private var isShowingList = false
+struct OneWeekKCalBurnedChartView: View {
     
-    private var chartTime60: [HealthMetricValue] {
-        healthKitVM.exerciseTime60DaysData.sorted { lhs, rhs in
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @State private var rawSelectedDate: Date?
+    
+    private var kcalsBurned: [HealthMetricValue] {
+        healthKitVM.kcalBurnedData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
     var selectedHealthValue: HealthMetricValue? {
         guard let rawSelectedDate else { return nil }
-        return healthKitVM.exerciseTime60DaysData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+        return healthKitVM.kcalBurnedData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
+
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             
-            Text("Average: \(Int(healthKitVM.chart60DayExTimeAvg)) min")
-                .font(.headline)
-                .padding(.bottom, 10)
-            
+            Text(Constants.past7DaysRange)
+                .foregroundStyle(.secondary)
+            Text("Total: \(Int(healthKitVM.total7DayKcalBurned)) kcal")
+            Text("Average: \(Int(healthKitVM.averageKcalBurned)) kcal")
+             
             Chart {
                 if let selectedHealthValue {
                     RuleMark(x: .value("Selected Metric", selectedHealthValue.date, unit: .day))
@@ -50,47 +50,42 @@ struct ThreeMonthExerciseChartView: View {
                         }
                 }
                 
-                ForEach(chartTime60, id: \.date) {
-                    value in
-                    
-                    BarMark(x: .value("day", value.date, unit: .day),
-                             y: .value("ex time", value.value)
+                ForEach(kcalsBurned, id: \.date) {
+                    kcal in
+
+                    BarMark(x: .value("day", kcal.date, unit: .day),
+                            y: .value("kcal", kcal.value)
                     )
-                    .foregroundStyle(.green)
-                    .cornerRadius(3)
+                    .foregroundStyle(.orange.gradient)
+                    .cornerRadius(5)
                 }
             }
             .frame(height: 200)
             .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
             .chartXAxis {
-                AxisMarks(values: .stride(by: .month )) {
+                AxisMarks(values: .stride(by: .day)) {
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.month(.defaultDigits).year(.twoDigits))
+                    AxisValueLabel(format: .dateTime.day().month(), centered: true)
                 }
             }
         }
         .padding(.horizontal)
-        
-        VStack {
-            Toggle("Show List", isOn: $isShowingList)
-                .padding(.horizontal)
-            
-            Divider()
-            
-            if isShowingList {
-                List{
-                    ForEach(chartTime60, id: \.date) { exTime in
-                        DataListView(imageText: "figure.mixed.cardio",
-                                     imageColor: .green,
-                                     valueText: exTime.value,
-                                     unitText: "min",
-                                     date: exTime.date)
-                    }
-                }
-                .listStyle(.inset)
+        .font(.headline)
+        .navigationTitle("Kcals Burned")
+        .navigationBarTitleDisplayMode(.inline)
+
+        List {
+            ForEach(kcalsBurned, id: \.date) {
+                burn in
+                
+                DataListView(imageText: "flame.fill",
+                             imageColor: .orange,
+                             valueText: burn.value,
+                             unitText: "kcal",
+                             date: burn.date)
             }
         }
-        Spacer()
+        .listStyle(.inset)
     }
     
     // MARK: - Annotation View
@@ -101,9 +96,9 @@ struct ThreeMonthExerciseChartView: View {
                 .font(.footnote.bold())
                 .foregroundStyle(.secondary)
             
-            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) min")
+            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) kcal")
                 .fontWeight(.semibold)
-                .foregroundStyle(.green)
+                .foregroundStyle(.orange)
         }
         .padding(12)
         .background(
@@ -114,8 +109,9 @@ struct ThreeMonthExerciseChartView: View {
     }
 }
 
-struct ThreeMonthExerciseChartView_Previews: PreviewProvider {
+struct CaloriesBurnedChartView_Previews: PreviewProvider {
     static var previews: some View {
-        ThreeMonthExerciseChartView(healthKitVM: HealthKitViewModel())
+        OneWeekKCalBurnedChartView()
+            .environment(HealthKitViewModel())
     }
 }

@@ -10,27 +10,58 @@ import SwiftUI
 
 struct OneWeekExerciseTimeChartView: View {
     
-    @ObservedObject var healthStoreVM: HealthStoreViewModel
+    var healthKitVM: HealthKitViewModel
+    @State private var rawSelectedDate: Date?
+    @State private var isShowingList = false
+    
+    private var chartTime: [HealthMetricValue] {
+        healthKitVM.exerciseTime7DaysData.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+    }
+    
+    var selectedHealthValue: HealthMetricValue? {
+        guard let rawSelectedDate else { return nil }
+        return healthKitVM.exerciseTime7DaysData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
             
-            
-            Text("Exercise Time Average: \(healthStoreVM.chartAverageExTime) mins")
+            Text("Average: \(Int(healthKitVM.chart7DayExTimeAvg)) min")
+                .font(.headline)
+                .padding(.bottom, 10)
 
-            
             Chart {
-                ForEach(healthStoreVM.exerciseTime7Days, id: \.date) {
+                if let selectedHealthValue {
+                    RuleMark(x: .value("Selected Metric", selectedHealthValue.date, unit: .day))
+                        .foregroundStyle(Color.secondary.opacity(0.3))
+                        .offset(y: -10)
+                        .zIndex(-1)
+                        .annotation(
+                            position: .top,
+                            spacing: 0,
+                            overflowResolution: .init(
+                                x: .fit(to: .chart),
+                                y: .disabled
+                            )
+                        ) {
+                            annotationView
+                        }
+                }
+                
+                ForEach(chartTime, id: \.date) {
                     time in
                     
                     BarMark(x: .value("day", time.date, unit: .day),
-                             y: .value("ex time", time.exerValue)
+                             y: .value("ex time", time.value)
                     )
                     .foregroundStyle(.green.gradient)
                     .cornerRadius(5)
                 }
             }
             .frame(height: 200)
+            .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) {
                     AxisGridLine()
@@ -41,24 +72,53 @@ struct OneWeekExerciseTimeChartView: View {
         }
         .padding(.horizontal)
         
-        List{
-            ForEach(healthStoreVM.exerciseTime7Days.reversed(), id: \.date) { exTime in
-                
-                DataListView(imageText: "figure.mixed.cardio",
-                             imageColor: .green,
-                             valueText: "\(exTime.exerValue) min",
-                             date: exTime.date)
-                
+        VStack {
+            Toggle("Show List", isOn: $isShowingList)
+                .padding(.horizontal)
+            
+            Divider()
+            
+            if isShowingList {
+                List{
+                    ForEach(chartTime, id: \.date) { exTime in
+                        DataListView(imageText: "figure.mixed.cardio",
+                                     imageColor: .green,
+                                     valueText: exTime.value,
+                                     unitText: "min",
+                                     date: exTime.date)
+                    }
+                }
+                .listStyle(.inset)
             }
         }
-        .listStyle(.inset)
+        Spacer()
         
+    }
+    
+    // MARK: - Annotation View
+
+    var annotationView: some View {
+        VStack(alignment: .leading) {
+            Text(selectedHealthValue?.date ?? .now, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
+                .font(.footnote.bold())
+                .foregroundStyle(.secondary)
+            
+            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) min")
+                .fontWeight(.semibold)
+                .foregroundStyle(.green)
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle( cornerRadius: 4)
+                .fill(Color(.secondarySystemBackground))
+                .shadow(color: .secondary.opacity(0.3), radius: 2, x: 2, y: 2)
+        )
     }
 }
 
 
 struct OneWeekExerciseTimeChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekExerciseTimeChartView(healthStoreVM: HealthStoreViewModel())
+       OneWeekExerciseTimeChartView(healthKitVM: HealthKitViewModel())
     }
 }

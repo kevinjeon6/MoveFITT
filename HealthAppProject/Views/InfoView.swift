@@ -42,9 +42,12 @@ struct InfoView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Text(" Physical Activity Guidelines for Americans, 2nd edition")
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.1)
+                    Link(destination: URL(string: "https://health.gov/sites/default/files/2019-09/Physical_Activity_Guidelines_2nd_edition.pdf")!) {
+
+                                          Text("Physical Activity Guidelines for Americans, 2nd edition")
+                                              .lineLimit(1)
+                                              .minimumScaleFactor(0.1)
+                                      }
                 }
                 
             }

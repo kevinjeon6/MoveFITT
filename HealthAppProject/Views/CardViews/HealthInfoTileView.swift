@@ -11,7 +11,7 @@ struct HealthInfoTileView: View {
     var title: String
     var imageText: String
     var color: Color
-    var healthValue: Int
+    var healthValue: Double
     
     
     var body: some View {
@@ -25,9 +25,8 @@ struct HealthInfoTileView: View {
                 Spacer()
                 Image(systemName: "chevron.forward")
             }
-            Text("\(healthValue)")
-                .font(.largeTitle)
-                .bold()
+            Text("\(healthValue, format: .number.precision(.fractionLength(0)))")
+                .font(.largeTitle.bold())
                 .foregroundColor(.primary)
             Spacer()
         }

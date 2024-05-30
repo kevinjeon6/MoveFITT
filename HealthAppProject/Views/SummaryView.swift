@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SummaryView.swift
 //  HealthAppProject
 //
 //  Created by Kevin Mattocks on 12/27/22.
@@ -8,9 +8,10 @@
 import HealthKit
 import SwiftUI
 
-struct QuickView: View {
+struct SummaryView: View {
   
-    @EnvironmentObject var healthStoreVM: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @EnvironmentObject var settingsVM: SettingsViewModel
 
     let columns = [
         GridItem(.flexible(), spacing: 10),
@@ -26,32 +27,44 @@ struct QuickView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         VStack (spacing: 10) {
                             HStack(spacing: 50) {
-                                ExerciseGaugeView(progress: Double(healthStoreVM.currentExTime), minValue: 0.0, maxValue: Double(healthStoreVM.exerciseDayGoal), title: "Today", dateText: Constants.todayDateString)
+                                ExerciseGaugeView(
+                                    progress: healthKitVM.mostRecentExerciseTime,
+                                    minValue: 0.0,
+                                    maxValue: Double(settingsVM.exerciseDayGoal),
+                                    title: "Today",
+                                    dateText: Constants.todayDateString
+                                )
                                 
       
-                                ExerciseGaugeView(progress: Double(healthStoreVM.weeklyExTime),
+                                ExerciseGaugeView(
+                                    progress:
+                                        healthKitVM.weekTotalTime,
                                     minValue: 0.0,
-                                    maxValue: Double(healthStoreVM.exerciseWeeklyGoal),
-                                                  title: "Weekly Total", dateText: Constants.currentWeekDatesString)
+                                    maxValue: Double(
+                                        settingsVM.exerciseWeeklyGoal
+                                    ),
+                                    title: "Weekly Total",
+                                    dateText: Constants.currentWeekDatesString
+                                )
                             }
                             .padding(.bottom, 20)
                             
                          
                             StrengthTrainingGoalView(
-                                progress: Double(healthStoreVM.strengthActivityWeekCount.count),
+                                progress: Double(healthKitVM.strengthActivityWeekCount.count),
                                 minValue: 0.0,
-                                maxValue: Double(healthStoreVM.muscleWeeklyGoal),
-                                title: healthStoreVM.strengthActivityWeekCount.count,
-                                goalText: healthStoreVM.muscleWeeklyGoal,
+                                maxValue: Double(settingsVM.muscleWeeklyGoal),
+                                title: healthKitVM.strengthActivityWeekCount.count,
+                                goalText: settingsVM.muscleWeeklyGoal,
                                 color: .green
                             )
                             
-                            StrengthActivityWeekView(healthStoreVM: healthStoreVM)
+                            StrengthActivityWeekView()
 
             
                             LazyVGrid(columns: columns, spacing: 10) {
                                 NavigationLink(value: 1) {
-                                    StepCountTileView(currentValue: healthStoreVM.currentStepCount, goalText: healthStoreVM.stepGoal, stepPercent: healthStoreVM.stepCountPercent)
+                                    StepCountTileView(currentValue: Int(healthKitVM.currentStepCount), goalText: settingsVM.stepGoal, stepPercent: (Int(healthKitVM.currentStepCount) * 100) / settingsVM.stepGoal)
                                         
                                 }
                                 .foregroundColor(.primary)
@@ -59,20 +72,20 @@ struct QuickView: View {
              
                                 
                                 NavigationLink(value: 3) {
-                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthStoreVM.currentKcalsBurned)
+                                    HealthInfoTileView(title: "Energy Burned", imageText: "flame.fill", color: .orange, healthValue: healthKitVM.currentKcalsBurned)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                       
                                 
                                 NavigationLink(value: 2) {
-                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthStoreVM.currentRestHR)
+                                    HealthInfoTileView(title: "Resting HR", imageText: "heart.fill", color: .red, healthValue: healthKitVM.currentRestHR)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
                                 
                                 NavigationLink(value: 4) {
-                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthStoreVM.currentHRV)
+                                    HealthInfoTileView(title: "HRV", imageText: "waveform.path.ecg", color: .red, healthValue: healthKitVM.currentHRV)
                                 }
                                 .foregroundColor(.primary)
                                 .accessibilityAddTraits(.isLink)
@@ -86,7 +99,7 @@ struct QuickView: View {
                         } else if chart == 2 {
                             OneWeekRestHRChartView()
                         } else if chart == 3 {
-                            CaloriesBurnedChartView()
+                            OneWeekKCalBurnedChartView()
                         } else {
                             OneWeekHRVChartView()
                         }
@@ -95,7 +108,10 @@ struct QuickView: View {
                     .padding(.horizontal)
                    
                 }
-                .navigationTitle("Activity Overview")
+                .navigationTitle("Summary")
+                .task {
+                   await healthKitVM.displayData()
+                }
             }
         }
     }
@@ -103,7 +119,8 @@ struct QuickView: View {
 
 struct QuickView_Previews: PreviewProvider {
     static var previews: some View {
-        QuickView()
-            .environmentObject(HealthStoreViewModel())
+        SummaryView()
+            .environment(HealthKitViewModel())
+            .environmentObject(SettingsViewModel())
     }
 }

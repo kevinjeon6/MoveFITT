@@ -7,34 +7,33 @@
 
 import SwiftUI
 
+///The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
 struct MainScreenView: View {
     
-    //@StateObject -> Use this on creation/ init
-    //@ObservedObject -> Use this for subviews
-//    @StateObject var healthStore = HealthStoreViewModel()
-    @EnvironmentObject var healthStore: HealthStoreViewModel
+    @Environment(HealthKitViewModel.self) private var healthKitVM
+    @EnvironmentObject var settingsVM: SettingsViewModel
 
     var body: some View {
-        TabView(selection: $healthStore.selectedTab) {
+        TabView(selection: $settingsVM.selectedTab) {
             
-            QuickView()
+            SummaryView()
                 .tabItem {
                     Label("Summary", systemImage: "list.bullet.clipboard")
                 }
                 .tag(1)
             
-            StatsView()
+            ExerciseStatsView()
                 .tabItem {
                     Label("Physical Activity", systemImage: "chart.xyaxis.line")
                 }
                 .tag(2)
             
-            //The MainScreen is the parent view and settingsview is the child view. The source of truth is coming from the ViewModel
+            
             SettingsView(
-                stepGoal: $healthStore.stepGoal,
-                exerciseDayGoal: $healthStore.exerciseDayGoal,
-                exerciseWeeklyGoal: $healthStore.exerciseWeeklyGoal,
-                muscleWeeklyGoal: $healthStore.muscleWeeklyGoal
+                stepGoal: $settingsVM.stepGoal,
+                exerciseDayGoal: $settingsVM.exerciseDayGoal,
+                exerciseWeeklyGoal: $settingsVM.exerciseWeeklyGoal,
+                muscleWeeklyGoal: $settingsVM.muscleWeeklyGoal
               )
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")
@@ -60,6 +59,7 @@ struct MainScreenView: View {
 struct MainScreenView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
-            .environmentObject(HealthStoreViewModel())
+            .environment(HealthKitViewModel())
+            .environmentObject(SettingsViewModel())
     }
 }
