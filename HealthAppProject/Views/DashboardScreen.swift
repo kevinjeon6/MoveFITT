@@ -9,7 +9,9 @@ import SwiftUI
 
 struct DashboardScreen: View {
     
+    @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var today = Date()
+    
     
     // Generate a range of dates from past to future
     private var dateRange: [Date] {
@@ -29,6 +31,7 @@ struct DashboardScreen: View {
                 Color.primary.ignoresSafeArea(.all)
                 ScrollView {
                     
+                    // MARK: - Header
                     ///Make a separate view?
                     VStack(alignment: .leading) {
                         Text("\(Constants.todayDateString)")
@@ -43,7 +46,9 @@ struct DashboardScreen: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 8)
                     
-                    ScrollView(.horizontal) {
+                    
+                    // MARK: - Calendar
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(dateRange, id: \.self) { date in
                                 VStack {
@@ -58,12 +63,89 @@ struct DashboardScreen: View {
                                 .frame(width: 50, height: 70)
                                 .overlay {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Calendar.current.isDate(date, inSameDayAs: today) ? Color.blue : Color.yellow, lineWidth: 2)
-                                    
+                                        .stroke(Calendar.current.isDate(date, inSameDayAs: today) ? Color.cyan : Color.clear, lineWidth: 4)
                                 }
                             }
                         }
                     }
+                    
+                    // MARK: - Overview
+  
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Daily Overview")
+                            
+                            HStack {
+                                Image(systemName: "stopwatch")
+                                    .foregroundStyle(.green)
+                                Text("\(healthKitVM.mostRecentExerciseTime) / 0 mins")
+                            }
+                            
+                            HStack {
+                                Image(systemName: "figure.walk")
+                                    .foregroundStyle(.cyan)
+                                Text("\(healthKitVM.currentStepCount) / 10,000 steps")
+                            }
+                            HStack {
+                                Image(systemName: "flame.fill")
+                                    .foregroundStyle(.orange)
+                                Text("\(healthKitVM.currentKcalsBurned) / kcals ")
+                            }
+                        }
+                        //                    .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: 180, height: 185)
+                        .foregroundStyle(.white)
+//                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
+                            
+                        )
+                        
+                        VStack(alignment: .leading) {
+                            Text("Strength Training")
+                                .foregroundStyle(.white)
+                                .padding()
+                            HStack {
+                                Text("Goal: 0/2")
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(.green)
+                            }
+                            
+                            ProgressGaugeView(progress: 1.0, minValue: 0.0, maxValue: 2.0, scaleValue: 1.0, gaugeColor: .green, title: 2)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .frame(width: 180, height: 185)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
+                            
+                        )
+                    }
+                    .padding()
+                    
+                    // MARK: - Health
+                    VStack(alignment: .leading) {
+                        Text("Strength Training")
+                            .foregroundStyle(.white)
+                            .padding()
+                        HStack {
+                            Text("Goal: 0/2")
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        }
+                        
+                        ProgressGaugeView(progress: 1.0, minValue: 0.0, maxValue: 2.0, scaleValue: 1.0, gaugeColor: .green, title: 2)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(height: 250)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
+                        
+                    )
+                    .padding()
                 }
             }
 
@@ -80,4 +162,5 @@ struct DashboardScreen: View {
 
 #Preview {
     DashboardScreen()
+        .environment(HealthKitViewModel())
 }
