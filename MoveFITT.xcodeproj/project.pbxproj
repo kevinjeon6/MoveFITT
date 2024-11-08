@@ -33,6 +33,7 @@
 		7492BC9B2BED684B0095BE20 /* HealthKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7492BC9A2BED684B0095BE20 /* HealthKitViewModel.swift */; };
 		7496020C29D77B2500B6B824 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020B29D77B2500B6B824 /* WelcomeView.swift */; };
 		7496021029D77B7E00B6B824 /* AuthorizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7496020F29D77B7E00B6B824 /* AuthorizationView.swift */; };
+		74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */; };
 		74CFCDA22C08CA4700BF1454 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
@@ -81,6 +82,7 @@
 		7492BC9A2BED684B0095BE20 /* HealthKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitViewModel.swift; sourceTree = "<group>"; };
 		7496020B29D77B2500B6B824 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		7496020F29D77B7E00B6B824 /* AuthorizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationView.swift; sourceTree = "<group>"; };
+		74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardScreen.swift; sourceTree = "<group>"; };
 		74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
 		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* SummaryView.swift */,
+				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
 				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
 				740D0E002999D3F500776E3D /* MuscleView.swift */,
@@ -370,6 +373,7 @@
 				740D0E012999D3F500776E3D /* MuscleView.swift in Sources */,
 				74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
+				74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */,
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
 				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
@@ -536,7 +540,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinmattocks.MoveFITT;
 				PRODUCT_NAME = MoveFITT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -571,7 +575,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kevinmattocks.MoveFITT;
 				PRODUCT_NAME = MoveFITT;
 				PROVISIONING_PROFILE_SPECIFIER = "";
