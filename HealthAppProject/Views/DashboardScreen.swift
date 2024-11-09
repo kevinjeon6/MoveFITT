@@ -70,59 +70,69 @@ struct DashboardScreen: View {
                     }
                     
                     // MARK: - Overview
-  
-                    HStack {
-                        VStack(alignment: .leading) {
+                    
+           
+                        VStack(alignment: .leading, spacing: 4) {
                             Text("Daily Overview")
+                                .foregroundStyle(.white)
+                                .font(.title2.weight(.semibold))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding([.leading, .bottom])
+                                .padding(.top, 10)
+                             
+                            HStack {
+                                Image(systemName: "figure.walk")
+                                    .foregroundStyle(.cyan)
+                                Text("\(healthKitVM.currentStepCount) / 10,000 steps")
+                                    .foregroundStyle(.white)
+                            }
+                            .padding(.leading)
+                            HStack {
+                                ProgressionStepBar(value: 5000, goalValue: 10_000)
+                                Text("50%")
+                                    .layoutPriority(1)
+                                    .foregroundStyle(.white)
+                            }
+                            
+                            
                             
                             HStack {
                                 Image(systemName: "stopwatch")
                                     .foregroundStyle(.green)
                                 Text("\(healthKitVM.mostRecentExerciseTime) / 0 mins")
+                                    .foregroundStyle(.white)
+                            }
+                            .padding(.leading)
+                            HStack {
+                                ProgressionStepBar(value: 5000, goalValue: 10_000)
+                                Text("50%")
+                                    .layoutPriority(1)
+                                    .foregroundStyle(.white)
                             }
                             
-                            HStack {
-                                Image(systemName: "figure.walk")
-                                    .foregroundStyle(.cyan)
-                                Text("\(healthKitVM.currentStepCount) / 10,000 steps")
-                            }
                             HStack {
                                 Image(systemName: "flame.fill")
                                     .foregroundStyle(.orange)
                                 Text("\(healthKitVM.currentKcalsBurned) / kcals ")
+                                    .foregroundStyle(.white)
                             }
-                        }
-                        //                    .frame(maxWidth: .infinity, alignment: .leading)
-                        .frame(width: 180, height: 185)
-                        .foregroundStyle(.white)
-//                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
-                            
-                        )
-                        
-                        VStack(alignment: .leading) {
-                            Text("Strength Training")
-                                .foregroundStyle(.white)
-                                .padding()
+                            .padding(.leading)
                             HStack {
-                                Text("Goal: 0/2")
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.green)
+                                ProgressionStepBar(value: 5000, goalValue: 10_000)
+                                Text("50%")
+                                    .layoutPriority(1)
+                                    .foregroundStyle(.white)
                             }
-                            
-                            ProgressGaugeView(progress: 1.0, minValue: 0.0, maxValue: 2.0, scaleValue: 1.0, gaugeColor: .green, title: 2)
-                                .frame(maxWidth: .infinity, alignment: .center)
                         }
-                        .frame(width: 180, height: 185)
+                        .padding(.bottom)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 210)
                         .background(
-                            RoundedRectangle(cornerRadius: 12)
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
                                 .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
                             
                         )
-                    }
-                    .padding()
+                        .padding()
                     
                     // MARK: - Health
                     VStack(alignment: .leading) {
