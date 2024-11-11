@@ -76,7 +76,6 @@ struct DashboardScreen: View {
                             Text("Daily Overview")
                                 .foregroundStyle(.white)
                                 .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding([.leading, .bottom])
                                 .padding(.top, 10)
                              
@@ -125,7 +124,7 @@ struct DashboardScreen: View {
                             }
                         }
                         .padding(.bottom)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .frame(height: 210)
                         .background(
                             RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -135,21 +134,31 @@ struct DashboardScreen: View {
                         .padding()
                     
                     // MARK: - Health
-                    VStack(alignment: .leading) {
-                        Text("Strength Training")
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Weekly Overview")
                             .foregroundStyle(.white)
-                            .padding()
+                            .font(.title2.weight(.semibold))
+                            .padding([.leading, .bottom])
+                            .padding(.top, 10)
+                        
+                        Text("Strength Traning")
                         HStack {
                             Text("Goal: 0/2")
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundStyle(.green)
                         }
+                        .padding(.bottom)
                         
-                        ProgressGaugeView(progress: 1.0, minValue: 0.0, maxValue: 2.0, scaleValue: 1.0, gaugeColor: .green, title: 2)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                        Text("Physical Activity")
+                        HStack {
+                            Text("200/350")
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(height: 250)
+                    .frame(height: 210)
+                    .foregroundStyle(.white)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
