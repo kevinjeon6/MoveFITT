@@ -71,13 +71,13 @@ struct DashboardScreen: View {
                     
                     // MARK: - Overview
                     
-           
+                        //TODO: Fix when creating separate views
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Daily Overview")
                                 .foregroundStyle(.white)
                                 .font(.title2.weight(.semibold))
-                                .padding([.leading, .bottom])
-                                .padding(.top, 10)
+                                .padding([.leading])
+
                              
                             HStack {
                                 Image(systemName: "figure.walk")
@@ -125,7 +125,7 @@ struct DashboardScreen: View {
                         }
                         .padding(.bottom)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .frame(height: 210)
+                        .frame(height: 180)
                         .background(
                             RoundedRectangle(cornerRadius: 12, style: .continuous)
                                 .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
@@ -134,6 +134,7 @@ struct DashboardScreen: View {
                         .padding()
                     
                     // MARK: - Health
+                    //TODO: Fix when creating separate views
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Weekly Overview")
                             .foregroundStyle(.white)
@@ -157,7 +158,7 @@ struct DashboardScreen: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(height: 210)
+                    .frame(height: 180)
                     .foregroundStyle(.white)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
@@ -165,6 +166,15 @@ struct DashboardScreen: View {
                         
                     )
                     .padding()
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(0..<3) { _ in
+                                HealthMetricSnapShotView()
+                                
+                            }
+                        }
+                    }
                 }
             }
 
