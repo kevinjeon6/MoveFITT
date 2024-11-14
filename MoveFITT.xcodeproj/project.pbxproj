@@ -16,6 +16,7 @@
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */; };
 		743570F32CE2DC5A005AE528 /* HealthMetricSnapShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */; };
+		7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */; };
 		743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743818E2295DFC8200FE4613 /* DateExtension.swift */; };
 		7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */; };
 		7438E69E2987457D00F571C7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438E69D2987457D00F571C7 /* Constants.swift */; };
@@ -65,6 +66,7 @@
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatsView.swift; sourceTree = "<group>"; };
 		743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMetricSnapShotView.swift; sourceTree = "<group>"; };
+		7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickOverviewView.swift; sourceTree = "<group>"; };
 		743818E2295DFC8200FE4613 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		7438360D29720ED400CE8384 /* OneWeekRestHRChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekRestHRChartView.swift; sourceTree = "<group>"; };
 		7438E69D2987457D00F571C7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* SummaryView.swift */,
 				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
+				7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */,
 				743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */,
 				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
@@ -377,6 +380,7 @@
 				740D0E012999D3F500776E3D /* MuscleView.swift in Sources */,
 				74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
+				7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */,
 				74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */,
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
