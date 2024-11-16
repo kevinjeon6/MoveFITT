@@ -12,66 +12,50 @@ struct QuickOverviewView: View {
     @State private var selectedTab = 1
     var body: some View {
         TabView(selection: $selectedTab) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 12) {
                 Text("Daily Overview")
                     .foregroundStyle(.white)
                     .font(.title2.weight(.semibold))
-                    .padding([.leading])
+               
+                
+                DailyView(
+                    imageText: "figure.walk",
+                    imageColor: .cyan,
+                    metricText: "steps",
+                    currentValue: 10_000,
+                    goalText: 10_000,
+                    goalPercent: 100,
+                    gradientColor: [ .cyan,.blue]
+                )
+                
+                DailyView(
+                    imageText: "stopwatch",
+                    imageColor: .green,
+                    metricText: "min",
+                    currentValue: 25,
+                    goalText: 30,
+                    goalPercent: 75,
+                    gradientColor: [.mint, .green]
+                )
+                
+                DailyView(
+                    imageText: "flame.fill",
+                    imageColor: .orange,
+                    metricText: "kcal",
+                    currentValue: 150,
+                    goalText: 500,
+                    goalPercent: 25,
+                    gradientColor: [.yellow, .orange]
+                )
 
-                 
-                HStack {
-                    Image(systemName: "figure.walk")
-                        .foregroundStyle(.cyan)
-                    Text("4,000 / 10,000 steps")
-                        .foregroundStyle(.white)
-                }
-                .padding(.leading)
-                HStack {
-                    ProgressionStepBar(value: 5000, goalValue: 10_000)
-                    Text("50%")
-                        .layoutPriority(1)
-                        .foregroundStyle(.white)
-                }
-                
-                
-                
-                HStack {
-                    Image(systemName: "stopwatch")
-                        .foregroundStyle(.green)
-                    Text("20 / 30 mins")
-                        .foregroundStyle(.white)
-                }
-                .padding(.leading)
-                HStack {
-                    ProgressionStepBar(value: 5000, goalValue: 10_000)
-                    Text("50%")
-                        .layoutPriority(1)
-                        .foregroundStyle(.white)
-                }
-                
-                HStack {
-                    Image(systemName: "flame.fill")
-                        .foregroundStyle(.orange)
-                    Text("555 / 1000 kcals ")
-                        .foregroundStyle(.white)
-                }
-                .padding(.leading)
-                HStack {
-                    ProgressionStepBar(value: 5000, goalValue: 10_000)
-                    Text("50%")
-                        .layoutPriority(1)
-                        .foregroundStyle(.white)
-                }
             }
-            .padding(.bottom)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 180)
+            .foregroundStyle(.white)
+            .padding()
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
                 
             )
-            .padding()
             .tag(1)
             
             //TODO: Fix when creating separate views

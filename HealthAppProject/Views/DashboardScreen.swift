@@ -27,26 +27,11 @@ struct DashboardScreen: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color.primary.ignoresSafeArea(.all)
                 VStack {
                     
                     // MARK: - Header
-                    ///Make a separate view?
-                    VStack(alignment: .leading) {
-                        Text("\(Constants.todayDateString)")
-                            .font(.title3.weight(.semibold))
-                            .foregroundStyle(.gray)
-                        
-                        Text("Dashboard")
-                            .font(.title.bold())
-                            .foregroundStyle(.white)
-                            
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 8)
-                    
-                    
+                    DashboardHeaderView()
+ 
                     // MARK: - Calendar
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -74,8 +59,6 @@ struct DashboardScreen: View {
                         //TODO: Fix when creating separate views
                
                         QuickOverviewView()
-                        
-                  
                     
                     // MARK: - Health
                  
@@ -89,8 +72,7 @@ struct DashboardScreen: View {
                         }
                     }
                 }
-            }
-
+                .background(Color.primary)
         }
     }
     
@@ -105,4 +87,21 @@ struct DashboardScreen: View {
 #Preview {
     DashboardScreen()
         .environment(HealthKitViewModel())
+}
+
+struct DashboardHeaderView: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(Constants.todayDateString)")
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(.gray)
+            
+            Text("Dashboard")
+                .font(.title.bold())
+                .foregroundStyle(.white)
+            
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 8)
+    }
 }
