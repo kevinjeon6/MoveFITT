@@ -26,7 +26,7 @@ struct StepCountTileView: View {
             Text("Goal: \(goalText) steps")
                 .minimumScaleFactor(0.1)
             HStack {
-                ProgressionStepBar(value: currentValue, goalValue: goalText)
+                ProgressionStepBar(value: currentValue, goalValue: goalText, linearGradientColor: [.cyan, .blue])
                 Text("\(stepPercent)%")
                     .layoutPriority(1)
             }
