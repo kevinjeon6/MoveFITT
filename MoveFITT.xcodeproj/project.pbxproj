@@ -7,12 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		740646F42CED753C006FF438 /* DailyOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740646F32CED753C006FF438 /* DailyOverviewView.swift */; };
+		740646F62CED75DA006FF438 /* WeeklyOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */; };
 		740D0E012999D3F500776E3D /* MuscleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E002999D3F500776E3D /* MuscleView.swift */; };
 		740D0E03299B27F100776E3D /* DataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E02299B27F100776E3D /* DataListView.swift */; };
 		74117142297A07C000328365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117141297A07C000328365 /* SettingsView.swift */; };
 		74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */; };
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		7429988429C414E20044E890 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429988329C414E20044E890 /* OnboardingView.swift */; };
+		742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A05472CE81D2000BB8C7C /* WeeklyView.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */; };
 		743570F32CE2DC5A005AE528 /* HealthMetricSnapShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */; };
@@ -58,12 +61,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		740646F32CED753C006FF438 /* DailyOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyOverviewView.swift; sourceTree = "<group>"; };
+		740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyOverviewView.swift; sourceTree = "<group>"; };
 		740D0E002999D3F500776E3D /* MuscleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleView.swift; sourceTree = "<group>"; };
 		740D0E02299B27F100776E3D /* DataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataListView.swift; sourceTree = "<group>"; };
 		74117141297A07C000328365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		7429988329C414E20044E890 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		742A05472CE81D2000BB8C7C /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatsView.swift; sourceTree = "<group>"; };
 		743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMetricSnapShotView.swift; sourceTree = "<group>"; };
@@ -261,7 +267,10 @@
 				74DF66FA295B77A50046F521 /* SummaryView.swift */,
 				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
 				7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */,
+				740646F32CED753C006FF438 /* DailyOverviewView.swift */,
 				743571212CE6BFD3005AE528 /* DailyView.swift */,
+				740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */,
+				742A05472CE81D2000BB8C7C /* WeeklyView.swift */,
 				743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */,
 				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
@@ -375,6 +384,7 @@
 				7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */,
 				74F02F6729B1A34A00AEB8BE /* Cardbackground.swift in Sources */,
 				744095B929A5C6930098ACA7 /* HealthTypeInfoText.swift in Sources */,
+				740646F42CED753C006FF438 /* DailyOverviewView.swift in Sources */,
 				74F02F5C29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift in Sources */,
 				7438E6A02988B9F800F571C7 /* OneWeekKCalBurnedChartView.swift in Sources */,
 				746660322982B3FD00C17C8A /* ProgressGaugeView.swift in Sources */,
@@ -395,9 +405,11 @@
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,
 				744095C129A71C5C0098ACA7 /* ColorExtension.swift in Sources */,
 				74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */,
+				742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */,
 				740D0E03299B27F100776E3D /* DataListView.swift in Sources */,
 				74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */,
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
+				740646F62CED75DA006FF438 /* WeeklyOverviewView.swift in Sources */,
 				7461398F2A5C471C00F44828 /* YearAndMonth.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */,
 				74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */,
