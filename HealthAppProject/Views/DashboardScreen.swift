@@ -27,7 +27,7 @@ struct DashboardScreen: View {
     
     var body: some View {
         NavigationStack {
-                VStack {
+            VStack(spacing: 0) {
                     
                     // MARK: - Header
                     DashboardHeaderView()
@@ -53,26 +53,22 @@ struct DashboardScreen: View {
                             }
                         }
                     }
-                    
-                    // MARK: - Overview
-                    
-                        //TODO: Fix when creating separate views
-               
-                        QuickOverviewView()
-                    
-                    // MARK: - Health
-                 
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(0..<3) { _ in
-                                HealthMetricSnapShotView()
-                                
-                                
-                            }
+                
+                // MARK: - Overview
+                QuickOverviewView()
+                
+                // MARK: - Health
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(0..<3) { _ in
+                            HealthMetricSnapShotView()
+                            
+                            
                         }
                     }
                 }
-                .background(Color.primary)
+            }
+            .background(Color.primary)
         }
     }
     
