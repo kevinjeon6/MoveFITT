@@ -10,7 +10,8 @@ import SwiftUI
 struct DailyOverviewView: View {
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        
+        VStack(alignment: .leading, spacing: 10) {
             Text("Daily Overview")
                 .foregroundStyle(.white)
                 .font(.title2.weight(.semibold))
@@ -47,7 +48,12 @@ struct DailyOverviewView: View {
             )
         }
         .foregroundStyle(.white)
-        .padding(.horizontal)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1))
+                     )
+        )
     }
 }
 
