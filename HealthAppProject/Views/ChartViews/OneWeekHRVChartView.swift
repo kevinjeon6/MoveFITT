@@ -13,13 +13,13 @@ struct OneWeekHRVChartView: View {
     @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var rawSelectedDate: Date?
     
-    private var hrv: [HealthMetricValue] {
+    private var hrv: [HealthMetric] {
         healthKitVM.hrvHRData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
-    var selectedHealthValue: HealthMetricValue? {
+    var selectedHealthValue: HealthMetric? {
         guard let rawSelectedDate else { return nil }
         return healthKitVM.hrvHRData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }

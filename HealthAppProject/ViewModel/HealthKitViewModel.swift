@@ -27,16 +27,16 @@ class HealthKitViewModel {
     ]
     
     // MARK: - Health Metric Data Values
-    var stepData: [HealthMetricValue] = []
-    var restingHRData: [HealthMetricValue] = []
-    var hrvHRData: [HealthMetricValue] = []
-    var kcalBurnedData: [HealthMetricValue] = []
-    var exerciseTime7DaysData: [HealthMetricValue] = []
-    var exerciseTime30DaysData: [HealthMetricValue] = []
-    var exerciseTime60DaysData: [HealthMetricValue] = []
+    var stepData: [HealthMetric] = []
+    var restingHRData: [HealthMetric] = []
+    var hrvHRData: [HealthMetric] = []
+    var kcalBurnedData: [HealthMetric] = []
+    var exerciseTime7DaysData: [HealthMetric] = []
+    var exerciseTime30DaysData: [HealthMetric] = []
+    var exerciseTime60DaysData: [HealthMetric] = []
     var muscleStrengthData: [HKWorkout] = []
     var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
-    var weekExerciseTimeData: [HealthMetricValue] = []
+    var weekExerciseTimeData: [HealthMetric] = []
     
     // MARK: - Dates
     let calendar: Calendar
@@ -112,7 +112,7 @@ class HealthKitViewModel {
     
     
     // MARK: - Daily Step Count
-    func getStepCount(from value: Int) async throws -> [HealthMetricValue]  {
+    func getStepCount(from value: Int) async throws -> [HealthMetric]  {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -134,7 +134,7 @@ class HealthKitViewModel {
         //You will want to loop through the returned async sequence to read the results
         for try await result in sumOfStepQuery.results(for: healthStore) {
             stepData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
             }
         }
         
@@ -143,7 +143,7 @@ class HealthKitViewModel {
     
     
     // MARK: - Resting Heart Rate
-    func getRestingHR(from value: Int) async throws -> [HealthMetricValue]  {
+    func getRestingHR(from value: Int) async throws -> [HealthMetric]  {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
 
@@ -160,7 +160,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfHRQuery.results(for: healthStore) {
             restingHRData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "count/min")) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "count/min")) ?? 0)
             }
         }
         
@@ -168,7 +168,7 @@ class HealthKitViewModel {
     }
     
     // MARK: - HRV
-    func getHRV(from value: Int) async throws -> [HealthMetricValue]  {
+    func getHRV(from value: Int) async throws -> [HealthMetric]  {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
  
@@ -186,7 +186,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfHrvQuery.results(for: healthStore) {
             hrvHRData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
             }
         }
         
@@ -196,7 +196,7 @@ class HealthKitViewModel {
     
     // MARK: - Kcals Burned
     
-    func getKcalsBurned(from value: Int) async throws -> [HealthMetricValue] {
+    func getKcalsBurned(from value: Int) async throws -> [HealthMetric] {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -213,7 +213,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfKcalsQuery.results(for: healthStore) {
             kcalBurnedData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .kilocalorie()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .kilocalorie()) ?? 0)
             }
         }
         
@@ -223,7 +223,7 @@ class HealthKitViewModel {
     
     // MARK: - Exercise Time
     
-    func getExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
+    func getExerciseTime(from value: Int) async throws -> [HealthMetric]  {
 
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
         
@@ -240,14 +240,14 @@ class HealthKitViewModel {
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
             exerciseTime7DaysData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
       return exerciseTime7DaysData
     }
     
-    func getWeekTotalExerciseTime() async throws -> [HealthMetricValue] {
+    func getWeekTotalExerciseTime() async throws -> [HealthMetric] {
         let startNewWeek = calendar.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
         
         let strengthWeek = HKQuery.predicateForSamples(withStart: startNewWeek, end: Date(), options: .strictStartDate)
@@ -263,7 +263,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfStrengthTime.results(for: healthStore) {
             weekExerciseTimeData = result.statisticsCollection.statistics().map {
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
@@ -271,7 +271,7 @@ class HealthKitViewModel {
     }
     
     
-    func get30DaysExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
+    func get30DaysExerciseTime(from value: Int) async throws -> [HealthMetric]  {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
       
@@ -288,14 +288,14 @@ class HealthKitViewModel {
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
             exerciseTime30DaysData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         
       return exerciseTime30DaysData
     }
     
-    func get60DaysExerciseTime(from value: Int) async throws -> [HealthMetricValue]  {
+    func get60DaysExerciseTime(from value: Int) async throws -> [HealthMetric]  {
 
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
 
@@ -312,7 +312,7 @@ class HealthKitViewModel {
         
         for try await result in sumOfExerciseTimeQuery.results(for: healthStore) {
           exerciseTime60DaysData = result.statisticsCollection.statistics().map{
-                HealthMetricValue(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .minute()) ?? 0)
             }
         }
         

@@ -12,13 +12,13 @@ struct OneWeekKCalBurnedChartView: View {
     @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var rawSelectedDate: Date?
     
-    private var kcalsBurned: [HealthMetricValue] {
+    private var kcalsBurned: [HealthMetric] {
         healthKitVM.kcalBurnedData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
-    var selectedHealthValue: HealthMetricValue? {
+    var selectedHealthValue: HealthMetric? {
         guard let rawSelectedDate else { return nil }
         return healthKitVM.kcalBurnedData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
