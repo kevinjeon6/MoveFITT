@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct HealthMetricSnapShotView: View {
+    
+    var title: String
+    var textGradient: LinearGradient
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -15,83 +19,54 @@ struct HealthMetricSnapShotView: View {
                     //Go to charts of the HealthMetric
                 } label: {
                     HStack {
-                            Text("Heart Overview")
-                                .font(.title3)
+                        Text(title)
+                            .font(.title3.weight(.semibold))
                         
                         Spacer()
                         Image(systemName: "chevron.right")
                     }
                     .padding(.bottom, 4)
                 }
-                .foregroundStyle(.secondary)
-
+                .foregroundStyle(textGradient)
+                
                 Divider()
-
+                    .frame(height: 1)
+                    .overlay(.white)
+                
                 Grid(alignment: .leading, horizontalSpacing: 80, verticalSpacing: 20) {
                     GridRow {
-                        // MARK: - Make into a reusable view
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack {
-                                Image(systemName: "arrow.down.heart.fill")
-                                Text("RHR")
-                                    .font(.subheadline)
-                                    .fontWeight(.heavy)
-                            }
-                            Text("62 bpm")
-                        }
-                        .font(.title2)
+                        HealthMetricInfoView(imageText: "arrow.down.heart.fill", metricTitle: "RHR", metricValue: 64, unit: "bpm")
                         
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack {
-                                Image(systemName: "heart.circle.fill")
-                                Text("HR")
-                                    .font(.subheadline)
-                                    .fontWeight(.heavy)
-                                
-                            }
-                            Text("74 bpm")
-                        }
-                        .font(.title2)
-
+                        HealthMetricInfoView(imageText: "heart.circle", metricTitle: "HR", metricValue: 74, unit: "bpm")
+                        
                     }
                     
                     GridRow {
-                        // MARK: - Make into a reusable view
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack {
-                                Image(systemName: "waveform.path.ecg.rectangle.fill")
-                                Text("HRV")
-                                    .font(.subheadline)
-                                    .fontWeight(.heavy)
-                            }
-                            Text("220 ms")
-                        }
-                        .font(.title2)
+                        HealthMetricInfoView(imageText: "waveform.path.ecg.rectangle.fill", metricTitle: "HRV", metricValue: 220, unit: "ms")
                         
-                        VStack(alignment: .leading, spacing: 5) {
-                            HStack {
-                                Image(systemName: "heart.circle.fill")
-                                Text("Walking HR")
-                                    .font(.subheadline)
-                                    .fontWeight(.heavy)
-                            }
-                            
-                            Text("76 bpm")
-                            
-                        }
-                        .font(.title2)
+                        HealthMetricInfoView(imageText: "heart.circle.fill", metricTitle: "Walking HR", metricValue: 78, unit: "bpm")
                     }
                 }
                 .padding(.top, 20)
             }
             .padding(20)
+            .foregroundStyle(textGradient)
             .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color(.secondarySystemBackground))
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
             )
         }
     }
 }
 
 #Preview {
-    HealthMetricSnapShotView()
+    
+    let previewGradient = LinearGradient(
+        gradient: Gradient(
+            colors: [.lightestRed,.lightRed,.mediumRed,.deepRed,.darkRed]
+        ),
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    HealthMetricSnapShotView(title: "Heart Overview", textGradient: previewGradient)
 }
