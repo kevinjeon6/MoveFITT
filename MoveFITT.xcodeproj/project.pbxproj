@@ -16,6 +16,8 @@
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		74257BB72CEFAB98004FB0B2 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */; };
 		74257BC02CF00339004FB0B2 /* HealthMetricInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74257BBF2CF00339004FB0B2 /* HealthMetricInfoView.swift */; };
+		74257BCA2CF03B83004FB0B2 /* RespiratoryMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74257BC92CF03B83004FB0B2 /* RespiratoryMetricsView.swift */; };
+		74257BCC2CF14A82004FB0B2 /* HeartMetricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74257BCB2CF14A82004FB0B2 /* HeartMetricsView.swift */; };
 		7429988429C414E20044E890 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429988329C414E20044E890 /* OnboardingView.swift */; };
 		742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A05472CE81D2000BB8C7C /* WeeklyView.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
@@ -72,6 +74,8 @@
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		74257BBF2CF00339004FB0B2 /* HealthMetricInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMetricInfoView.swift; sourceTree = "<group>"; };
+		74257BC92CF03B83004FB0B2 /* RespiratoryMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryMetricsView.swift; sourceTree = "<group>"; };
+		74257BCB2CF14A82004FB0B2 /* HeartMetricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartMetricsView.swift; sourceTree = "<group>"; };
 		7429988329C414E20044E890 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		742A05472CE81D2000BB8C7C /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 				742A05472CE81D2000BB8C7C /* WeeklyView.swift */,
 				743570F22CE2DC5A005AE528 /* HealthMetricSnapShotView.swift */,
 				74257BBF2CF00339004FB0B2 /* HealthMetricInfoView.swift */,
+				74257BC92CF03B83004FB0B2 /* RespiratoryMetricsView.swift */,
+				74257BCB2CF14A82004FB0B2 /* HeartMetricsView.swift */,
 				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
 				740D0E002999D3F500776E3D /* MuscleView.swift */,
@@ -408,8 +414,10 @@
 				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
 				747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */,
 				7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */,
+				74257BCC2CF14A82004FB0B2 /* HeartMetricsView.swift in Sources */,
 				74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */,
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,
+				74257BCA2CF03B83004FB0B2 /* RespiratoryMetricsView.swift in Sources */,
 				744095C129A71C5C0098ACA7 /* ColorExtension.swift in Sources */,
 				74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */,
 				742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */,
