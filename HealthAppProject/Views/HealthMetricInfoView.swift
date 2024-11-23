@@ -22,7 +22,12 @@ struct HealthMetricInfoView: View {
                     .font(.subheadline)
                     .fontWeight(.heavy)
             }
-            Text("\(metricValue, format: .number.precision(.fractionLength(0))) \(unit)")
+            HStack(alignment: .firstTextBaseline ,spacing: 2) {
+                Text("\(metricValue, format: .number.precision(.fractionLength(0)))")
+                    .font(.title.weight(.semibold))
+                Text(unit)
+                    .font(.footnote)
+            }
         }
         .font(.title2)
     }
