@@ -60,6 +60,7 @@
 		74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */; };
 		74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */; };
 		74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F07AC329E06654004FC83D /* OnboardTextDescription.swift */; };
+		74F32A802CF61E670042E751 /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */; };
 		74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
@@ -121,6 +122,7 @@
 		74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfoTileView.swift; sourceTree = "<group>"; };
 		74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekHRVChartView.swift; sourceTree = "<group>"; };
 		74F07AC329E06654004FC83D /* OnboardTextDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardTextDescription.swift; sourceTree = "<group>"; };
+		74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
 		74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardInitialGoalDescription.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -274,6 +276,7 @@
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
 				74DF66FA295B77A50046F521 /* SummaryView.swift */,
 				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
+				74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */,
 				7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */,
 				74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */,
 				740646F32CED753C006FF438 /* DailyOverviewView.swift */,
@@ -408,6 +411,7 @@
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
 				7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */,
 				74257BB72CEFAB98004FB0B2 /* IndicatorView.swift in Sources */,
+				74F32A802CF61E670042E751 /* DashboardHeaderView.swift in Sources */,
 				74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */,
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
