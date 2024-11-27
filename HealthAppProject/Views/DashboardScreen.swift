@@ -10,74 +10,100 @@ import SwiftUI
 struct DashboardScreen: View {
     
     @Environment(HealthKitViewModel.self) var healthKitVM
+    
+    // MARK: - Calendar Properties
     @State private var today = Date()
-    
-    
-    // Generate a range of dates from past to future
-    private var dateRange: [Date] {
-        let calendar = Calendar.current
-        let today = Date()
-        
-        // Define the range: 14 days before and after today
-        return (-14...14).compactMap { offset in
-            calendar.date(byAdding: .day, value: offset, to: today)
-        }
-    }
-    
+    @State private var weekSlider: [[Date.WeekDay]] = []
+    @State private var currentWeekIndex: Int = 1
+
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
+                
+                // MARK: - Header
+                DashboardHeaderView()
+                
+                // MARK: - Calendar
+                TabView(selection: $currentWeekIndex) {
+                    ForEach(weekSlider.indices, id: \.self) { index in
+                        let week = weekSlider[index]
+                        WeekView(week)
+                            .tag(index)
+                    }
+                }
+                .padding(.horizontal, -15)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .frame(height: 90)
+
+                
+                ScrollView(.vertical, showsIndicators: false) {
                     
-                    // MARK: - Header
-                    DashboardHeaderView()
- 
-                    // MARK: - Calendar
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(dateRange, id: \.self) { date in
-                                VStack {
-                                    Text(dateFormatted(date: date, format: "d"))
-                                        .font(.headline)
-                                        .foregroundStyle(.white)
-                                    
-                                    Text(dateFormatted(date: date, format: "E"))
-                                        .font(.subheadline)
-                                        .foregroundStyle(.white)
-                                }
-                                .frame(width: 50, height: 70)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Calendar.current.isDate(date, inSameDayAs: today) ? Color.cyan : Color.clear, lineWidth: 4)
-                                }
-                            }
-                        }
-                    }
-                
-                // MARK: - Overview
-                QuickOverviewView()
-                
-                // MARK: - Health
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(0..<3) { _ in
-                            HealthMetricSnapShotView()
-                            
-                            
-                        }
-                    }
+                    // MARK: - Overview
+                    QuickOverviewView()
+                        .padding(.vertical, 20)
+                    
+                    // MARK: - Health
+                    
+                    HeartMetricsView()
+                    RespiratoryMetricsView()
+                    
+                    Spacer()
                 }
             }
             .background(Color.primary)
+            .onAppear {
+                if weekSlider.isEmpty {
+                    let currentWeek = Date().fetchWeek()
+                    
+                    if let firstDate = currentWeek.first?.date {
+                        weekSlider.append(firstDate.previousWeek())
+                    }
+                    
+                    weekSlider.append(currentWeek)
+                    
+                    if let lastDate = currentWeek.last?.date {
+                        weekSlider.append(lastDate.nextWeek())
+                    }
+                }
+            }
         }
     }
     
-    // Helper function to format the date
-    private func dateFormatted(date: Date, format: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        return formatter.string(from: date)
+
+    // MARK: - Weekly View
+    @ViewBuilder
+    func WeekView(_ week: [Date.WeekDay]) -> some View {
+        HStack(spacing: 0) {
+            ForEach(week) { day in
+                VStack(spacing: 4) {
+                    Text(day.date.format("d"))
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                      
+                    
+                    Text(day.date.format("E"))
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.white)
+
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Calendar.current.isDate(day.date, inSameDayAs: today) ? Color.cyan : Color.clear, lineWidth: 2)
+                }
+                .contentShape(.rect)
+                .onTapGesture {
+                    ///Updating Current Date
+                    withAnimation(.snappy) {
+                        today = day.date
+                    }
+                }
+            }
+        }
     }
+    
 }
 
 #Preview {
@@ -85,19 +111,4 @@ struct DashboardScreen: View {
         .environment(HealthKitViewModel())
 }
 
-struct DashboardHeaderView: View {
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(Constants.todayDateString)")
-                .font(.title3.weight(.semibold))
-                .foregroundStyle(.gray)
-            
-            Text("Dashboard")
-                .font(.title.bold())
-                .foregroundStyle(.white)
-            
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 8)
-    }
-}
+
