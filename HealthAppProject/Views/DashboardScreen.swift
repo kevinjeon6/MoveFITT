@@ -17,6 +17,22 @@ struct DashboardScreen: View {
     @State private var currentWeekIndex: Int = 1
 
     
+    let heartGradient = LinearGradient(
+        gradient: Gradient(
+            colors: [.lightestRed, .lightRed, .mediumRed, .deepRed, .darkRed]
+        ),
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    
+    let respiratoryGradient = LinearGradient(
+        gradient: Gradient(
+            colors: [.lightestBlue, .lightBlue, .mediumBlue, .deepBlue, .darkBlue]
+        ),
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -45,13 +61,57 @@ struct DashboardScreen: View {
                     
                     // MARK: - Health
                     
-                    HeartMetricsView()
-                    RespiratoryMetricsView()
-                    
+                    NavigationLink {
+                        HeartMetricChartView()
+                    } label: {
+                        HealthTileInfoView(
+                            headerTitleText: "Heart Overview",
+                            textGradient: heartGradient,
+                            borderColor: .red,
+                            imageText1: "arrow.down.heart.fill",
+                            metricTitle1: "Resting Heart Rate",
+                            metricValue1: healthKitVM.currentRestHR,
+                            unit1: "bpm",
+                            imageText2: "heart.circle",
+                            metricTitle2: "Heart Rate",
+                            metricValue2: healthKitVM.currentHR,
+                            unit2: "bpm",
+                            imageText3: "waveform.path.ecg.rectangle.fill",
+                            metricTitle3: "Heart Rate Variability (HRV)",
+                            metricValue3: healthKitVM.currentHRV,
+                            unit3: "ms"
+                        )
+                    }
+
+                    NavigationLink {
+                        RespiratoryMetricChartView()
+                    } label: {
+                        HealthTileInfoView(
+                            headerTitleText: "Respiratory Overview",
+                            textGradient: respiratoryGradient,
+                            borderColor: .blue,
+                            imageText1: "lungs.fill",
+                            metricTitle1: "Respiratory Rate",
+                            metricValue1: healthKitVM.currentRespiratoryRate,
+                            unit1: "breaths/min",
+                            imageText2: "drop.circle",
+                            metricTitle2: "Blood Oxygen",
+                            metricValue2: healthKitVM.currentSpO2,
+                            unit2: "%",
+                            imageText3: "figure.run.circle",
+                            metricTitle3: "VO2max",
+                            metricValue3: healthKitVM.currentVO2max,
+                            unit3: "ml/kg/min"
+                        )
+                    }
+
                     Spacer()
                 }
             }
             .background(Color.primary)
+            .task {
+                await healthKitVM.displayData()
+            }
             .onAppear {
                 if weekSlider.isEmpty {
                     let currentWeek = Date().fetchWeek()

@@ -21,8 +21,12 @@ class HealthKitViewModel {
         HKQuantityType(.stepCount),
         HKQuantityType(.restingHeartRate),
         HKQuantityType(.heartRateVariabilitySDNN),
+        HKQuantityType(.heartRate),
         HKQuantityType(.appleExerciseTime),
         HKQuantityType(.activeEnergyBurned),
+        HKQuantityType(.vo2Max),
+        HKQuantityType(.respiratoryRate),
+        HKQuantityType(.oxygenSaturation),
         HKWorkoutType.workoutType()
     ]
     
@@ -30,10 +34,14 @@ class HealthKitViewModel {
     var stepData: [HealthMetric] = []
     var restingHRData: [HealthMetric] = []
     var hrvHRData: [HealthMetric] = []
+    var heartRateData: [HealthMetric] = []
     var kcalBurnedData: [HealthMetric] = []
     var exerciseTime7DaysData: [HealthMetric] = []
     var exerciseTime30DaysData: [HealthMetric] = []
     var exerciseTime60DaysData: [HealthMetric] = []
+    var vo2MaxData: [HealthMetric] = []
+    var respiratoryRateData: [HealthMetric] = []
+    var oxygenSaturationData: [HealthMetric] = []
     var muscleStrengthData: [HKWorkout] = []
     var muscleYearAndMonth = [YearAndMonth: [HKWorkout]]()
     var weekExerciseTimeData: [HealthMetric] = []
@@ -80,12 +88,19 @@ class HealthKitViewModel {
     
     var averageHRV: Double { hrvHRData.reduce(0)  { $0 + $1.value / 7 }}
     
+    var currentHR: Double { heartRateData.last?.value ?? 0 }
+    
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
     
     var averageKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value / 7 }}
     
     var total7DayKcalBurned: Double { kcalBurnedData.reduce(0) { $0 + $1.value }}
     
+    var currentVO2max: Double { vo2MaxData.last?.value ?? 0}
+    
+    var currentRespiratoryRate: Double { respiratoryRateData.last?.value ?? 0 }
+    
+    var currentSpO2: Double { oxygenSaturationData.last?.value ?? 0 }
   
     // MARK: - Initializer
     init() {
@@ -100,14 +115,17 @@ class HealthKitViewModel {
         async let stepCount = getStepCount(from: -7)
         async let restingHR = getRestingHR(from: -7)
         async let hrv = getHRV(from: -7)
+        async let heartRate = getHR(from: -7)
         async let kcals = getKcalsBurned(from: -7)
+        async let vo2Max = getVo2Data(from: -7)
+        async let spO2 = getSpO2(from: -7)
         async let minutes = getExerciseTime(from: -7)
         async let thirtyMins = get30DaysExerciseTime(from: -30)
         async let sixtyMins = get60DaysExerciseTime(from: -60)
         async let workout = getWorkoutHistory()
         async let totalWeekTime = getWeekTotalExerciseTime()
         
-        let data = try? await [stepCount, restingHR, hrv, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
+        let data = try? await [stepCount, restingHR, hrv, heartRate, vo2Max,spO2, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
     }
     
     
@@ -130,7 +148,7 @@ class HealthKitViewModel {
         )
 
         
-        //If you want live updates as your health data changes, use the results(for:)
+        //If you want initial results AND live updates as your health data changes, use the results(for:)
         //You will want to loop through the returned async sequence to read the results
         for try await result in sumOfStepQuery.results(for: healthStore) {
             stepData = result.statisticsCollection.statistics().map{
@@ -193,6 +211,30 @@ class HealthKitViewModel {
      return hrvHRData
     }
     
+    // MARK: - HR
+    func getHR(from value: Int) async throws -> [HealthMetric] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        let hrOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.heartRate), predicate: oneWeek)
+        
+        let sumOfHrQuery = HKStatisticsCollectionQueryDescriptor(
+            predicate: hrOneWeek,
+            options: .discreteAverage,
+            anchorDate: endDate,
+            intervalComponents: hourly
+        )
+        
+        for try await result in sumOfHrQuery.results(for: healthStore) {
+            heartRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "count/min")) ?? 0)
+            }
+        }
+        
+        return heartRateData
+    }
+    
     
     // MARK: - Kcals Burned
     
@@ -218,6 +260,82 @@ class HealthKitViewModel {
         }
         
         return kcalBurnedData
+    }
+    
+    // MARK: - Respiratory Rate
+    
+    func getRespiratoryRateData(from value: Int) async throws -> [HealthMetric] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        let respiratoryRateOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.respiratoryRate), predicate: oneWeek)
+        
+        let sumOfRespiratoryRateQuery = HKStatisticsCollectionQueryDescriptor(
+            predicate: respiratoryRateOneWeek,
+            options: .mostRecent,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+        
+        for try await result in sumOfRespiratoryRateQuery.results(for: healthStore) {
+            respiratoryRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "breaths/min")) ?? 0)
+                    
+            }
+        }
+        
+        return respiratoryRateData
+    }
+    
+    // MARK: - VO2 Data
+    
+    func getVo2Data(from value: Int) async throws -> [HealthMetric] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        let vo2OneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.vo2Max), predicate: oneWeek)
+        
+        let sumofVo2Query = HKStatisticsCollectionQueryDescriptor(
+            predicate: vo2OneWeek,
+            options: .mostRecent,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+        
+        for try await result in sumofVo2Query.results(for: healthStore) {
+            vo2MaxData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "ml/(kg*min)")) ?? 0)
+                
+            }
+        }
+        
+        return vo2MaxData
+    }
+    
+    // MARK: - Oxygen Saturation Data
+    func getSpO2(from value: Int) async throws -> [HealthMetric] {
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        let spO2OneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.oxygenSaturation), predicate: oneWeek)
+        
+        let sumOfSpO2Query = HKStatisticsCollectionQueryDescriptor(
+            predicate: spO2OneWeek,
+            options: .discreteAverage,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+        
+        for try await result in sumOfSpO2Query.results(for: healthStore) {
+            oxygenSaturationData = result.statisticsCollection.statistics().map{
+                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .percent()) ?? 0)
+            }
+        }
+        
+        return oxygenSaturationData
     }
     
     
