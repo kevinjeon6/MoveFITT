@@ -14,7 +14,7 @@ struct Constants {
     static var notifications = "notifications"
     
 
-    static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month().day())
+    static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month(.wide).day())
     static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
     //Start of the week is Sunday - Saturday
     

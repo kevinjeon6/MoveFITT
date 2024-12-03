@@ -48,7 +48,7 @@ struct DashboardScreen: View {
                             .tag(index)
                     }
                 }
-                .padding(.horizontal, -15)
+                .padding(.horizontal, 4)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .frame(height: 90)
 
@@ -96,7 +96,7 @@ struct DashboardScreen: View {
                             unit1: "breaths/min",
                             imageText2: "drop.circle",
                             metricTitle2: "Blood Oxygen",
-                            metricValue2: healthKitVM.currentSpO2,
+                            metricValue2: healthKitVM.currentSpO2 * 100,
                             unit2: "%",
                             imageText3: "figure.run.circle",
                             metricTitle3: "VO2max",

@@ -51,6 +51,7 @@ class HealthKitViewModel {
     let today: Date
     let endDate: Date
     let daily = DateComponents(day: 1)
+    let hourly = DateComponents(hour: 1)
 
     
     // MARK: - Computed Properties
@@ -117,15 +118,17 @@ class HealthKitViewModel {
         async let hrv = getHRV(from: -7)
         async let heartRate = getHR(from: -7)
         async let kcals = getKcalsBurned(from: -7)
-        async let vo2Max = getVo2Data(from: -7)
+        async let vo2Max = getVo2Data()
         async let spO2 = getSpO2(from: -7)
+        async let respRate = getRespiratoryRateData(from: -7)
         async let minutes = getExerciseTime(from: -7)
         async let thirtyMins = get30DaysExerciseTime(from: -30)
         async let sixtyMins = get60DaysExerciseTime(from: -60)
         async let workout = getWorkoutHistory()
         async let totalWeekTime = getWeekTotalExerciseTime()
         
-        let data = try? await [stepCount, restingHR, hrv, heartRate, vo2Max,spO2, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
+        let data = try? await [stepCount, restingHR, hrv, heartRate, vo2Max,spO2, respRate, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
+
     }
     
     
@@ -274,14 +277,13 @@ class HealthKitViewModel {
         
         let sumOfRespiratoryRateQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: respiratoryRateOneWeek,
-            options: .mostRecent,
+            options: [.discreteAverage, .separateBySource],
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfRespiratoryRateQuery.results(for: healthStore) {
-            respiratoryRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "breaths/min")) ?? 0)
-                    
+            respiratoryRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
             }
         }
         
@@ -290,17 +292,18 @@ class HealthKitViewModel {
     
     // MARK: - VO2 Data
     
-    func getVo2Data(from value: Int) async throws -> [HealthMetric] {
+    func getVo2Data() async throws -> [HealthMetric] {
         
-        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        ///To get the most recent VO2max data point, need distantPast because the last value recorded could have been months ago and not within a given time frame such as past 7 days. Especially if you are not walking or running outdoors.
+        let startDate = Date.distantPast
         
-        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        let vo2DateInterval = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
-        let vo2OneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.vo2Max), predicate: oneWeek)
+        let vo2OneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.vo2Max), predicate: vo2DateInterval)
         
         let sumofVo2Query = HKStatisticsCollectionQueryDescriptor(
             predicate: vo2OneWeek,
-            options: .mostRecent,
+            options: .discreteAverage,
             anchorDate: endDate,
             intervalComponents: daily
         )
