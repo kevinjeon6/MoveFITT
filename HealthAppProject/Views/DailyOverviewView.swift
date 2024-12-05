@@ -45,8 +45,8 @@ struct DailyOverviewView: View {
                 imageColor: .orange,
                 metricText: "kcal",
                 currentValue: Int(healthKitVM.currentKcalsBurned),
-                goalText: 500,
-                goalPercent: 25,
+                goalText: settingsVM.kcalsBurnedDailyGoal,
+                goalPercent: (Int(healthKitVM.currentKcalsBurned) * 100 / settingsVM.kcalsBurnedDailyGoal),
                 gradientColor: [.yellow, .orange]
             )
         }

@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Binding var exerciseDayGoal: Int
     @Binding var exerciseWeeklyGoal: Int
     @Binding var muscleWeeklyGoal: Int
+    @Binding var kcalsDailyGoal: Int
     @State private var isShowingInfoSheet = false
     @EnvironmentObject var settingsVM: SettingsViewModel
     
@@ -42,6 +43,8 @@ struct SettingsView: View {
                     Stepper("Strength Goal: \(muscleWeeklyGoal)", value: $settingsVM.muscleWeeklyGoal, in: 2...7, step: 1)
                         .foregroundColor(.blue)
                     
+                    Stepper("Kcal Goal: \(kcalsDailyGoal)", value: $settingsVM.kcalsBurnedDailyGoal, in: 100...2000, step: 25)
+                        .foregroundStyle(.blue)
                     
                 } header: {
                     Text("Set your Exercise Goals Here")
@@ -57,7 +60,7 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2))
+        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2), kcalsDailyGoal: Binding.constant(500))
             .environmentObject(SettingsViewModel())
     }
 }
