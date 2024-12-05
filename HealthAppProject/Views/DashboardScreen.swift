@@ -10,6 +10,7 @@ import SwiftUI
 struct DashboardScreen: View {
     
     @Environment(HealthKitViewModel.self) var healthKitVM
+    @EnvironmentObject var settingsVM: SettingsViewModel
     
     // MARK: - Calendar Properties
     @State private var today = Date()
@@ -169,6 +170,7 @@ struct DashboardScreen: View {
 #Preview {
     DashboardScreen()
         .environment(HealthKitViewModel())
+        .environmentObject(SettingsViewModel())
 }
 
 

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct DailyOverviewView: View {
     
+    @Environment(HealthKitViewModel.self) var healthKitVM
+    @EnvironmentObject var settingsVM: SettingsViewModel
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
@@ -21,9 +24,9 @@ struct DailyOverviewView: View {
                 imageText: "figure.walk",
                 imageColor: .cyan,
                 metricText: "steps",
-                currentValue: 10_000,
-                goalText: 10_000,
-                goalPercent: 100,
+                currentValue: Int(healthKitVM.currentStepCount),
+                goalText: settingsVM.stepGoal,
+                goalPercent: (Int(healthKitVM.currentStepCount) * 100 / settingsVM.stepGoal),
                 gradientColor: [ .cyan,.blue]
             )
             
@@ -31,9 +34,9 @@ struct DailyOverviewView: View {
                 imageText: "stopwatch",
                 imageColor: .green,
                 metricText: "min",
-                currentValue: 25,
-                goalText: 30,
-                goalPercent: 75,
+                currentValue: Int(healthKitVM.mostRecentExerciseTime),
+                goalText: settingsVM.exerciseDayGoal,
+                goalPercent: (Int(healthKitVM.mostRecentExerciseTime) * 100 / settingsVM.exerciseDayGoal),
                 gradientColor: [.mint, .green]
             )
             
@@ -41,7 +44,7 @@ struct DailyOverviewView: View {
                 imageText: "flame.fill",
                 imageColor: .orange,
                 metricText: "kcal",
-                currentValue: 150,
+                currentValue: Int(healthKitVM.currentKcalsBurned),
                 goalText: 500,
                 goalPercent: 25,
                 gradientColor: [.yellow, .orange]
@@ -51,12 +54,13 @@ struct DailyOverviewView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1))
-                     )
+                .fill(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
         )
     }
 }
 
 #Preview {
     DailyOverviewView()
+        .environment(HealthKitViewModel())
+        .environmentObject(SettingsViewModel())
 }
