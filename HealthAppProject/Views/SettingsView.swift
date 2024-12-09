@@ -10,13 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     
     // MARK: - Properties
-    @Binding var stepGoal: Int
-    @Binding var exerciseDayGoal: Int
-    @Binding var exerciseWeeklyGoal: Int
-    @Binding var muscleWeeklyGoal: Int
-    @Binding var kcalsDailyGoal: Int
-    @State private var isShowingInfoSheet = false
     @EnvironmentObject var settingsVM: SettingsViewModel
+    @State private var isShowingInfoSheet = false
     
     
     
@@ -26,7 +21,7 @@ struct SettingsView: View {
             Form {
                 //MARK: Step Goal
                 Section {
-                    Stepper("\(stepGoal) steps", value: $settingsVM.stepGoal, in: 5_000...15_000, step: 100)
+                    Stepper("\(settingsVM.stepGoal) steps", value: $settingsVM.stepGoal, in: 5_000...15_000, step: 100)
                         .foregroundColor(.blue)
                 } header: {
                     Text("Set your Daily Step Goal Here")
@@ -34,16 +29,16 @@ struct SettingsView: View {
                 
                 //MARK: Exercise Daily Goal
                 Section {
-                    Stepper("Daily Goal: \(exerciseDayGoal)", value: $settingsVM.exerciseDayGoal, in: 5...75, step: 5)
+                    Stepper("Daily Goal: \(settingsVM.exerciseDayGoal)", value: $settingsVM.exerciseDayGoal, in: 5...75, step: 5)
                         .foregroundColor(.blue)
                     
-                    Stepper("Weekly Goal: \(exerciseWeeklyGoal)", value: $settingsVM.exerciseWeeklyGoal, in: 75...450, step: 15)
+                    Stepper("Weekly Goal: \(settingsVM.exerciseWeeklyGoal)", value: $settingsVM.exerciseWeeklyGoal, in: 75...450, step: 15)
                         .foregroundColor(.blue)
                     
-                    Stepper("Strength Goal: \(muscleWeeklyGoal)", value: $settingsVM.muscleWeeklyGoal, in: 2...7, step: 1)
+                    Stepper("Strength Goal: \(settingsVM.muscleWeeklyGoal)", value: $settingsVM.muscleWeeklyGoal, in: 2...7, step: 1)
                         .foregroundColor(.blue)
                     
-                    Stepper("Kcal Goal: \(kcalsDailyGoal)", value: $settingsVM.kcalsBurnedDailyGoal, in: 100...2000, step: 25)
+                    Stepper("Kcal Goal: \(settingsVM.kcalsBurnedDailyGoal)", value: $settingsVM.kcalsBurnedDailyGoal, in: 100...2000, step: 25)
                         .foregroundStyle(.blue)
                     
                 } header: {
@@ -60,7 +55,7 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(stepGoal: Binding.constant(7500), exerciseDayGoal: Binding.constant(30), exerciseWeeklyGoal: Binding.constant(150), muscleWeeklyGoal: Binding.constant(2), kcalsDailyGoal: Binding.constant(500))
+        SettingsView()
             .environmentObject(SettingsViewModel())
     }
 }
