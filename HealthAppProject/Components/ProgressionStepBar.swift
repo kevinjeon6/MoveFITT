@@ -17,6 +17,9 @@ struct ProgressionStepBar: View {
     var body: some View {
         
         GeometryReader { geo in
+            let progress = min(Double(value) / Double(goalValue), 1.0) //Caps at 100%
+            let barWidth = geo.size.width * progress
+            
             ZStack(alignment: .leading) {
                 Capsule()
                     .fill(Color.black.opacity(0.1))
@@ -29,10 +32,7 @@ struct ProgressionStepBar: View {
                     endPoint: .trailing
                 )
                 .clipShape(Capsule())
-                .frame(
-                    width: geo.size.width * CGFloat(value) / CGFloat(goalValue),
-                    height: 12
-                )
+                .frame(width: barWidth, height: 12)
             }
         }///End of GeometryReader
         .frame(height: 12)
