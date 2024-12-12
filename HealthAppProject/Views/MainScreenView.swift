@@ -16,42 +16,25 @@ struct MainScreenView: View {
     var body: some View {
         TabView(selection: $settingsVM.selectedTab) {
             
-            SummaryView()
-                .tabItem {
-                    Label("Summary", systemImage: "list.bullet.clipboard")
-                }
-                .tag(1)
-            
-            ExerciseStatsView()
-                .tabItem {
-                    Label("Physical Activity", systemImage: "chart.xyaxis.line")
-                }
-                .tag(2)
+            Tab("Dashboard", systemImage: "rectangle.grid.2x2.fill", value: 1) {
+                DashboardScreen()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
             
-            SettingsView(
-                stepGoal: $settingsVM.stepGoal,
-                exerciseDayGoal: $settingsVM.exerciseDayGoal,
-                exerciseWeeklyGoal: $settingsVM.exerciseWeeklyGoal,
-                muscleWeeklyGoal: $settingsVM.muscleWeeklyGoal
-              )
-                .tabItem {
-                    Label("Settings", systemImage: "slider.horizontal.3")
-                }
-                .tag(3)
+            Tab("Workouts", systemImage: "dumbbell.fill", value: 2) {
+                MuscleView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            MuscleView()
-                .tabItem {
-                    Label("Workouts", systemImage: "dumbbell.fill")
-                }
-                .tag(4)
-            
-        }
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor(.darkModeColor)
-            UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
+            Tab("Settings", systemImage: "slider.horizontal.3", value: 3) {
+                SettingsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
+
         }
     }
 }

@@ -44,4 +44,6 @@ struct QuickOverviewView: View {
 
 #Preview {
     QuickOverviewView()
+        .environment(HealthKitViewModel())
+        .environmentObject(SettingsViewModel())
 }
