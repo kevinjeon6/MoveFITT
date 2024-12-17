@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MuscleView: View {
+struct WorkoutHistoryView: View {
     
     @Environment(HealthKitViewModel.self) private var healthKitVM
     
@@ -29,6 +29,7 @@ struct MuscleView: View {
                                 Text("\(workout.startDate.formatted(.dateTime.weekday() .month().day()))")
                                 Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
                             }
+                            .foregroundStyle(.white)
                         }
                     }
                 } header: {
@@ -40,13 +41,21 @@ struct MuscleView: View {
 
             }
             .navigationTitle("Workout History")
+            .background(Color.primary)
+            .scrollContentBackground(.hidden)
         }
+    }
+    
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
     }
 }
 
 struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
-        MuscleView()
+        WorkoutHistoryView()
             .environment(HealthKitViewModel())
         
         HStack(spacing: 15) {
@@ -68,6 +77,8 @@ struct MuscleView_Previews: PreviewProvider {
                 Text("Mon, Jul 10")
                 Text("16: 23 - 17:03")
             }
+            .foregroundStyle(.white)
         }
+        .background(Color.primary)
     }
 }

@@ -24,12 +24,18 @@ struct MainScreenView: View {
             
             
             Tab("Workouts", systemImage: "dumbbell.fill", value: 2) {
-                MuscleView()
+                WorkoutHistoryView()
                     .toolbarBackground(.primary, for: .tabBar)
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)
             }
             
-            Tab("Settings", systemImage: "slider.horizontal.3", value: 3) {
+            Tab("Learn", systemImage: "book.fill", value: 3) {
+                InfoView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
+            
+            Tab("Settings", systemImage: "slider.horizontal.3", value: 4) {
                 SettingsView()
                     .toolbarBackground(.primary, for: .tabBar)
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)

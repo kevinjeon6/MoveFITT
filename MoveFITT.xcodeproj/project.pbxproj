@@ -9,14 +9,13 @@
 /* Begin PBXBuildFile section */
 		740646F42CED753C006FF438 /* DailyOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740646F32CED753C006FF438 /* DailyOverviewView.swift */; };
 		740646F62CED75DA006FF438 /* WeeklyOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */; };
-		740D0E012999D3F500776E3D /* MuscleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E002999D3F500776E3D /* MuscleView.swift */; };
+		740D0E012999D3F500776E3D /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E002999D3F500776E3D /* WorkoutHistoryView.swift */; };
 		740D0E03299B27F100776E3D /* DataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740D0E02299B27F100776E3D /* DataListView.swift */; };
 		74117142297A07C000328365 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117141297A07C000328365 /* SettingsView.swift */; };
 		74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */; };
 		74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */; };
 		74257BB72CEFAB98004FB0B2 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */; };
 		7429988429C414E20044E890 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7429988329C414E20044E890 /* OnboardingView.swift */; };
-		742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A05472CE81D2000BB8C7C /* WeeklyView.swift */; };
 		74338BC22974C96700EEC9B9 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC12974C96700EEC9B9 /* MainScreenView.swift */; };
 		74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */; };
 		7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */; };
@@ -62,6 +61,7 @@
 		74F32A862CF942800042E751 /* MetricRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A852CF942800042E751 /* MetricRowView.swift */; };
 		74F32A882CFBC9870042E751 /* HeartMetricChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A872CFBC9870042E751 /* HeartMetricChartView.swift */; };
 		74F32A8A2CFBCA4D0042E751 /* RespiratoryMetricChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A892CFBCA4D0042E751 /* RespiratoryMetricChartView.swift */; };
+		74F32A8C2CFFC0A10042E751 /* WeeklyPAChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A8B2CFFC0A10042E751 /* WeeklyPAChartView.swift */; };
 		74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */; };
 		74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */; };
 /* End PBXBuildFile section */
@@ -69,14 +69,13 @@
 /* Begin PBXFileReference section */
 		740646F32CED753C006FF438 /* DailyOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyOverviewView.swift; sourceTree = "<group>"; };
 		740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyOverviewView.swift; sourceTree = "<group>"; };
-		740D0E002999D3F500776E3D /* MuscleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuscleView.swift; sourceTree = "<group>"; };
+		740D0E002999D3F500776E3D /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		740D0E02299B27F100776E3D /* DataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataListView.swift; sourceTree = "<group>"; };
 		74117141297A07C000328365 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		74117144297B4FCE00328365 /* OneMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74117146297E0CD000328365 /* ThreeMonthExerciseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeMonthExerciseChartView.swift; sourceTree = "<group>"; };
 		74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
 		7429988329C414E20044E890 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		742A05472CE81D2000BB8C7C /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		74338BC12974C96700EEC9B9 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseStatsView.swift; sourceTree = "<group>"; };
 		7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickOverviewView.swift; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		74F32A852CF942800042E751 /* MetricRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRowView.swift; sourceTree = "<group>"; };
 		74F32A872CFBC9870042E751 /* HeartMetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartMetricChartView.swift; sourceTree = "<group>"; };
 		74F32A892CFBCA4D0042E751 /* RespiratoryMetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryMetricChartView.swift; sourceTree = "<group>"; };
+		74F32A8B2CFFC0A10042E751 /* WeeklyPAChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPAChartView.swift; sourceTree = "<group>"; };
 		74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardInitialGoalDescription.swift; sourceTree = "<group>"; };
 		74FBE85B2971FCA5003B5789 /* OneWeekStepChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekStepChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +149,7 @@
 				7438E69F2988B9F800F571C7 /* OneWeekKCalBurnedChartView.swift */,
 				74117143297B4FBA00328365 /* Exercise Charts */,
 				74F32A872CFBC9870042E751 /* HeartMetricChartView.swift */,
+				74F32A8B2CFFC0A10042E751 /* WeeklyPAChartView.swift */,
 				74F32A892CFBCA4D0042E751 /* RespiratoryMetricChartView.swift */,
 			);
 			path = ChartViews;
@@ -287,12 +288,11 @@
 				740646F32CED753C006FF438 /* DailyOverviewView.swift */,
 				743571212CE6BFD3005AE528 /* DailyView.swift */,
 				740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */,
-				742A05472CE81D2000BB8C7C /* WeeklyView.swift */,
 				74F32A812CF91D110042E751 /* HealthTileInfoView.swift */,
 				74F32A852CF942800042E751 /* MetricRowView.swift */,
 				74338BC32974D03800EEC9B9 /* ExerciseStatsView.swift */,
 				74117141297A07C000328365 /* SettingsView.swift */,
-				740D0E002999D3F500776E3D /* MuscleView.swift */,
+				740D0E002999D3F500776E3D /* WorkoutHistoryView.swift */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
 				740D0DF92995767800776E3D /* CardViews */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
@@ -411,8 +411,9 @@
 				7438360E29720ED400CE8384 /* OneWeekRestHRChartView.swift in Sources */,
 				743571222CE6BFD3005AE528 /* DailyView.swift in Sources */,
 				74F32A842CF934560042E751 /* OverviewBackground.swift in Sources */,
-				740D0E012999D3F500776E3D /* MuscleView.swift in Sources */,
+				740D0E012999D3F500776E3D /* WorkoutHistoryView.swift in Sources */,
 				74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */,
+				74F32A8C2CFFC0A10042E751 /* WeeklyPAChartView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
 				7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */,
 				74257BB72CEFAB98004FB0B2 /* IndicatorView.swift in Sources */,
@@ -427,7 +428,6 @@
 				7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */,
 				744095C129A71C5C0098ACA7 /* ColorExtension.swift in Sources */,
 				74F81BEB29DA45D400D13B4C /* OnboardInitialGoalDescription.swift in Sources */,
-				742A05482CE81D2000BB8C7C /* WeeklyView.swift in Sources */,
 				740D0E03299B27F100776E3D /* DataListView.swift in Sources */,
 				74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */,
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
