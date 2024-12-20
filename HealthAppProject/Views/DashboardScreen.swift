@@ -111,7 +111,12 @@ struct DashboardScreen: View {
             }
             .background(Color.primary)
             .task {
-                await healthKitVM.displayData()
+                do {
+                    var healthMetrics = try await healthKitVM.displayData()
+                    var workoutData = try await healthKitVM.getWorkoutHistory()
+                } catch {
+                    print("Error fetching data: \(error)")
+                }
             }
             .onAppear {
                 if weekSlider.isEmpty {

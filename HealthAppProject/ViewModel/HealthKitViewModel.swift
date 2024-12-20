@@ -111,24 +111,33 @@ class HealthKitViewModel {
     }
     
   
-
-    func displayData() async {
-        async let stepCount = getStepCount(from: -7)
-        async let restingHR = getRestingHR(from: -7)
-        async let hrv = getHRV(from: -7)
-        async let heartRate = getHR(from: -7)
-        async let kcals = getKcalsBurned(from: -7)
-        async let vo2Max = getVo2Data()
-        async let spO2 = getSpO2(from: -7)
-        async let respRate = getRespiratoryRateData(from: -7)
-        async let minutes = getExerciseTime(from: -7)
-        async let thirtyMins = get30DaysExerciseTime(from: -30)
-        async let sixtyMins = get60DaysExerciseTime(from: -60)
-        async let workout = getWorkoutHistory()
-        async let totalWeekTime = getWeekTotalExerciseTime()
+    ///async let is not super scalable
+    func displayData() async throws -> [HealthMetric] {
         
-        let data = try? await [stepCount, restingHR, hrv, heartRate, vo2Max,spO2, respRate, minutes, kcals, workout, thirtyMins, sixtyMins, totalWeekTime]
-
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var hkData: [HealthMetric] = []
+            
+            group.addTask { try await self.getExerciseTime(from: -7) }
+            group.addTask { try await self.getWeekTotalExerciseTime() }
+            group.addTask { try await self.getStepCount(from: -7) }
+            group.addTask { try await self.getKcalsBurned(from: -7) }
+            
+            group.addTask { try await self.getRespiratoryRateData(from: -7) }
+            group.addTask { try await self.getVo2Data() }
+            group.addTask { try await self.getSpO2(from: -7) }
+            
+            group.addTask { try await self.getRestingHR(from: -7) }
+            group.addTask { try await self.getHRV(from: -7) }
+            group.addTask { try await self.getHR(from: -7) }
+            
+            
+            for try await result in group {
+                hkData.append(contentsOf: result)
+            }
+            
+            return hkData
+            
+        }
     }
     
     
