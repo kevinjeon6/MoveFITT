@@ -19,10 +19,10 @@ struct WorkoutHistoryView: View {
                 Section {
                     ForEach(healthKitVM.muscleYearAndMonth[yearMonth] ?? [], id: \.self) { workout in
                         HStack(spacing: 15) {
-
                             workout.workoutActivityType.fitnessIcon
                                 .modifier(FitnessIconModifier())
                                 .frame(width: 50, height: 50)
+                            
                             VStack(alignment: .leading) {
                                 Text("\(workout.workoutActivityType.name)")
                                 Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
@@ -32,13 +32,13 @@ struct WorkoutHistoryView: View {
                             .foregroundStyle(.white)
                         }
                     }
+                    .listRowBackground(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
                 } header: {
                     Text("\(yearMonth.monthName()) \(String(yearMonth.year))")
                         .font(.title2)
                         .bold()
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                 }
-
             }
             .navigationTitle("Workout History")
             .background(Color.primary)
