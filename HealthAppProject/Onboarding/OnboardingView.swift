@@ -24,15 +24,7 @@ struct OnboardingView: View {
                     WelcomeView()
                         .tag(0)
                     
-                    OnboardTextDescription(onboardText: HealthInfoText.onboardingPhysicalActivityDescription)
-                        .tag(1)
-                    
-                    OnboardTextDescription(onboardText: HealthInfoText.onboardingStrengthActivityDescription)
-                        .tag(2)
-                    
-                    OnboardTextDescription(onboardText: HealthInfoText.onboardingStepCountDescription)
-                        .tag(3)
-                    
+                    //TODO: Update Onboarding Flow
                     OnboardInitialGoalDescription()
                         .tag(4)
                     
@@ -88,7 +80,7 @@ struct OnboardingView: View {
                     case .success(_):
                         print("Access to HealthKit is successful")
                         Task {
-                           await healthKitVM.displayData()
+                           try await healthKitVM.displayData()
                         }
 //                        dismiss()
                     case .failure(_):

@@ -24,7 +24,7 @@ struct HealthInfoText {
     }
     
     static var strengthGoalDescription: String {
-        "Performing a muscle strengthening activity can increase muscle strength, endurance, and power. This activity incorporates resistance training and weight lifting. You can use elastic bands, body weight training (i.e., push-ups), or free weights (e.g., dumbbells, barbells, etc.). This activity should be performed on 2 or more days a week."
+        "Performing a muscle strengthening activity can increase muscle strength and size, endurance, power, and bone strength. These factors are important to perform activities of daily living. Muscle-strengthening activities should include all major muscle groups - legs, hips, back, chest, shoulders, arms, and abdominals. You can use elastic bands, body weight training (i.e., push-ups), or free weights (e.g., dumbbells, barbells, etc.). This activity should be performed on 2 or more days a week."
     }
     
     
@@ -40,18 +40,6 @@ struct HealthInfoText {
         • Weekly goal: 
             150 minutes per week
         """
-    }
-    
-    static var onboardingStepCountDescription: String {
-        "Having a step goal can increase your physical activity. The typical target goal for step count in a day is 10,000 steps. However, a baseline of 5,000 steps per day should be aimed for."
-    }
-    
-    static var onboardingStrengthActivityDescription: String {
-        "Performing muscle strengthening exercise 2 times a week or more can provide an increase in muscular strength, muscular power, muscle mass, and bone strength. These factors are important to perform activities of daily living. Muscle-strengthening activities should include all major muscle groups - legs, hips, back, chest, shoulders, arms, and abdominals.  "
-    }
-    
-    static var onboardingPhysicalActivityDescription: String {
-        "Physical activity is any bodily movement that increases energy expenditure above basal level. It is recommended that individuals perform at least 150 minutes to 300 minutes a week of moderate-intensity or 75 minutes to 150 minutes a week of vigorous-intensity of aerobic activity. "
     }
     
 }
