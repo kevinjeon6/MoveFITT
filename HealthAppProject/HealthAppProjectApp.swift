@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct HealthAppProjectApp: App {
@@ -25,5 +26,6 @@ struct HealthAppProjectApp: App {
                     .environmentObject(settingsVM)
             }
         }
+        .modelContainer(for: SupplementItem.self)
     }
 }
