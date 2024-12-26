@@ -22,8 +22,17 @@ struct SupplementDetailView: View {
                 TextField("Supplement Name", text: $supplement.name)
                     .autocorrectionDisabled()
                 DatePicker("Supplement Date", selection: $supplement.date, displayedComponents: .date)
+                
+                Section {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Update")
+                            .frame(maxWidth: .infinity)
+                    }
+                }
             }
-            .navigationTitle("Add Supplement")
+            .navigationTitle("Supplement")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
