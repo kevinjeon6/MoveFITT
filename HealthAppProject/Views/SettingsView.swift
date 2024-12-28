@@ -45,6 +45,17 @@ struct SettingsView: View {
                 }
                 .foregroundStyle(.white)
                 .listRowBackground(Color.gray.opacity(0.3))
+                
+                List {
+                    NavigationLink {
+                        InfoView()
+                    } label: {
+                        Text("Learn About Your Goals")
+                    }
+                    .foregroundStyle(.white)
+                    .listRowBackground(Color.gray.opacity(0.3))
+ 
+                }
             }
             .background(Color.primary)
             .scrollContentBackground(.hidden)

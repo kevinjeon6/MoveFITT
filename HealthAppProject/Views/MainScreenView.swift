@@ -22,25 +22,23 @@ struct MainScreenView: View {
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)
             }
             
+            Tab("Supplements", systemImage: "cross.circle.fill", value: 2) {
+                SupplementsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            Tab("Workouts", systemImage: "dumbbell.fill", value: 2) {
+            Tab("Workouts", systemImage: "dumbbell.fill", value: 3) {
                 WorkoutHistoryView()
                     .toolbarBackground(.primary, for: .tabBar)
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)
             }
-            
-            Tab("Learn", systemImage: "book.fill", value: 3) {
-                InfoView()
-                    .toolbarBackground(.primary, for: .tabBar)
-                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
-            }
-            
+    
             Tab("Settings", systemImage: "slider.horizontal.3", value: 4) {
                 SettingsView()
                     .toolbarBackground(.primary, for: .tabBar)
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)
             }
-
         }
     }
 }

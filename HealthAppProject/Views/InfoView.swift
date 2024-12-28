@@ -48,7 +48,7 @@ struct InfoView: View {
                     }
                 }
             }
-            .padding(.vertical, 10)
+            .padding()
         }
     }
 }
