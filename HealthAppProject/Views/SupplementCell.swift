@@ -12,6 +12,7 @@ struct SupplementCell: View {
     var brandName: String
     var name: String
     var date: Date
+    var category: String
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,6 +21,7 @@ struct SupplementCell: View {
                 Text(name)
                 Text(date, format: .dateTime.month().day().year())
             }
+            Text(category)
         }
     }
     

@@ -31,6 +31,7 @@
 		745D24B22D1C867800372E2A /* SupplementDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D24B12D1C867800372E2A /* SupplementDetailView.swift */; };
 		745D24B42D1DE12000372E2A /* SupplementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D24B32D1DE12000372E2A /* SupplementCell.swift */; };
 		745D24B62D1DE14900372E2A /* AddSupplementSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D24B52D1DE14900372E2A /* AddSupplementSheet.swift */; };
+		745D24BA2D20B71F00372E2A /* SupplementCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D24B92D20B71F00372E2A /* SupplementCategory.swift */; };
 		7461398F2A5C471C00F44828 /* YearAndMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7461398E2A5C471C00F44828 /* YearAndMonth.swift */; };
 		7466602C297EB60B00C17C8A /* StrengthTrainingGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */; };
 		7466602E297EE96100C17C8A /* ExerciseGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */; };
@@ -97,6 +98,7 @@
 		745D24B12D1C867800372E2A /* SupplementDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementDetailView.swift; sourceTree = "<group>"; };
 		745D24B32D1DE12000372E2A /* SupplementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementCell.swift; sourceTree = "<group>"; };
 		745D24B52D1DE14900372E2A /* AddSupplementSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSupplementSheet.swift; sourceTree = "<group>"; };
+		745D24B92D20B71F00372E2A /* SupplementCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplementCategory.swift; sourceTree = "<group>"; };
 		7461398E2A5C471C00F44828 /* YearAndMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearAndMonth.swift; sourceTree = "<group>"; };
 		7466602B297EB60B00C17C8A /* StrengthTrainingGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthTrainingGoalView.swift; sourceTree = "<group>"; };
 		7466602D297EE96100C17C8A /* ExerciseGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseGaugeView.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				74F02F6629B1A34A00AEB8BE /* Cardbackground.swift */,
 				74F32A832CF934560042E751 /* OverviewBackground.swift */,
 				7461398E2A5C471C00F44828 /* YearAndMonth.swift */,
+				745D24B92D20B71F00372E2A /* SupplementCategory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				74FBE85C2971FCA5003B5789 /* OneWeekStepChartView.swift in Sources */,
 				74F32A8C2CFFC0A10042E751 /* WeeklyPAChartView.swift in Sources */,
 				743818E3295DFC8200FE4613 /* DateExtension.swift in Sources */,
+				745D24BA2D20B71F00372E2A /* SupplementCategory.swift in Sources */,
 				7435711E2CE6A06D005AE528 /* QuickOverviewView.swift in Sources */,
 				74257BB72CEFAB98004FB0B2 /* IndicatorView.swift in Sources */,
 				74F32A802CF61E670042E751 /* DashboardHeaderView.swift in Sources */,

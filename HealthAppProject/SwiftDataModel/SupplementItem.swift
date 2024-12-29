@@ -10,18 +10,19 @@ import SwiftData
 
 ///This is SwiftData model of the attributes that you want to store
 ///
+
 @Model
 class SupplementItem {
     var brandName: String
     var name: String
     var date: Date
-    var image: Data?
+    var supplementCategory: SupplementCategory
     
     
-    init(brandName: String, name: String, date: Date, image: Data? = nil) {
+    init(brandName: String, name: String, date: Date, supplementCategory: SupplementCategory) {
         self.brandName = brandName
         self.name = name
         self.date = date
-        self.image = image
+        self.supplementCategory = supplementCategory
     }
 }

@@ -13,7 +13,7 @@ struct SupplementsView: View {
     @State private var isShowingAddSupplementSheet: Bool = false
     
     ///Query is like FetchRequest in Core Data
-    @Query var supplement: [SupplementItem]
+    @Query(sort: \SupplementItem.date) var supplement: [SupplementItem]
     
     var body: some View {
         NavigationStack {
@@ -25,7 +25,8 @@ struct SupplementsView: View {
                         SupplementCell(
                             brandName: item.brandName,
                             name: item.name,
-                            date: item.date
+                            date: item.date,
+                            category: item.supplementCategory.title
                         )
                     }
                 }
@@ -43,9 +44,27 @@ struct SupplementsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Add Supplement", systemImage: "plus") {
-                        isShowingAddSupplementSheet = true
+                    if !supplement.isEmpty {
+                        Button("Add Supplement", systemImage: "plus") {
+                            isShowingAddSupplementSheet = true
+                        }
                     }
+                }
+            }
+            .overlay {
+                if supplement.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Supplements", systemImage: "list.dash")
+                            .foregroundStyle(.white)
+                    } description: {
+                        Text("Start adding your supplements to the list")
+                            .foregroundStyle(.white)
+                    } actions: {
+                        Button("Add Supplement") {
+                            isShowingAddSupplementSheet = true
+                        }
+                    }
+                    .offset(y: -80)
                 }
             }
         }

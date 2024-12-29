@@ -23,6 +23,16 @@ struct SupplementDetailView: View {
                     .autocorrectionDisabled()
                 DatePicker("Supplement Date", selection: $supplement.date, displayedComponents: .date)
                 
+                Section("Select a Supplement Category") {
+                    Picker("Selected Category", selection: $supplement.supplementCategory) {
+                        ForEach(SupplementCategory.allCases) {
+                            category in
+                            Text(category.title)
+                                .tag(category)
+                        }
+                    }
+                }
+                
                 Section {
                     Button {
                         dismiss()
@@ -47,5 +57,5 @@ struct SupplementDetailView: View {
 }
 
 #Preview {
-    SupplementDetailView(supplement: .init(brandName: "Ryse", name: "Loaded-Pre", date: Date()))
+    SupplementDetailView(supplement: .init(brandName: "Ryse", name: "Loaded-Pre", date: Date(), supplementCategory: .preWorkout))
 }
