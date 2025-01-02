@@ -26,15 +26,19 @@ struct SupplementsView: View {
                             brandName: item.brandName,
                             name: item.name,
                             date: item.date,
-                            category: item.supplementCategory.title
+                            category: item.supplementCategory.title,
+                            categoryStyle: item.supplementCategory
                         )
+                        .foregroundStyle(.white)
                     }
+                    .listRowSeparatorTint(.white)
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
                         modelContext.delete(supplement[index])
                     }
                 }
+                .listRowBackground(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
             }
             .navigationTitle("Supplements")
             .background(Color.primary)

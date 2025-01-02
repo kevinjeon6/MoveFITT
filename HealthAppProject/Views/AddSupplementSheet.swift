@@ -47,11 +47,7 @@ struct AddSupplementSheet: View {
                         //Save item
                         let suppItem = SupplementItem(brandName: brandName, name: name, date: date, supplementCategory: selectedCategory)
                         modelContext.insert(suppItem)
-                        do {
-                            try modelContext.save()
-                        } catch {
-                            print("Failed to save supplement item: \(error)")
-                        }
+
                         dismiss()
                     }
                 }
