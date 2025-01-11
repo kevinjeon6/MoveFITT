@@ -109,7 +109,7 @@ struct DashboardScreen: View {
                     Spacer()
                 }
             }
-            .background(Color.primary)
+            .background(Color.black)
             .task {
                 do {
                     var healthMetrics = try await healthKitVM.displayData()

@@ -41,7 +41,7 @@ struct SupplementsView: View {
                 .listRowBackground(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
             }
             .navigationTitle("Supplements")
-            .background(Color.primary)
+            .background(Color.black)
             .scrollContentBackground(.hidden)
             .sheet(isPresented: $isShowingAddSupplementSheet) {
                 AddSupplementSheet()

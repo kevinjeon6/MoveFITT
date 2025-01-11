@@ -12,7 +12,7 @@ struct InfoView: View {
     
     var body: some View {
         ZStack {
-            Color.primary.ignoresSafeArea(.all)
+            Color.black.ignoresSafeArea(.all)
             
             VStack(alignment: .leading, spacing: 10) {
                 Group {

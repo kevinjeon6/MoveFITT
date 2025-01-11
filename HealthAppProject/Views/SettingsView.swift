@@ -57,7 +57,7 @@ struct SettingsView: View {
  
                 }
             }
-            .background(Color.primary)
+            .background(Color.black)
             .scrollContentBackground(.hidden)
             .navigationTitle("Settings")
         }

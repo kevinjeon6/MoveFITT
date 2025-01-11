@@ -13,7 +13,6 @@ struct WorkoutHistoryView: View {
     
    
     var body: some View {
-
         NavigationStack {
             List(healthKitVM.muscleYearAndMonth.keys.sorted(), id: \.self) { yearMonth in
                 Section {
@@ -41,7 +40,7 @@ struct WorkoutHistoryView: View {
                 }
             }
             .navigationTitle("Workout History")
-            .background(Color.primary)
+            .background(Color.black)
             .scrollContentBackground(.hidden)
         }
     }
