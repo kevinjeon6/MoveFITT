@@ -11,4 +11,7 @@ struct HealthMetric: Identifiable {
     let id = UUID()
     let date: Date
     let value: Double
+    var minValue: Double?
+    var maxValue: Double?
+    var mostRecentValue: Double?
 }

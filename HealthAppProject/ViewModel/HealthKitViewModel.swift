@@ -81,15 +81,39 @@ class HealthKitViewModel {
     
     var total7DayStepCount: Double { stepData.reduce(0) { $0 + $1.value }}
     
-    var currentRestHR: Double { restingHRData.last?.value ?? 0 }
+    // MARK: - Computed Resting HR Properties
+//    var currentRestHR: Double { restingHRData.last?.value ?? 0 }
+    var mostRecentRHR: Double { restingHRData.last?.mostRecentValue ?? 0} ///NEW
     
     var averageRestHR: Double { restingHRData.reduce(0) {$0 + $1.value / 7 }}
     
+    // MARK: - Computed HRV Properties
     var currentHRV: Double { hrvHRData.last?.value ?? 0 }
+    var mostRecentHRV: Double { hrvHRData.last?.mostRecentValue ?? 0 } ///NEW
     
     var averageHRV: Double { hrvHRData.reduce(0)  { $0 + $1.value / 7 }}
     
-    var currentHR: Double { heartRateData.last?.value ?? 0 }
+//    var currentHR: Double { heartRateData.last?.value ?? 0 } ///Doesn't get the latest, just the last one from the element. Can DELETE. DO NOT USE. USE MOST RECENT.
+    
+    var mostRecentHR: Double { heartRateData.last?.mostRecentValue ?? 0 } ///Gets the latest input
+   
+    var heartRateRange: (min: Double, max: Double) {
+        let calendar = Calendar.current
+        let today = Date()
+        
+        // Filter for metrics from today only
+        let todayMetrics = heartRateData.filter {
+            calendar.isDate($0.date, inSameDayAs: today)
+        }
+        
+        let minValues = todayMetrics.compactMap { $0.minValue ?? 0 > 0 ? $0.minValue : nil }
+        let maxValues = todayMetrics.compactMap { $0.maxValue ?? 0 > 0 ? $0.maxValue : nil }
+        
+        return (
+            min: minValues.min() ?? 0,
+            max: maxValues.max() ?? 0
+        )
+    }
     
     var currentKcalsBurned: Double { kcalBurnedData.last?.value ?? 0 }
     
@@ -101,8 +125,12 @@ class HealthKitViewModel {
     
     var currentRespiratoryRate: Double { respiratoryRateData.last?.value ?? 0 }
     
+    var mostRecentRespiratoryRate: Double { respiratoryRateData.last?.mostRecentValue ?? 0} /// Gets the latest input
+    
     var currentSpO2: Double { oxygenSaturationData.last?.value ?? 0 }
-  
+    
+    var mostRecentSpO2: Double { oxygenSaturationData.last?.mostRecentValue ?? 0 }
+    
     // MARK: - Initializer
     init() {
         self.calendar = Calendar.current
@@ -110,7 +138,7 @@ class HealthKitViewModel {
         self.endDate = calendar.date(byAdding: .day, value: 1, to: today) ?? Date()
     }
     
-  
+    
     ///async let is not super scalable
     func displayData() async throws -> [HealthMetric] {
         
@@ -183,14 +211,18 @@ class HealthKitViewModel {
         
         let sumOfHRQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: restHrOneWeek,
-            options: .discreteAverage,
+            options: [.discreteAverage, .mostRecent],
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfHRQuery.results(for: healthStore) {
-            restingHRData = result.statisticsCollection.statistics().map{
-                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "count/min")) ?? 0)
+            restingHRData = result.statisticsCollection.statistics().map{ stats in
+                guard let average = stats.averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                      let mostRecentRHR = stats.mostRecentQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())) else {
+                    return HealthMetric(date: stats.startDate, value: 0)
+                }
+                return HealthMetric(date: stats.startDate, value: average, mostRecentValue: mostRecentRHR)
             }
         }
         
@@ -201,22 +233,26 @@ class HealthKitViewModel {
     func getHRV(from value: Int) async throws -> [HealthMetric]  {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
- 
+        
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
         
         let hrvOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.heartRateVariabilitySDNN), predicate: oneWeek)
         
         let sumOfHrvQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: hrvOneWeek,
-            options: .discreteAverage,
+            options: [.discreteAverage, .mostRecent],
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         
         for try await result in sumOfHrvQuery.results(for: healthStore) {
-            hrvHRData = result.statisticsCollection.statistics().map{
-                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .secondUnit(with: .milli)) ?? 0)
+            hrvHRData = result.statisticsCollection.statistics().map{ stats in
+                guard let averageHRV = stats.averageQuantity()?.doubleValue(for: .secondUnit(with: .milli)),
+                      let mostRecentHRV = stats.mostRecentQuantity()?.doubleValue(for: .secondUnit(with: .milli)) else {
+                    return HealthMetric(date: stats.startDate, value: averageHRV)
+                }
+                return HealthMetric(date: stats.startDate, value: averageHRV, mostRecentValue: mostRecentHRV)
             }
         }
         
@@ -234,16 +270,25 @@ class HealthKitViewModel {
         
         let sumOfHrQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: hrOneWeek,
-            options: .discreteAverage,
+            options: [.discreteAverage, .discreteMin, .discreteMax, .mostRecent],
             anchorDate: endDate,
             intervalComponents: hourly
         )
         
+   
+        
         for try await result in sumOfHrQuery.results(for: healthStore) {
-            heartRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "count/min")) ?? 0)
+            heartRateData = result.statisticsCollection.statistics().map{ stats in
+                guard let average = stats.averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                      let minHRValue = stats.minimumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                      let maxHRValue = stats.maximumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                      let mostRecentHR = stats.mostRecentQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())) else {
+                    return HealthMetric(date: stats.startDate, value: 0)
+                }
+ 
+                return HealthMetric(date: stats.startDate, value: average, minValue: minHRValue, maxValue: maxHRValue, mostRecentValue: mostRecentHR)
             }
         }
-        
         return heartRateData
     }
     
@@ -280,19 +325,20 @@ class HealthKitViewModel {
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
-        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictEndDate)
         
         let respiratoryRateOneWeek = HKSamplePredicate.quantitySample(type: HKQuantityType(.respiratoryRate), predicate: oneWeek)
         
         let sumOfRespiratoryRateQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: respiratoryRateOneWeek,
-            options: [.discreteAverage, .separateBySource],
+            options: .discreteAverage,
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfRespiratoryRateQuery.results(for: healthStore) {
-            respiratoryRateData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
+            respiratoryRateData = result.statisticsCollection.statistics().map{
+                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
             }
         }
         
@@ -319,7 +365,6 @@ class HealthKitViewModel {
         
         for try await result in sumofVo2Query.results(for: healthStore) {
             vo2MaxData = result.statisticsCollection.statistics().map{ HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: HKUnit(from: "ml/(kg*min)")) ?? 0)
-                
             }
         }
         
