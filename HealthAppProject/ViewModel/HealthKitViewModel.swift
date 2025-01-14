@@ -55,7 +55,7 @@ class HealthKitViewModel {
 
     
     // MARK: - Computed Properties
-    var mostRecentExerciseTime: Double { exerciseTime7DaysData.last?.value ?? 0.0 }
+    var currentExerciseTime: Double { exerciseTime7DaysData.last?.value ?? 0.0 }
     
     var weekTotalTime: Double { weekExerciseTimeData.reduce(0) { $0 + $1.value }}
     
@@ -82,14 +82,14 @@ class HealthKitViewModel {
     var total7DayStepCount: Double { stepData.reduce(0) { $0 + $1.value }}
     
     // MARK: - Computed Resting HR Properties
-//    var currentRestHR: Double { restingHRData.last?.value ?? 0 }
-    var mostRecentRHR: Double { restingHRData.last?.mostRecentValue ?? 0} ///NEW
+    var currentRestHR: Double { restingHRData.last?.value ?? 0 } //USE THIS COMPUTED PROPERTY. THIS MATCHES WITH APPLE'S HEALTH VALUE
+//    var mostRecentRHR: Double { restingHRData.last?.mostRecentValue ?? 0} ///NEW. KEEP IF YOU WANT TO GET THE LATEST VALUE
     
     var averageRestHR: Double { restingHRData.reduce(0) {$0 + $1.value / 7 }}
     
     // MARK: - Computed HRV Properties
-    var currentHRV: Double { hrvHRData.last?.value ?? 0 }
-    var mostRecentHRV: Double { hrvHRData.last?.mostRecentValue ?? 0 } ///NEW
+    var currentHRV: Double { hrvHRData.last?.value ?? 0 }//USE THIS COMPUTED PROPERTY. THIS MATCHES APPLE'S HEALTH VALUE
+//    var mostRecentHRV: Double { hrvHRData.last?.mostRecentValue ?? 0 } ///NEW
     
     var averageHRV: Double { hrvHRData.reduce(0)  { $0 + $1.value / 7 }}
     
@@ -123,13 +123,13 @@ class HealthKitViewModel {
     
     var currentVO2max: Double { vo2MaxData.last?.value ?? 0}
     
-    var currentRespiratoryRate: Double { respiratoryRateData.last?.value ?? 0 }
+//    var currentRespiratoryRate: Double { respiratoryRateData.last?.value ?? 0 }
     
-    var mostRecentRespiratoryRate: Double { respiratoryRateData.last?.mostRecentValue ?? 0} /// Gets the latest input
+    var mostRecentRespiratoryRate: Double { respiratoryRateData.last?.mostRecentValue ?? 0 } /// Gets the latest input. USE THIS COMPUTED PROPERTY. MATCHES APPLE HEALTH'S VALUE
     
-    var currentSpO2: Double { oxygenSaturationData.last?.value ?? 0 }
+//    var currentSpO2: Double { oxygenSaturationData.last?.value ?? 0 }
     
-    var mostRecentSpO2: Double { oxygenSaturationData.last?.mostRecentValue ?? 0 }
+    var mostRecentSpO2: Double { oxygenSaturationData.last?.mostRecentValue ?? 0 } ///USE THIS COMPUTED PROPERTY. MATCHES APPLE HEALTH'S VALUE
     
     // MARK: - Initializer
     init() {
@@ -331,14 +331,23 @@ class HealthKitViewModel {
         
         let sumOfRespiratoryRateQuery = HKStatisticsCollectionQueryDescriptor(
             predicate: respiratoryRateOneWeek,
-            options: .discreteAverage,
+            options: [.discreteAverage, .discreteMin, .discreteMax, .mostRecent],
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfRespiratoryRateQuery.results(for: healthStore) {
             respiratoryRateData = result.statisticsCollection.statistics().map{
-                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
+//                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
+                stats in
+                    guard let average = stats.averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                          let minRRValue = stats.minimumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                          let maxRRValue = stats.maximumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
+                          let mostRecentRR = stats.mostRecentQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())) else {
+                        return HealthMetric(date: stats.startDate, value: 0)
+                    }
+     
+                return HealthMetric(date: stats.startDate, value: average, minValue: minRRValue, maxValue: maxRRValue, mostRecentValue: mostRecentRR)
             }
         }
         
@@ -381,14 +390,23 @@ class HealthKitViewModel {
         
         let sumOfSpO2Query = HKStatisticsCollectionQueryDescriptor(
             predicate: spO2OneWeek,
-            options: .discreteAverage,
+            options: [.discreteAverage, .discreteMin, .discreteMax, .mostRecent],
             anchorDate: endDate,
             intervalComponents: daily
         )
         
         for try await result in sumOfSpO2Query.results(for: healthStore) {
             oxygenSaturationData = result.statisticsCollection.statistics().map{
-                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .percent()) ?? 0)
+//                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .percent()) ?? 0)
+                stats in
+                guard let average = stats.averageQuantity()?.doubleValue(for: .percent()),
+                      let minSpO2Value = stats.minimumQuantity()?.doubleValue(for: .percent()),
+                      let maxSpO2Value = stats.maximumQuantity()?.doubleValue(for: .percent()),
+                      let mostRecentSpO2 = stats.mostRecentQuantity()?.doubleValue(for: .percent()) else {
+                        return HealthMetric(date: stats.startDate, value: 0)
+                    }
+     
+                return HealthMetric(date: stats.startDate, value: average, minValue: minSpO2Value, maxValue: maxSpO2Value, mostRecentValue: mostRecentSpO2)
             }
         }
         

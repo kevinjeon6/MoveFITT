@@ -71,16 +71,19 @@ struct DashboardScreen: View {
                             borderColor: .red,
                             imageText1: "arrow.down.heart.fill",
                             metricTitle1: "Resting Heart Rate",
-                            metricValue1: healthKitVM.mostRecentRHR,
+                            metricValue1: healthKitVM.currentRestHR,
                             unit1: "bpm",
+                            decimal1: 0,
                             imageText2: "heart.circle",
                             metricTitle2: "Heart Rate",
                             metricValue2: healthKitVM.mostRecentHR,
                             unit2: "bpm",
+                            decimal2: 0,
                             imageText3: "waveform.path.ecg.rectangle.fill",
                             metricTitle3: "Heart Rate Variability (HRV)",
                             metricValue3: healthKitVM.currentHRV,
-                            unit3: "ms"
+                            unit3: "ms",
+                            decimal3: 0
                         )
                     }
 
@@ -93,16 +96,19 @@ struct DashboardScreen: View {
                             borderColor: .blue,
                             imageText1: "lungs.fill",
                             metricTitle1: "Respiratory Rate",
-                            metricValue1: healthKitVM.currentRespiratoryRate,
+                            metricValue1: healthKitVM.mostRecentRespiratoryRate,
                             unit1: "breaths/min",
+                            decimal1: 1,
                             imageText2: "drop.circle",
                             metricTitle2: "Blood Oxygen",
-                            metricValue2: healthKitVM.currentSpO2 * 100,
+                            metricValue2: healthKitVM.mostRecentSpO2 * 100,
                             unit2: "%",
+                            decimal2: 0,
                             imageText3: "figure.run.circle",
                             metricTitle3: "VO2max",
                             metricValue3: healthKitVM.currentVO2max,
-                            unit3: "ml/kg/min"
+                            unit3: "ml/kg/min",
+                            decimal3: 0
                         )
                     }
 

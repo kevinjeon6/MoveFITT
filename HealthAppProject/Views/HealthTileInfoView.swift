@@ -18,18 +18,21 @@ struct HealthTileInfoView: View {
     var metricTitle1: String
     var metricValue1: Double
     var unit1: String
+    var decimal1: Int
     
     //Metric 2 properties
     var imageText2: String
     var metricTitle2: String
     var metricValue2: Double
     var unit2: String
+    var decimal2: Int
     
     //Metric 3 properties
     var imageText3: String
     var metricTitle3: String
     var metricValue3: Double
     var unit3: String
+    var decimal3: Int
     
     var body: some View {
             VStack {
@@ -48,9 +51,9 @@ struct HealthTileInfoView: View {
                     .overlay(.white)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    MetricRowView(imageName: imageText1, title: metricTitle1, healthValue: metricValue1, unit: unit1)
-                    MetricRowView(imageName: imageText2, title: metricTitle2, healthValue: metricValue2, unit: unit2)
-                    MetricRowView(imageName: imageText3, title: metricTitle3, healthValue: metricValue3, unit: unit3)
+                    MetricRowView(imageName: imageText1, title: metricTitle1, healthValue: metricValue1, unit: unit1, decimal: decimal1)
+                    MetricRowView(imageName: imageText2, title: metricTitle2, healthValue: metricValue2, unit: unit2, decimal: decimal2)
+                    MetricRowView(imageName: imageText3, title: metricTitle3, healthValue: metricValue3, unit: unit3, decimal: decimal3)
                 }
                 .font(.title2)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -71,5 +74,5 @@ struct HealthTileInfoView: View {
         startPoint: .top,
         endPoint: .bottom
     )
-    HealthTileInfoView(headerTitleText: "Heart Overview", textGradient: previewGradient, borderColor: .red, imageText1: "arrow.down.heart.fill", metricTitle1: "Resting HR", metricValue1: 69, unit1: "bpm", imageText2: "heart.circle", metricTitle2: "Heart Rate", metricValue2: 72, unit2: "bpm", imageText3: "waveform.path.ecg.rectangle.fill", metricTitle3: "Heart Rate Variability", metricValue3: 220, unit3: "ms")
+    HealthTileInfoView(headerTitleText: "Heart Overview", textGradient: previewGradient, borderColor: .red, imageText1: "arrow.down.heart.fill", metricTitle1: "Resting HR", metricValue1: 69, unit1: "bpm", decimal1: 0, imageText2: "heart.circle", metricTitle2: "Heart Rate", metricValue2: 72, unit2: "bpm", decimal2: 0, imageText3: "waveform.path.ecg.rectangle.fill", metricTitle3: "Heart Rate Variability", metricValue3: 220, unit3: "ms", decimal3: 0)
 }
