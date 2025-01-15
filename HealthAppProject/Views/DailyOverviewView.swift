@@ -34,9 +34,9 @@ struct DailyOverviewView: View {
                 imageText: "stopwatch",
                 imageColor: .green,
                 metricText: "min",
-                currentValue: Int(healthKitVM.mostRecentExerciseTime),
+                currentValue: Int(healthKitVM.currentExerciseTime),
                 goalText: settingsVM.exerciseDayGoal,
-                goalPercent: (Int(healthKitVM.mostRecentExerciseTime) * 100 / settingsVM.exerciseDayGoal),
+                goalPercent: (Int(healthKitVM.currentExerciseTime) * 100 / settingsVM.exerciseDayGoal),
                 gradientColor: [.mint, .green]
             )
             

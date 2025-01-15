@@ -19,5 +19,16 @@ struct MockData {
         
         return array
     }
+    
+    static var exerciseTime: [HealthMetric] {
+        var array: [HealthMetric] = []
+        
+        for i in 0..<7 {
+            let metric = HealthMetric(date: Calendar.current.date(byAdding: .day, value: -i, to: .now) ?? Date(), value: .random(in: 1...90))
+            array.append(metric)
+        }
+        
+        return array
+    }
 
 }

@@ -29,7 +29,7 @@ struct WeeklyOverviewView: View {
                 .foregroundStyle(.white)
                 .font(.title2.weight(.semibold))
             
-            HStack(spacing: 30){
+            HStack(alignment: .lastTextBaseline, spacing: 30){
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Strength Traning")
                         .font(.title2)
@@ -56,9 +56,8 @@ struct WeeklyOverviewView: View {
                 
                 Spacer()
 
-                WeeklyPAChartView(healthKitVM: healthKitVM)
-
-                Spacer()
+                WeeklyPAChartView(metricData: healthKitVM.exerciseTime7DaysData)
+                    .frame(height: 90)
             }
             .padding(.bottom, 32)
             .frame(maxWidth: .infinity, alignment: .leading)
