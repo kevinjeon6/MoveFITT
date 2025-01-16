@@ -40,6 +40,7 @@ struct DashboardScreen: View {
                 
                 // MARK: - Header
                 DashboardHeaderView()
+                    .padding(.horizontal)
                 
                 // MARK: - Calendar
                 TabView(selection: $currentWeekIndex) {
