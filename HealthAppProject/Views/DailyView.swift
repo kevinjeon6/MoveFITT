@@ -27,7 +27,6 @@ struct DailyView: View {
                     .minimumScaleFactor(0.1)
                 Spacer()
                 Text("\(goalPercent)%")
-                
             }
 
             ProgressionStepBar(value: currentValue, goalValue: goalText, linearGradientColor: gradientColor)
