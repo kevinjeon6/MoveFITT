@@ -231,6 +231,7 @@
 				74F32A832CF934560042E751 /* OverviewBackground.swift */,
 				7461398E2A5C471C00F44828 /* YearAndMonth.swift */,
 				745D24B92D20B71F00372E2A /* SupplementCategory.swift */,
+				74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */,
 				74A763412D333BAE00198B7E /* MockData.swift */,
 			);
 			path = Helpers;
@@ -252,6 +253,17 @@
 				7438E69F2988B9F800F571C7 /* OneWeekKCalBurnedChartView.swift */,
 			);
 			path = SevenDayCharts;
+			sourceTree = "<group>";
+		};
+		74A763482D38837C00198B7E /* Supplement */ = {
+			isa = PBXGroup;
+			children = (
+				745D24AF2D1B2F0600372E2A /* SupplementsView.swift */,
+				745D24B52D1DE14900372E2A /* AddSupplementSheet.swift */,
+				745D24B32D1DE12000372E2A /* SupplementCell.swift */,
+				745D24B12D1C867800372E2A /* SupplementDetailView.swift */,
+			);
+			path = Supplement;
 			sourceTree = "<group>";
 		};
 		74D30638296E1E71004D153B /* Components */ = {
@@ -320,7 +332,6 @@
 				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
 				74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */,
 				7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */,
-				74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */,
 				740646F32CED753C006FF438 /* DailyOverviewView.swift */,
 				743571212CE6BFD3005AE528 /* DailyView.swift */,
 				740646F52CED75DA006FF438 /* WeeklyOverviewView.swift */,
@@ -330,10 +341,7 @@
 				74117141297A07C000328365 /* SettingsView.swift */,
 				740D0E002999D3F500776E3D /* WorkoutHistoryView.swift */,
 				74E4DE532978C2D300E2A42C /* InfoView.swift */,
-				745D24AF2D1B2F0600372E2A /* SupplementsView.swift */,
-				745D24B52D1DE14900372E2A /* AddSupplementSheet.swift */,
-				745D24B32D1DE12000372E2A /* SupplementCell.swift */,
-				745D24B12D1C867800372E2A /* SupplementDetailView.swift */,
+				74A763482D38837C00198B7E /* Supplement */,
 				740D0DF92995767800776E3D /* CardViews */,
 				7400144F29735DAE00675EE9 /* ChartViews */,
 			);
