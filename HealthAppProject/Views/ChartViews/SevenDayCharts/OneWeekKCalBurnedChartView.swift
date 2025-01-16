@@ -1,38 +1,37 @@
 //
-//  OneWeekRestHRChartView.swift
+//  OneWeekKCalBurnedChartView.swift
 //  HealthAppProject
 //
-//  Created by Kevin Mattocks on 1/13/23.
+//  Created by Kevin Mattocks on 1/30/23.
 //
 import Charts
 import SwiftUI
 
-struct OneWeekRestHRChartView: View {
-
+struct OneWeekKCalBurnedChartView: View {
+    
     @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var rawSelectedDate: Date?
     
-    private var restingHR: [HealthMetricValue] {
-        healthKitVM.restingHRData.sorted { lhs, rhs in
+    private var kcalsBurned: [HealthMetric] {
+        healthKitVM.kcalBurnedData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
-    var selectedHealthValue: HealthMetricValue? {
+    var selectedHealthValue: HealthMetric? {
         guard let rawSelectedDate else { return nil }
-        return healthKitVM.restingHRData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
+        return healthKitVM.kcalBurnedData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
 
     
     var body: some View {
-        
         VStack(alignment: .leading, spacing: 5) {
+            
             Text(Constants.past7DaysRange)
                 .foregroundStyle(.secondary)
-            
-            Text("Average: \(Int(healthKitVM.averageRestHR)) bpm")
-                .padding(.bottom, 10)
-            
+            Text("Total: \(Int(healthKitVM.total7DayKcalBurned)) kcal")
+            Text("Average: \(Int(healthKitVM.averageKcalBurned)) kcal")
+             
             Chart {
                 if let selectedHealthValue {
                     RuleMark(x: .value("Selected Metric", selectedHealthValue.date, unit: .day))
@@ -51,23 +50,17 @@ struct OneWeekRestHRChartView: View {
                         }
                 }
                 
-                ForEach(restingHR, id: \.date) {
-                    restHrData in
-                    
-                    LineMark(x: .value("day", restHrData.date, unit: .day),
-                             y: .value("RHR", restHrData.value)
+                ForEach(kcalsBurned, id: \.date) {
+                    kcal in
+
+                    BarMark(x: .value("day", kcal.date, unit: .day),
+                            y: .value("kcal", kcal.value)
                     )
-                    .interpolationMethod(.catmullRom)
-                    .foregroundStyle(.red)
-                    .symbol() {
-                        Circle()
-                            .fill(.red)
-                            .frame(width: 15)
-                    }
+                    .foregroundStyle(.orange.gradient)
+                    .cornerRadius(5)
                 }
             }
             .frame(height: 200)
-            .chartYScale(domain: 30...80)
             .chartXSelection(value: $rawSelectedDate.animation(.easeInOut))
             .chartXAxis {
                 AxisMarks(values: .stride(by: .day)) {
@@ -78,34 +71,34 @@ struct OneWeekRestHRChartView: View {
         }
         .padding(.horizontal)
         .font(.headline)
-        .navigationTitle("Resting Heart Rate")
+        .navigationTitle("Kcals Burned")
         .navigationBarTitleDisplayMode(.inline)
-        
-        List{
-            ForEach(restingHR, id: \.date) {
-                restHR in
+
+        List {
+            ForEach(kcalsBurned, id: \.date) {
+                burn in
                 
-                DataListView(imageText: "heart.fill",
-                             imageColor: .red,
-                             valueText: restHR.value,
-                             unitText: "bpm",
-                             date: restHR.date)
+                DataListView(imageText: "flame.fill",
+                             imageColor: .orange,
+                             valueText: burn.value,
+                             unitText: "kcal",
+                             date: burn.date)
             }
         }
         .listStyle(.inset)
     }
     
     // MARK: - Annotation View
-    
+
     var annotationView: some View {
         VStack(alignment: .leading) {
             Text(selectedHealthValue?.date ?? .now, format: .dateTime.weekday(.abbreviated).month(.abbreviated).day())
                 .font(.footnote.bold())
                 .foregroundStyle(.secondary)
             
-            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) bpm")
+            Text("\(selectedHealthValue?.value ?? 0, format: .number.precision(.fractionLength(0))) kcal")
                 .fontWeight(.semibold)
-                .foregroundStyle(.red)
+                .foregroundStyle(.orange)
         }
         .padding(12)
         .background(
@@ -116,9 +109,9 @@ struct OneWeekRestHRChartView: View {
     }
 }
 
-struct OneWeekRestHRChartView_Previews: PreviewProvider {
+struct CaloriesBurnedChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OneWeekRestHRChartView()
+        OneWeekKCalBurnedChartView()
             .environment(HealthKitViewModel())
     }
 }

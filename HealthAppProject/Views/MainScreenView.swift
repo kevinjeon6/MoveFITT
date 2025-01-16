@@ -16,42 +16,29 @@ struct MainScreenView: View {
     var body: some View {
         TabView(selection: $settingsVM.selectedTab) {
             
-            SummaryView()
-                .tabItem {
-                    Label("Summary", systemImage: "list.bullet.clipboard")
-                }
-                .tag(1)
+            Tab("Dashboard", systemImage: "rectangle.grid.2x2.fill", value: 1) {
+                DashboardScreen()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            ExerciseStatsView()
-                .tabItem {
-                    Label("Physical Activity", systemImage: "chart.xyaxis.line")
-                }
-                .tag(2)
+            Tab("Supplements", systemImage: "cross.circle.fill", value: 2) {
+                SupplementsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            
-            SettingsView(
-                stepGoal: $settingsVM.stepGoal,
-                exerciseDayGoal: $settingsVM.exerciseDayGoal,
-                exerciseWeeklyGoal: $settingsVM.exerciseWeeklyGoal,
-                muscleWeeklyGoal: $settingsVM.muscleWeeklyGoal
-              )
-                .tabItem {
-                    Label("Settings", systemImage: "slider.horizontal.3")
-                }
-                .tag(3)
-            
-            MuscleView()
-                .tabItem {
-                    Label("Workouts", systemImage: "dumbbell.fill")
-                }
-                .tag(4)
-            
-        }
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor(.darkModeColor)
-            UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
+            Tab("Workouts", systemImage: "dumbbell.fill", value: 3) {
+                WorkoutHistoryView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
+    
+            Tab("Settings", systemImage: "slider.horizontal.3", value: 4) {
+                SettingsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
         }
     }
 }

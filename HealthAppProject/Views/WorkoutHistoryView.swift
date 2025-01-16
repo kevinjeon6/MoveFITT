@@ -7,46 +7,54 @@
 
 import SwiftUI
 
-struct MuscleView: View {
+struct WorkoutHistoryView: View {
     
     @Environment(HealthKitViewModel.self) private var healthKitVM
     
    
     var body: some View {
-
         NavigationStack {
             List(healthKitVM.muscleYearAndMonth.keys.sorted(), id: \.self) { yearMonth in
                 Section {
                     ForEach(healthKitVM.muscleYearAndMonth[yearMonth] ?? [], id: \.self) { workout in
                         HStack(spacing: 15) {
-
                             workout.workoutActivityType.fitnessIcon
                                 .modifier(FitnessIconModifier())
                                 .frame(width: 50, height: 50)
+                            
                             VStack(alignment: .leading) {
                                 Text("\(workout.workoutActivityType.name)")
                                 Text(String(format: "%.0f kcals", (workout.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0.0) ))
                                 Text("\(workout.startDate.formatted(.dateTime.weekday() .month().day()))")
                                 Text("\(workout.startDate.formatted(.dateTime.hour().minute())) - \(workout.endDate.formatted(.dateTime.hour().minute()))")
                             }
+                            .foregroundStyle(.white)
                         }
                     }
+                    .listRowBackground(Color(#colorLiteral(red: 0.1353680193, green: 0.1355423033, blue: 0.1408430636, alpha: 1)))
                 } header: {
                     Text("\(yearMonth.monthName()) \(String(yearMonth.year))")
                         .font(.title2)
                         .bold()
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                 }
-
             }
             .navigationTitle("Workout History")
+            .background(Color.black)
+            .scrollContentBackground(.hidden)
         }
+    }
+    
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
     }
 }
 
 struct MuscleView_Previews: PreviewProvider {
     static var previews: some View {
-        MuscleView()
+        WorkoutHistoryView()
             .environment(HealthKitViewModel())
         
         HStack(spacing: 15) {
@@ -68,6 +76,8 @@ struct MuscleView_Previews: PreviewProvider {
                 Text("Mon, Jul 10")
                 Text("16: 23 - 17:03")
             }
+            .foregroundStyle(.white)
         }
+        .background(Color.primary)
     }
 }

@@ -10,11 +10,12 @@ struct Constants {
     static var stepGoal = "step goal"
     static var exerciseDailyGoal = "exercise daily goal"
     static var exerciseWeeklyGoal = "exercise weekly goal"
+    static var kcalBurnedDailyGoal = "kcal burned daily goal"
     static var muscleStrengtheningWeeklyGoal = "muscle strengthening weekly goal"
     static var notifications = "notifications"
     
 
-    static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month().day())
+    static var todayDateString = Date().formatted(.dateTime.weekday(.wide).month(.wide).day())
     static var strengthActivityWeek = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
     //Start of the week is Sunday - Saturday
     

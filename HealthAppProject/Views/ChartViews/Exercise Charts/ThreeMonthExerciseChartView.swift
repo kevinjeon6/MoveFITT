@@ -14,13 +14,13 @@ struct ThreeMonthExerciseChartView: View {
     @State private var rawSelectedDate: Date?
     @State private var isShowingList = false
     
-    private var chartTime60: [HealthMetricValue] {
+    private var chartTime60: [HealthMetric] {
         healthKitVM.exerciseTime60DaysData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
-    var selectedHealthValue: HealthMetricValue? {
+    var selectedHealthValue: HealthMetric? {
         guard let rawSelectedDate else { return nil }
         return healthKitVM.exerciseTime60DaysData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }

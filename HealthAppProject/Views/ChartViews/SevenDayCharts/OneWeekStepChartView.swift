@@ -13,13 +13,13 @@ struct OneWeekStepChartView: View {
     @Environment(HealthKitViewModel.self) var healthKitVM
     @State private var rawSelectedDate: Date?
     
-    private var steps: [HealthMetricValue] {
+    private var steps: [HealthMetric] {
         healthKitVM.stepData.sorted { lhs, rhs in
             lhs.date > rhs.date
         }
     }
     
-    var selectedHealthValue: HealthMetricValue? {
+    var selectedHealthValue: HealthMetric? {
         guard let rawSelectedDate else { return nil }
         return healthKitVM.stepData.first { Calendar.current.isDate(rawSelectedDate, inSameDayAs: $0.date) }
     }
