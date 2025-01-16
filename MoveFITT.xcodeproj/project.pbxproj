@@ -52,7 +52,6 @@
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
 		74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */; };
 		74DF66F9295B77A50046F521 /* HealthAppProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */; };
-		74DF66FB295B77A50046F521 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DF66FA295B77A50046F521 /* SummaryView.swift */; };
 		74DF66FD295B77AC0046F521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FC295B77AC0046F521 /* Assets.xcassets */; };
 		74DF6700295B77AC0046F521 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74DF66FF295B77AC0046F521 /* Preview Assets.xcassets */; };
 		74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE532978C2D300E2A42C /* InfoView.swift */; };
@@ -122,7 +121,6 @@
 		74D9111B29CBE65400DD694F /* FitnessIconModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessIconModifier.swift; sourceTree = "<group>"; };
 		74DF66F5295B77A50046F521 /* MoveFITT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoveFITT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74DF66F8295B77A50046F521 /* HealthAppProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthAppProjectApp.swift; sourceTree = "<group>"; };
-		74DF66FA295B77A50046F521 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		74DF66FC295B77AC0046F521 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74DF66FF295B77AC0046F521 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		74DF6706295B80450046F521 /* HealthAppProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthAppProject.entitlements; sourceTree = "<group>"; };
@@ -328,7 +326,6 @@
 			isa = PBXGroup;
 			children = (
 				74338BC12974C96700EEC9B9 /* MainScreenView.swift */,
-				74DF66FA295B77A50046F521 /* SummaryView.swift */,
 				74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */,
 				74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */,
 				7435711D2CE6A06D005AE528 /* QuickOverviewView.swift */,
@@ -440,7 +437,6 @@
 				7496020C29D77B2500B6B824 /* WelcomeView.swift in Sources */,
 				74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */,
 				74117147297E0CD000328365 /* ThreeMonthExerciseChartView.swift in Sources */,
-				74DF66FB295B77A50046F521 /* SummaryView.swift in Sources */,
 				746DD41F2BF3C6EA00EEA376 /* HealthMetric.swift in Sources */,
 				74D9111C29CBE65400DD694F /* FitnessIconModifier.swift in Sources */,
 				7496021029D77B7E00B6B824 /* AuthorizationView.swift in Sources */,
