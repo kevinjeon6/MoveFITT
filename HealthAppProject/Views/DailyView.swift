@@ -31,6 +31,7 @@ struct DailyView: View {
 
             ProgressionStepBar(value: currentValue, goalValue: goalText, linearGradientColor: gradientColor)
                 .frame(maxWidth: .infinity)
+                .animation(.linear(duration: 0.6), value: currentValue)
         }
     }
 }
