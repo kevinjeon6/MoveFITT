@@ -24,12 +24,11 @@ struct OnboardingView: View {
                     WelcomeView()
                         .tag(0)
                     
-                    //TODO: Update Onboarding Flow
                     OnboardInitialGoalDescription()
-                        .tag(4)
+                        .tag(1)
                     
                     AuthorizationView()
-                        .tag(5)
+                        .tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .always))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -38,7 +37,7 @@ struct OnboardingView: View {
 
             // MARK: Button
             
-            if onBoardingTabSelection != 5 {
+            if onBoardingTabSelection != 2 {
                     Button {
                         onBoardingTabSelection += 1
                     } label: {
