@@ -145,18 +145,9 @@ class HealthKitViewModel {
         return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
             var hkData: [HealthMetric] = []
             
-            group.addTask { try await self.getExerciseTime(from: -7) }
-            group.addTask { try await self.getWeekTotalExerciseTime() }
-            group.addTask { try await self.getStepCount(from: -7) }
-            group.addTask { try await self.getKcalsBurned(from: -7) }
-            
-            group.addTask { try await self.getRespiratoryRateData(from: -7) }
-            group.addTask { try await self.getVo2Data() }
-            group.addTask { try await self.getSpO2(from: -7) }
-            
-            group.addTask { try await self.getRestingHR(from: -7) }
-            group.addTask { try await self.getHRV(from: -7) }
-            group.addTask { try await self.getHR(from: -7) }
+            group.addTask { try await self.getExerciseRelatedMetrics() }
+            group.addTask { try await self.getHeartMetrics() }
+            group.addTask { try await self.getRespiratoryMetrics() }
             
             
             for try await result in group {
@@ -166,6 +157,89 @@ class HealthKitViewModel {
             return hkData
             
         }
+    }
+    
+    // MARK: - Exercise Related Metrics Data
+    func getExerciseRelatedMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var exerciseMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getExerciseTime(from: -7) }
+            group.addTask { try await self.getWeekTotalExerciseTime() }
+            group.addTask { try await self.getStepCount(from: -7) }
+            group.addTask { try await self.getKcalsBurned(from: -7) }
+         
+            for try await result in group {
+                exerciseMetricsData.append(contentsOf: result)
+            }
+            
+            return exerciseMetricsData
+        }
+    }
+    
+    // MARK: - All of Heart Metrics Data
+    func getHeartMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var heartMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getRestingHR(from: -7) }
+            group.addTask { try await self.getHRV(from: -7) }
+            group.addTask { try await self.getHR(from: -7) }
+            
+            for try await result in group {
+                heartMetricsData.append(contentsOf: result)
+            }
+            
+            return heartMetricsData
+        }
+    }
+    
+    // MARK: - All of Respiratory Metrics Data
+    func getRespiratoryMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var respiratoryMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getRespiratoryRateData(from: -7) }
+            group.addTask { try await self.getVo2Data() }
+            group.addTask { try await self.getSpO2(from: -7) }
+        
+            for try await result in group {
+                respiratoryMetricsData.append(contentsOf: result)
+            }
+            
+            return respiratoryMetricsData
+        }
+    }
+    
+    
+    
+    func getHealthDataValue(from value: Int, dataTypeIdentifier: HKQuantityType) async throws -> [HealthMetric] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        //Create the predicate
+        let queryPredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        //Create the query descriptor
+        let samplePredicate = HKSamplePredicate.quantitySample(type: dataTypeIdentifier, predicate: queryPredicate)
+        
+        let sumOfQuery = HKStatisticsCollectionQueryDescriptor(
+            predicate: samplePredicate,
+            options: .cumulativeSum,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+
+        var metrics: [HealthMetric] = []
+        //If you want initial results AND live updates as your health data changes, use the results(for:)
+        //You will want to loop through the returned async sequence to read the results
+        for try await result in sumOfQuery.results(for: healthStore) {
+            metrics = result.statisticsCollection.statistics().map{
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
+            }
+        }
+        
+        return metrics
     }
     
     
