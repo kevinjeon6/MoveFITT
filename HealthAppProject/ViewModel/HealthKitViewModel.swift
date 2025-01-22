@@ -136,11 +136,23 @@ class HealthKitViewModel {
         self.calendar = Calendar.current
         self.today = calendar.startOfDay(for: .now)
         self.endDate = calendar.date(byAdding: .day, value: 1, to: today) ?? Date()
+        displayAll()
+    }
+    
+    func displayAll() {
+        Task {
+            do {
+                _ = try await getWorkoutHistory()
+                _ = try await getHealthMetrics()
+            } catch {
+                print("Error retrieving and displaying all data: \(error)")
+            }
+        }
     }
     
     
     ///async let is not super scalable
-    func displayData() async throws -> [HealthMetric] {
+    func getHealthMetrics() async throws -> [HealthMetric] {
         
         return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
             var hkData: [HealthMetric] = []

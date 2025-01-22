@@ -79,7 +79,7 @@ struct OnboardingView: View {
                     case .success(_):
                         print("Access to HealthKit is successful")
                         Task {
-                           try await healthKitVM.displayData()
+                             await healthKitVM.displayAll()
                         }
 //                        dismiss()
                     case .failure(_):
