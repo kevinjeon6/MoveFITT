@@ -117,14 +117,6 @@ struct DashboardScreen: View {
                 }
             }
             .background(Color.black)
-            .task {
-                do {
-                    var healthMetrics = try await healthKitVM.displayData()
-                    var workoutData = try await healthKitVM.getWorkoutHistory()
-                } catch {
-                    print("Error fetching data: \(error)")
-                }
-            }
             .onAppear {
                 if weekSlider.isEmpty {
                     let currentWeek = Date().fetchWeek()

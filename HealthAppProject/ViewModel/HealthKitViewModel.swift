@@ -89,7 +89,6 @@ class HealthKitViewModel {
     
     // MARK: - Computed HRV Properties
     var currentHRV: Double { hrvHRData.last?.value ?? 0 }//USE THIS COMPUTED PROPERTY. THIS MATCHES APPLE'S HEALTH VALUE
-//    var mostRecentHRV: Double { hrvHRData.last?.mostRecentValue ?? 0 } ///NEW
     
     var averageHRV: Double { hrvHRData.reduce(0)  { $0 + $1.value / 7 }}
     
@@ -123,11 +122,7 @@ class HealthKitViewModel {
     
     var currentVO2max: Double { vo2MaxData.last?.value ?? 0}
     
-//    var currentRespiratoryRate: Double { respiratoryRateData.last?.value ?? 0 }
-    
     var mostRecentRespiratoryRate: Double { respiratoryRateData.last?.mostRecentValue ?? 0 } /// Gets the latest input. USE THIS COMPUTED PROPERTY. MATCHES APPLE HEALTH'S VALUE
-    
-//    var currentSpO2: Double { oxygenSaturationData.last?.value ?? 0 }
     
     var mostRecentSpO2: Double { oxygenSaturationData.last?.mostRecentValue ?? 0 } ///USE THIS COMPUTED PROPERTY. MATCHES APPLE HEALTH'S VALUE
     
@@ -136,27 +131,30 @@ class HealthKitViewModel {
         self.calendar = Calendar.current
         self.today = calendar.startOfDay(for: .now)
         self.endDate = calendar.date(byAdding: .day, value: 1, to: today) ?? Date()
+        displayAll()
+    }
+    
+    func displayAll() {
+        Task {
+            do {
+                _ = try await getWorkoutHistory()
+                _ = try await getHealthMetrics()
+            } catch {
+                print("Error retrieving and displaying all data: \(error)")
+            }
+        }
     }
     
     
     ///async let is not super scalable
-    func displayData() async throws -> [HealthMetric] {
+    func getHealthMetrics() async throws -> [HealthMetric] {
         
         return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
             var hkData: [HealthMetric] = []
             
-            group.addTask { try await self.getExerciseTime(from: -7) }
-            group.addTask { try await self.getWeekTotalExerciseTime() }
-            group.addTask { try await self.getStepCount(from: -7) }
-            group.addTask { try await self.getKcalsBurned(from: -7) }
-            
-            group.addTask { try await self.getRespiratoryRateData(from: -7) }
-            group.addTask { try await self.getVo2Data() }
-            group.addTask { try await self.getSpO2(from: -7) }
-            
-            group.addTask { try await self.getRestingHR(from: -7) }
-            group.addTask { try await self.getHRV(from: -7) }
-            group.addTask { try await self.getHR(from: -7) }
+            group.addTask { try await self.getExerciseRelatedMetrics() }
+            group.addTask { try await self.getHeartMetrics() }
+            group.addTask { try await self.getRespiratoryMetrics() }
             
             
             for try await result in group {
@@ -166,6 +164,89 @@ class HealthKitViewModel {
             return hkData
             
         }
+    }
+    
+    // MARK: - Exercise Related Metrics Data
+    func getExerciseRelatedMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var exerciseMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getExerciseTime(from: -7) }
+            group.addTask { try await self.getWeekTotalExerciseTime() }
+            group.addTask { try await self.getStepCount(from: -7) }
+            group.addTask { try await self.getKcalsBurned(from: -7) }
+         
+            for try await result in group {
+                exerciseMetricsData.append(contentsOf: result)
+            }
+            
+            return exerciseMetricsData
+        }
+    }
+    
+    // MARK: - All of Heart Metrics Data
+    func getHeartMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var heartMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getRestingHR(from: -7) }
+            group.addTask { try await self.getHRV(from: -7) }
+            group.addTask { try await self.getHR(from: -7) }
+            
+            for try await result in group {
+                heartMetricsData.append(contentsOf: result)
+            }
+            
+            return heartMetricsData
+        }
+    }
+    
+    // MARK: - All of Respiratory Metrics Data
+    func getRespiratoryMetrics() async throws -> [HealthMetric] {
+        return try await withThrowingTaskGroup(of: [HealthMetric].self) { group in
+            var respiratoryMetricsData: [HealthMetric] = []
+            
+            group.addTask { try await self.getRespiratoryRateData(from: -7) }
+            group.addTask { try await self.getVo2Data() }
+            group.addTask { try await self.getSpO2(from: -7) }
+        
+            for try await result in group {
+                respiratoryMetricsData.append(contentsOf: result)
+            }
+            
+            return respiratoryMetricsData
+        }
+    }
+    
+    
+    
+    func getHealthDataValue(from value: Int, dataTypeIdentifier: HKQuantityType) async throws -> [HealthMetric] {
+        
+        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
+        
+        //Create the predicate
+        let queryPredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
+        
+        //Create the query descriptor
+        let samplePredicate = HKSamplePredicate.quantitySample(type: dataTypeIdentifier, predicate: queryPredicate)
+        
+        let sumOfQuery = HKStatisticsCollectionQueryDescriptor(
+            predicate: samplePredicate,
+            options: .cumulativeSum,
+            anchorDate: endDate,
+            intervalComponents: daily
+        )
+
+        var metrics: [HealthMetric] = []
+        //If you want initial results AND live updates as your health data changes, use the results(for:)
+        //You will want to loop through the returned async sequence to read the results
+        for try await result in sumOfQuery.results(for: healthStore) {
+            metrics = result.statisticsCollection.statistics().map{
+                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
+            }
+        }
+        
+        return metrics
     }
     
     
@@ -275,8 +356,6 @@ class HealthKitViewModel {
             intervalComponents: hourly
         )
         
-   
-        
         for try await result in sumOfHrQuery.results(for: healthStore) {
             heartRateData = result.statisticsCollection.statistics().map{ stats in
                 guard let average = stats.averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
@@ -337,9 +416,7 @@ class HealthKitViewModel {
         )
         
         for try await result in sumOfRespiratoryRateQuery.results(for: healthStore) {
-            respiratoryRateData = result.statisticsCollection.statistics().map{
-//                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0)
-                stats in
+            respiratoryRateData = result.statisticsCollection.statistics().map{ stats in
                     guard let average = stats.averageQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
                           let minRRValue = stats.minimumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
                           let maxRRValue = stats.maximumQuantity()?.doubleValue(for: HKUnit.count().unitDivided(by: .minute())),
@@ -396,9 +473,7 @@ class HealthKitViewModel {
         )
         
         for try await result in sumOfSpO2Query.results(for: healthStore) {
-            oxygenSaturationData = result.statisticsCollection.statistics().map{
-//                HealthMetric(date: $0.startDate, value: $0.averageQuantity()?.doubleValue(for: .percent()) ?? 0)
-                stats in
+            oxygenSaturationData = result.statisticsCollection.statistics().map{ stats in
                 guard let average = stats.averageQuantity()?.doubleValue(for: .percent()),
                       let minSpO2Value = stats.minimumQuantity()?.doubleValue(for: .percent()),
                       let maxSpO2Value = stats.maximumQuantity()?.doubleValue(for: .percent()),
