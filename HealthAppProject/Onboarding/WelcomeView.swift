@@ -10,12 +10,14 @@ import SwiftUI
 struct WelcomeView: View {
     var body: some View {
         VStack {
-            //Need to update image for actual app. Current image is a placeholder
-            Image("Welcome-image")
+            Image(.welcomeIcon)
                 .resizable()
-                .scaledToFit()
+                .frame(width: 120, height: 120)
+                .clipShape(.rect(cornerRadius: 12))
+                .shadow(color: .gray.opacity(0.3), radius: 16)
+                .padding(.bottom, 12)
             
-            Text("Welcome to the MoveFITT. This is to help keep track of hitting your physical activity recommendation and meet the muscle strengthening activity recommendation")
+            Text("Track your progress towards the goals set by the Physical Activity Guidelines and get insights for heart and respiratory metrics.")
                 .font(.title3)
                 .bold()
                 .multilineTextAlignment(.center)

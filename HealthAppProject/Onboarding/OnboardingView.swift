@@ -43,12 +43,12 @@ struct OnboardingView: View {
                     } label: {
                         ZStack {
                             Capsule()
-                                .fill(Color.tangBlue)
+                                .fill(.white)
                                 .frame(height: 48)
                             
                             Text("Next")
                                 .font(.title2.bold())
-                                .foregroundStyle(Color.darkModeColor) 
+                                .foregroundStyle(.black)
                         }
                     }
                     .accessibilityAddTraits(.isButton)
@@ -62,11 +62,14 @@ struct OnboardingView: View {
                 } label: {
                     ZStack {
                         Capsule()
-                            .fill(Color.tangBlue)
+                            .fill(.pink)
                             .frame(height: 48)
-                        Text("Connect")
-                            .font(.title2.bold())
-                            .foregroundStyle(Color.darkModeColor)
+                        HStack {
+                            Image(systemName: "heart.fill")
+                            Text("Connect")
+                                .font(.title2.bold())
+                        }
+                        .foregroundStyle(.white)
                     }
                 }
                 .accessibilityAddTraits(.isButton)
@@ -91,9 +94,9 @@ struct OnboardingView: View {
         }
         .padding(.horizontal)
         .padding(.bottom)
-        .foregroundStyle(.black)
+        .foregroundStyle(.white)
         .background(
-            LinearGradient(colors: [.tangBlue, .white], startPoint: .top, endPoint: .bottom)
+            Color.black
         )
 
         

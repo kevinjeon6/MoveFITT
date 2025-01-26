@@ -61,7 +61,6 @@
 		74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */; };
 		74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */; };
 		74F02F7129B28C2E00AEB8BE /* OneWeekHRVChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */; };
-		74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F07AC329E06654004FC83D /* OnboardTextDescription.swift */; };
 		74F32A802CF61E670042E751 /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */; };
 		74F32A822CF91D110042E751 /* HealthTileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A812CF91D110042E751 /* HealthTileInfoView.swift */; };
 		74F32A842CF934560042E751 /* OverviewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F32A832CF934560042E751 /* OverviewBackground.swift */; };
@@ -131,7 +130,6 @@
 		74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountTileView.swift; sourceTree = "<group>"; };
 		74F02F6C29B278B900AEB8BE /* HealthInfoTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthInfoTileView.swift; sourceTree = "<group>"; };
 		74F02F7029B28C2E00AEB8BE /* OneWeekHRVChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWeekHRVChartView.swift; sourceTree = "<group>"; };
-		74F07AC329E06654004FC83D /* OnboardTextDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardTextDescription.swift; sourceTree = "<group>"; };
 		74F32A7F2CF61E670042E751 /* DashboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
 		74F32A812CF91D110042E751 /* HealthTileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthTileInfoView.swift; sourceTree = "<group>"; };
 		74F32A832CF934560042E751 /* OverviewBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewBackground.swift; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 			children = (
 				7429988329C414E20044E890 /* OnboardingView.swift */,
 				7496020B29D77B2500B6B824 /* WelcomeView.swift */,
-				74F07AC329E06654004FC83D /* OnboardTextDescription.swift */,
 				74F81BEA29DA45D400D13B4C /* OnboardInitialGoalDescription.swift */,
 				7496020F29D77B7E00B6B824 /* AuthorizationView.swift */,
 			);
@@ -484,7 +481,6 @@
 				7461398F2A5C471C00F44828 /* YearAndMonth.swift in Sources */,
 				74F32A862CF942800042E751 /* MetricRowView.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */,
-				74F07AC429E06654004FC83D /* OnboardTextDescription.swift in Sources */,
 				745D24B42D1DE12000372E2A /* SupplementCell.swift in Sources */,
 				74F32A822CF91D110042E751 /* HealthTileInfoView.swift in Sources */,
 				74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */,

@@ -16,7 +16,7 @@ struct AuthorizationView: View {
                 .shadow(color: .gray.opacity(0.3), radius: 16)
                 .padding(.bottom, 12)
             
-            Text("MoveFITT needs to connect to Apple Health to help hit your goals")
+            Text("Connect to Apple Health to hit your goals")
                 .font(.title2)
                 .bold()
         }
