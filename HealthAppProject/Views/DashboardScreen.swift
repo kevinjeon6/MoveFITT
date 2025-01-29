@@ -156,7 +156,7 @@ struct DashboardScreen: View {
                 .padding(.vertical, 12)
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Calendar.current.isDate(day.date, inSameDayAs: today) ? Color.cyan : Color.clear, lineWidth: 2)
+                        .dayOutline(isToday: Calendar.current.isDate(day.date, inSameDayAs: today), lineWidth: 2)
                 }
                 .contentShape(.rect)
                 .onTapGesture {
