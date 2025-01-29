@@ -12,6 +12,7 @@ struct MainScreenView: View {
     
     @Environment(HealthKitViewModel.self) private var healthKitVM
     @EnvironmentObject var settingsVM: SettingsViewModel
+    @State private var isShowingWhatsNew = false
 
     var body: some View {
         TabView(selection: $settingsVM.selectedTab) {
@@ -40,7 +41,33 @@ struct MainScreenView: View {
                     .toolbarBackgroundVisibility(.visible, for: .tabBar)
             }
         }
+        .sheet(isPresented: $isShowingWhatsNew) { WhatsNewView() }
+        .onAppear { checkForUpdate() }
     }
+    
+    // MARK: - Methods
+    
+    /// Get's the current version of the App
+    /// - Returns: The string of the current version of the app based from the Info.plist
+    func getCurrentAppVersion() -> String {
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        
+        return appVersion
+    }
+    
+    /// Check if the app has been started after update
+    func checkForUpdate() {
+        let version = getCurrentAppVersion()
+        let savedVersion = UserDefaults.standard.string(forKey: "savedVersion")
+        
+        if savedVersion == version {
+            print("App is up to date")
+        } else {
+            isShowingWhatsNew.toggle()
+            UserDefaults.standard.set(version, forKey: "savedVersion")
+        }
+    }
+    
 }
 
 struct MainScreenView_Previews: PreviewProvider {
