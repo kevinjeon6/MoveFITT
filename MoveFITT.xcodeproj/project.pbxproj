@@ -47,6 +47,7 @@
 		74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */; };
 		74A763422D333BAE00198B7E /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A763412D333BAE00198B7E /* MockData.swift */; };
 		74A763462D34A6FE00198B7E /* RespiratoryDataChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A763452D34A6FE00198B7E /* RespiratoryDataChartView.swift */; };
+		74A764A42D49BBC700198B7E /* ShapeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A764A32D49BBC700198B7E /* ShapeExtension.swift */; };
 		74CFCDA22C08CA4700BF1454 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */; };
 		74D3063A296E1E95004D153B /* ProgressionStepBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D30639296E1E95004D153B /* ProgressionStepBar.swift */; };
 		74D9111829C7ED6D00DD694F /* StrengthActivityWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */; };
@@ -114,6 +115,7 @@
 		74962B0F2CDD65D500E57D11 /* DashboardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardScreen.swift; sourceTree = "<group>"; };
 		74A763412D333BAE00198B7E /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		74A763452D34A6FE00198B7E /* RespiratoryDataChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryDataChartView.swift; sourceTree = "<group>"; };
+		74A764A32D49BBC700198B7E /* ShapeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeExtension.swift; sourceTree = "<group>"; };
 		74CFCDA12C08CA4700BF1454 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		74D30639296E1E95004D153B /* ProgressionStepBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressionStepBar.swift; sourceTree = "<group>"; };
 		74D9111729C7ED6D00DD694F /* StrengthActivityWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthActivityWeekView.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				743818E2295DFC8200FE4613 /* DateExtension.swift */,
 				74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */,
 				744095C029A71C5C0098ACA7 /* ColorExtension.swift */,
+				74A764A32D49BBC700198B7E /* ShapeExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				74F02F6D29B278B900AEB8BE /* HealthInfoTileView.swift in Sources */,
 				740646F62CED75DA006FF438 /* WeeklyOverviewView.swift in Sources */,
 				745D24AE2D1B25C000372E2A /* SupplementItem.swift in Sources */,
+				74A764A42D49BBC700198B7E /* ShapeExtension.swift in Sources */,
 				7461398F2A5C471C00F44828 /* YearAndMonth.swift in Sources */,
 				74F32A862CF942800042E751 /* MetricRowView.swift in Sources */,
 				74338BC42974D03800EEC9B9 /* ExerciseStatsView.swift in Sources */,
