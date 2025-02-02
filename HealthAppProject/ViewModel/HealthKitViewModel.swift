@@ -139,8 +139,10 @@ class HealthKitViewModel {
             do {
                 _ = try await getWorkoutHistory()
                 _ = try await getHealthMetrics()
-            } catch {
-                print("Error retrieving and displaying all data: \(error)")
+            } catch HKError.errorNoData {
+                throw MFError.noData
+            } catch  {
+                throw MFError.unableToCompleteRequest
             }
         }
     }
@@ -219,39 +221,13 @@ class HealthKitViewModel {
     }
     
     
-    
-    func getHealthDataValue(from value: Int, dataTypeIdentifier: HKQuantityType) async throws -> [HealthMetric] {
-        
-        let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
-        
-        //Create the predicate
-        let queryPredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
-        
-        //Create the query descriptor
-        let samplePredicate = HKSamplePredicate.quantitySample(type: dataTypeIdentifier, predicate: queryPredicate)
-        
-        let sumOfQuery = HKStatisticsCollectionQueryDescriptor(
-            predicate: samplePredicate,
-            options: .cumulativeSum,
-            anchorDate: endDate,
-            intervalComponents: daily
-        )
-
-        var metrics: [HealthMetric] = []
-        //If you want initial results AND live updates as your health data changes, use the results(for:)
-        //You will want to loop through the returned async sequence to read the results
-        for try await result in sumOfQuery.results(for: healthStore) {
-            metrics = result.statisticsCollection.statistics().map{
-                HealthMetric(date: $0.startDate, value: $0.sumQuantity()?.doubleValue(for: .count()) ?? 0)
-            }
-        }
-        
-        return metrics
-    }
-    
-    
     // MARK: - Daily Step Count
     func getStepCount(from value: Int) async throws -> [HealthMetric]  {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.stepCount)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -284,6 +260,11 @@ class HealthKitViewModel {
     // MARK: - Resting Heart Rate
     func getRestingHR(from value: Int) async throws -> [HealthMetric]  {
         
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.restingHeartRate)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
 
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
@@ -312,6 +293,11 @@ class HealthKitViewModel {
     
     // MARK: - HRV
     func getHRV(from value: Int) async throws -> [HealthMetric]  {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.heartRateVariabilitySDNN)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -342,6 +328,11 @@ class HealthKitViewModel {
     
     // MARK: - HR
     func getHR(from value: Int) async throws -> [HealthMetric] {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.heartRate)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -376,6 +367,11 @@ class HealthKitViewModel {
     
     func getKcalsBurned(from value: Int) async throws -> [HealthMetric] {
         
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.activeEnergyBurned)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
@@ -401,6 +397,11 @@ class HealthKitViewModel {
     // MARK: - Respiratory Rate
     
     func getRespiratoryRateData(from value: Int) async throws -> [HealthMetric] {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.respiratoryRate)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
         
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
@@ -435,6 +436,11 @@ class HealthKitViewModel {
     
     func getVo2Data() async throws -> [HealthMetric] {
         
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.vo2Max)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         ///To get the most recent VO2max data point, need distantPast because the last value recorded could have been months ago and not within a given time frame such as past 7 days. Especially if you are not walking or running outdoors.
         let startDate = Date.distantPast
         
@@ -459,6 +465,12 @@ class HealthKitViewModel {
     
     // MARK: - Oxygen Saturation Data
     func getSpO2(from value: Int) async throws -> [HealthMetric] {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.oxygenSaturation)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let startDate = calendar.date(byAdding: .day, value: value, to: endDate)!
         
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
@@ -492,6 +504,11 @@ class HealthKitViewModel {
     // MARK: - Exercise Time
     
     func getExerciseTime(from value: Int) async throws -> [HealthMetric]  {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.appleExerciseTime)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
 
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
         
@@ -516,6 +533,12 @@ class HealthKitViewModel {
     }
     
     func getWeekTotalExerciseTime() async throws -> [HealthMetric] {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.appleExerciseTime)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let startNewWeek = calendar.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
         
         let strengthWeek = HKQuery.predicateForSamples(withStart: startNewWeek, end: Date(), options: .strictStartDate)
@@ -541,6 +564,11 @@ class HealthKitViewModel {
     
     func get30DaysExerciseTime(from value: Int) async throws -> [HealthMetric]  {
         
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.appleExerciseTime)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
       
         let oneWeek = HKQuery.predicateForSamples(withStart: startDate, end: endDate)
@@ -564,6 +592,11 @@ class HealthKitViewModel {
     }
     
     func get60DaysExerciseTime(from value: Int) async throws -> [HealthMetric]  {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKQuantityType(.appleExerciseTime)) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
 
         let startDate = calendar.date(byAdding: .day, value: value, to: Date())!
 
@@ -591,6 +624,12 @@ class HealthKitViewModel {
     // MARK: - Getting Workout History
     
     func getWorkoutHistory() async throws -> [HKWorkout]  {
+        
+        //Error handling
+        guard healthStore.authorizationStatus(for: HKWorkoutType.workoutType()) != .notDetermined else {
+            throw MFError.authNotDetermined
+        }
+        
         let allWorkoutsPredicate = HKQuery.predicateForWorkouts(with: .greaterThanOrEqualTo, duration: 1)
         
         let descriptor = HKSampleQueryDescriptor(

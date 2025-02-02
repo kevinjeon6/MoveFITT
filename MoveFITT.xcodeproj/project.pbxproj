@@ -58,6 +58,7 @@
 		74E3E5472D4ABE6B005DF332 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E3E5462D4ABE6B005DF332 /* WhatsNewView.swift */; };
 		74E4DE542978C2D300E2A42C /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE532978C2D300E2A42C /* InfoView.swift */; };
 		74E4DE562978C6D700E2A42C /* InfoHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */; };
+		74EAF1CB2D4DB9550079ED6D /* MF-Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EAF1CA2D4DB9550079ED6D /* MF-Error.swift */; };
 		74F02F5C29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */; };
 		74F02F6729B1A34A00AEB8BE /* Cardbackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6629B1A34A00AEB8BE /* Cardbackground.swift */; };
 		74F02F6929B1A83E00AEB8BE /* StepCountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */; };
@@ -129,6 +130,7 @@
 		74E3E5462D4ABE6B005DF332 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		74E4DE532978C2D300E2A42C /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		74E4DE552978C6D700E2A42C /* InfoHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderComponent.swift; sourceTree = "<group>"; };
+		74EAF1CA2D4DB9550079ED6D /* MF-Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MF-Error.swift"; sourceTree = "<group>"; };
 		74F02F5B29AAE9B200AEB8BE /* HKWorkoutActivityTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKWorkoutActivityTypeExtension.swift; sourceTree = "<group>"; };
 		74F02F6629B1A34A00AEB8BE /* Cardbackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardbackground.swift; sourceTree = "<group>"; };
 		74F02F6829B1A83E00AEB8BE /* StepCountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountTileView.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				745D24B92D20B71F00372E2A /* SupplementCategory.swift */,
 				74257BB62CEFAB98004FB0B2 /* IndicatorView.swift */,
 				74A763412D333BAE00198B7E /* MockData.swift */,
+				74EAF1CA2D4DB9550079ED6D /* MF-Error.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				74962B102CDD65D500E57D11 /* DashboardScreen.swift in Sources */,
 				74117145297B4FCE00328365 /* OneMonthExerciseChartView.swift in Sources */,
 				74675B15295FAD51008658B1 /* CurrentSummaryCardView.swift in Sources */,
+				74EAF1CB2D4DB9550079ED6D /* MF-Error.swift in Sources */,
 				7429988429C414E20044E890 /* OnboardingView.swift in Sources */,
 				747ED72129D65A4800F4FE16 /* GoalTextModifier.swift in Sources */,
 				7466D62D2975D2C5000A2763 /* OneWeekExerciseTimeChartView.swift in Sources */,
