@@ -60,10 +60,17 @@ struct MainScreenView: View {
         let version = getCurrentAppVersion()
         let savedVersion = UserDefaults.standard.string(forKey: "savedVersion")
         
-        if savedVersion == version {
+        // If savedVersion is nil, this is first install
+        if let savedVersion {
+            // We have a saved version, so this isn't first install
+            if savedVersion != version {
+                // Version is different, must be an update
+                isShowingWhatsNew.toggle()
+                UserDefaults.standard.set(version, forKey: "savedVersion")
+            }
             print("App is up to date")
         } else {
-            isShowingWhatsNew.toggle()
+            // First install, just save the version without showing What's New
             UserDefaults.standard.set(version, forKey: "savedVersion")
         }
     }
