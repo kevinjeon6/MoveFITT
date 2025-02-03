@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AuthorizationView: View {
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Image(.appleHealthIcon)
@@ -17,8 +18,7 @@ struct AuthorizationView: View {
                 .padding(.bottom, 12)
             
             Text("Connect to Apple Health to hit your goals")
-                .font(.title2)
-                .bold()
+                .font(.title3.bold())
         }
     }
 }

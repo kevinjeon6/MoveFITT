@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct OnboardInitialGoalDescription: View {
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(HealthInfoText.onboardingInitialGoalDescription)
-  
-            
             Text("You can change your goals in the \"Settings\" tab")
         }
-        .font(.title2)
-        .bold()
+        .font(.title3.bold())
     }
 }
 
