@@ -10,14 +10,55 @@ import SwiftUI
 
 struct OnboardingView: View {
     
-    //The true value will only be added to the property when the app does not find the onboarding key previously set in the device's permanent storage
+    ///The true value will only be added to the property when the app does not find the onboarding key previously set in the device's permanent storage
     @AppStorage("onboarding") var isOnboardingViewShowing: Bool = true
     @Environment(HealthKitViewModel.self) var healthKitVM
     @Environment(\.dismiss) private var dismiss
     @State private var trigger = false
     @State private var onBoardingTabSelection = 0
-   
     
+    // MARK: - Computed Next Button Property
+    var nextButton: some View {
+        Button {
+            onBoardingTabSelection += 1
+        } label: {
+            ZStack {
+                Capsule()
+                    .fill(.white)
+                    .frame(height: 48)
+                
+                Text("Next")
+                    .font(.title2.bold())
+                    .foregroundStyle(.black)
+            }
+        }
+        .accessibilityAddTraits(.isButton)
+    }
+    
+    // MARK: - Computed Connect to Apple Health Property
+    var connectToHealthButton: some View {
+        Button {
+            ///Check that Health data is available on the user's device
+            if HKHealthStore.isHealthDataAvailable() {
+                trigger = true
+            }
+            isOnboardingViewShowing = false
+        } label: {
+            ZStack {
+                Capsule()
+                    .fill(.pink)
+                    .frame(height: 48)
+                HStack {
+                    Image(systemName: "heart.fill")
+                    Text("Connect")
+                        .font(.title2.bold())
+                }
+            }
+        }
+        .accessibilityAddTraits(.isButton)
+    }
+   
+    // MARK: - Body
     var body: some View {
         VStack{
                 TabView(selection: $onBoardingTabSelection) {
@@ -38,68 +79,33 @@ struct OnboardingView: View {
             // MARK: Button
             
             if onBoardingTabSelection != 2 {
-                    Button {
-                        onBoardingTabSelection += 1
-                    } label: {
-                        ZStack {
-                            Capsule()
-                                .fill(.white)
-                                .frame(height: 48)
-                            
-                            Text("Next")
-                                .font(.title2.bold())
-                                .foregroundStyle(.black)
-                        }
-                    }
-                    .accessibilityAddTraits(.isButton)
+                nextButton
             } else {
-                Button {
-                    ///Check that Health data is available on the user's device
-                    if HKHealthStore.isHealthDataAvailable() {
-                        trigger = true
-                    }
-                    isOnboardingViewShowing = false
-                } label: {
-                    ZStack {
-                        Capsule()
-                            .fill(.pink)
-                            .frame(height: 48)
-                        HStack {
-                            Image(systemName: "heart.fill")
-                            Text("Connect")
-                                .font(.title2.bold())
-                        }
-                        .foregroundStyle(.white)
-                    }
-                }
-                .accessibilityAddTraits(.isButton)
-                .healthDataAccessRequest(
-                    store: healthKitVM.healthStore,
-                    readTypes: healthKitVM.allTypes,
-                    trigger: trigger) { result in
-                    switch result {
-                        
-                    case .success(_):
-                        print("Access to HealthKit is successful")
-                        Task {
-                             await healthKitVM.displayAll()
-                        }
-//                        dismiss()
-                    case .failure(_):
-                        print("Cannot access to HealthKit")
-                        dismiss()
+                connectToHealthButton
+                    .accessibilityAddTraits(.isButton)
+                    .healthDataAccessRequest(
+                        store: healthKitVM.healthStore,
+                        readTypes: healthKitVM.allTypes,
+                        trigger: trigger) { result in
+                            switch result {
+                                
+                            case .success(_):
+                                print("Access to HealthKit is successful")
+                                Task {
+                                    await healthKitVM.displayAll()
+                                }
+                                //dismiss()
+                            case .failure(_):
+                                print("Cannot access to HealthKit")
+                                dismiss()
                     }
                 }
             }
         }
-        .padding(.horizontal)
-        .padding(.bottom)
+        .padding([.horizontal, .bottom])
         .foregroundStyle(.white)
-        .background(
-            Color.black
-        )
+        .background( Color.black )
 
-        
     }
 }
 

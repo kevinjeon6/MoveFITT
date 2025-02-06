@@ -35,7 +35,7 @@ struct HealthInfoText {
         Your initial goals are set to:
         • Steps: 
             10,000 steps per day
-        • Muscle strengthening activity: 
+        • Muscle strength activity: 
             2 times per week
         • Weekly goal: 
             150 minutes per week
