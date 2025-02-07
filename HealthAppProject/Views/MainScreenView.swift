@@ -12,48 +12,69 @@ struct MainScreenView: View {
     
     @Environment(HealthKitViewModel.self) private var healthKitVM
     @EnvironmentObject var settingsVM: SettingsViewModel
+    @State private var isShowingWhatsNew = false
 
     var body: some View {
         TabView(selection: $settingsVM.selectedTab) {
             
-            SummaryView()
-                .tabItem {
-                    Label("Summary", systemImage: "list.bullet.clipboard")
-                }
-                .tag(1)
+            Tab("Dashboard", systemImage: "rectangle.grid.2x2.fill", value: 1) {
+                DashboardScreen()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            ExerciseStatsView()
-                .tabItem {
-                    Label("Physical Activity", systemImage: "chart.xyaxis.line")
-                }
-                .tag(2)
+            Tab("Supplements", systemImage: "cross.circle.fill", value: 2) {
+                SupplementsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
             
-            
-            SettingsView(
-                stepGoal: $settingsVM.stepGoal,
-                exerciseDayGoal: $settingsVM.exerciseDayGoal,
-                exerciseWeeklyGoal: $settingsVM.exerciseWeeklyGoal,
-                muscleWeeklyGoal: $settingsVM.muscleWeeklyGoal
-              )
-                .tabItem {
-                    Label("Settings", systemImage: "slider.horizontal.3")
-                }
-                .tag(3)
-            
-            MuscleView()
-                .tabItem {
-                    Label("Workouts", systemImage: "dumbbell.fill")
-                }
-                .tag(4)
-            
+            Tab("Workouts", systemImage: "dumbbell.fill", value: 3) {
+                WorkoutHistoryView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
+    
+            Tab("Settings", systemImage: "slider.horizontal.3", value: 4) {
+                SettingsView()
+                    .toolbarBackground(.primary, for: .tabBar)
+                    .toolbarBackgroundVisibility(.visible, for: .tabBar)
+            }
         }
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor(.darkModeColor)
-            UITabBar.appearance().standardAppearance = appearance
-            UITabBar.appearance().scrollEdgeAppearance = appearance
+        .sheet(isPresented: $isShowingWhatsNew) { WhatsNewView() }
+        .onAppear { checkForUpdate() }
+    }
+    
+    // MARK: - Methods
+    
+    /// Get's the current version of the App
+    /// - Returns: The string of the current version of the app based from the Info.plist
+    func getCurrentAppVersion() -> String {
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        
+        return appVersion
+    }
+    
+    /// Check if the app has been started after update
+    func checkForUpdate() {
+        let version = getCurrentAppVersion()
+        let savedVersion = UserDefaults.standard.string(forKey: "savedVersion")
+        
+        // If savedVersion is nil, this is first install
+        if let savedVersion {
+            // We have a saved version, so this isn't first install
+            if savedVersion != version {
+                // Version is different, must be an update
+                isShowingWhatsNew.toggle()
+                UserDefaults.standard.set(version, forKey: "savedVersion")
+            }
+            print("App is up to date")
+        } else {
+            // First install, just save the version without showing What's New
+            UserDefaults.standard.set(version, forKey: "savedVersion")
         }
     }
+    
 }
 
 struct MainScreenView_Previews: PreviewProvider {
